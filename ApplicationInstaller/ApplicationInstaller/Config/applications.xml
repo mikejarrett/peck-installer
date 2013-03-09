@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Applications>
+  <Application>
+    <Name>CCleaner</Name>
+    <Version>3.28.1913</Version>
+    <InstallArgs>/S</InstallArgs>
+    <RelativePath>\\</RelativePath>
+    <Filename>ccleaner.exe</Filename>
+  </Application>
+</Applications>
