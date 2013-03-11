@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace ApplicationInstaller.Classes
 {
-    public class App
+    public struct App
     {
         [XmlElement("ApplicationName")]
         public string ApplicationName
