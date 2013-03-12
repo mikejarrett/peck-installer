@@ -12,6 +12,10 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using ApplicationInstaller.Classes;
 using System.Xml.Serialization;
+using System.Xml.Schema;
+using System.Xml.Linq;
+using System.Xml;
+
 
 namespace ApplicationInstaller
 {
@@ -267,7 +271,6 @@ namespace ApplicationInstaller
 
         private void openConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: Validate XML before loading.
             // Load previously saved configuration file.
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Configutration File (*.xml)|*.xml|All Files|*.*";
@@ -275,22 +278,48 @@ namespace ApplicationInstaller
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<App>));
-                TextReader textReader = new StreamReader(openFileDialog.FileName);
-                List<App> apps = (List<App>)deserializer.Deserialize(textReader);
-                textReader.Close();
-
-                clearRows();
-                for (int i = 0; i < apps.Count; ++i)
+                bool validation_errors = false;
+                XDocument xdocApps;
+                XmlSchemaSet xmlSchemaSet = new XmlSchemaSet();
+                Stream xsdStream = this.GetType().Assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Applications.xsd");
+                XmlReader schemaReader = XmlReader.Create(xsdStream);
+                xmlSchemaSet.Add("", schemaReader);
+                try
                 {
-                    this.gridviewApplicationList.Rows.Add(
-                        apps[i].ApplicationName.ToString(),
-                        apps[i].Filename.ToString(),
-                        apps[i].AbsolutePath.ToString(),
-                        apps[i].RelativePath.ToString(),
-                        apps[i].InstallSwitch.ToString(),
-                        apps[i].Version.ToString()
-                    );
+                    xdocApps = XDocument.Load(openFileDialog.FileName);
+
+                    xdocApps.Validate(xmlSchemaSet, (o, err) =>
+                    {
+                        MessageBox.Show(err.Message, "Invalid XML File",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        validation_errors = true;
+                    });
+
+                    if (validation_errors == false)
+                    {
+                        XmlSerializer deserializer = new XmlSerializer(typeof(List<App>));
+                        XmlReader reader = xdocApps.CreateReader();
+                        reader.MoveToContent();
+                        List<App> apps = (List<App>)deserializer.Deserialize(reader);
+
+                        clearRows();
+                        for (int i = 0; i < apps.Count; ++i)
+                        {
+                            this.gridviewApplicationList.Rows.Add(
+                                apps[i].ApplicationName.ToString(),
+                                apps[i].Filename.ToString(),
+                                apps[i].AbsolutePath.ToString(),
+                                apps[i].RelativePath.ToString(),
+                                apps[i].InstallSwitch.ToString(),
+                                apps[i].Version.ToString()
+                            );
+                        }
+                    }
+                }
+                catch (Exception error)
+                {
+                    // TODO: Add logging - don't throw nasty errors at the user!
+                    MessageBox.Show(error.ToString());
                 }
             }
         }

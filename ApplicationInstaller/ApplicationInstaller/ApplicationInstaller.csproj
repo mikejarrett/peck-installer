@@ -51,6 +51,7 @@
     <Compile Include="ApplicationsBuilder.Designer.cs">
       <DependentUpon>ApplicationsBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\XMLValidation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ApplicationsBuilder.resx">
@@ -74,6 +75,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Validation\Applications.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
