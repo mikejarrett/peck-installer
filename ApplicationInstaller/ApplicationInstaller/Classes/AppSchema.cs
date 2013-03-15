@@ -33,5 +33,8 @@ namespace ApplicationInstaller.Classes
         public string Filename
         { get; set; }
 
+        [XmlElement("Architecture")]
+        public string Architecture
+        { get; set; }
     }
 }

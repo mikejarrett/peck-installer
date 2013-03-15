@@ -16,7 +16,7 @@ namespace ApplicationInstaller
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ApplicationsBuilder());
+            Application.Run(new ConfigBuilder());
         }
     }
 }

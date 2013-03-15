@@ -44,18 +44,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\App.cs" />
-    <Compile Include="ApplicationsBuilder.cs">
+    <Compile Include="Classes\AppSchema.cs" />
+    <Compile Include="Classes\Exceptions.cs" />
+    <Compile Include="Classes\FileProperties.cs" />
+    <Compile Include="ConfigBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ApplicationsBuilder.Designer.cs">
-      <DependentUpon>ApplicationsBuilder.cs</DependentUpon>
+    <Compile Include="ConfigBuilder.Designer.cs">
+      <DependentUpon>ConfigBuilder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\XMLValidation.cs" />
+    <Compile Include="Classes\XmlProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ApplicationsBuilder.resx">
-      <DependentUpon>ApplicationsBuilder.cs</DependentUpon>
+    <EmbeddedResource Include="ConfigBuilder.resx">
+      <DependentUpon>ConfigBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
