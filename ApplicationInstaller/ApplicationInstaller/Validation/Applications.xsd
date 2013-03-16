@@ -6,13 +6,13 @@
         <xsd:element name="App" minOccurs="1" maxOccurs="unbounded">
           <xsd:complexType>
             <xsd:sequence>
+              <xsd:element name="AbsolutePath" type="xsd:string" />
               <xsd:element name="ApplicationName" type="xsd:string" />
-              <xsd:element name="Version" type="xsd:string" />
+              <xsd:element name="Architecture" type="xsd:string" />
+              <xsd:element name="Filename" type="xsd:string" />
               <xsd:element name="InstallSwitch" />
               <xsd:element name="RelativePath" type="xsd:string" />
-              <xsd:element name="AbsolutePath" type="xsd:string" />
-              <xsd:element name="Filename" type="xsd:string" />
-              <xsd:element name="Architecture" type="xsd:string" />
+              <xsd:element name="Version" type="xsd:string" />
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>

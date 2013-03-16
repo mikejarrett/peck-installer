@@ -57,7 +57,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.generateConfigurationFromFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClearDataGridView = new System.Windows.Forms.Button();
@@ -70,6 +69,7 @@
             this.installSwitches = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.architecture = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.selectAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).BeginInit();
             this.menuDeleteRow.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -148,9 +148,8 @@
             this.dgvApplicationList.Name = "dgvApplicationList";
             this.dgvApplicationList.RowHeadersWidth = 49;
             this.dgvApplicationList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvApplicationList.Size = new System.Drawing.Size(651, 200);
+            this.dgvApplicationList.Size = new System.Drawing.Size(656, 200);
             this.dgvApplicationList.TabIndex = 9;
-            this.dgvApplicationList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvApplicationList_CellContentClick);
             this.dgvApplicationList.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCellMouseDown);
             this.dgvApplicationList.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridviewApplicationList_KeyUp);
             // 
@@ -298,7 +297,7 @@
             this.buildToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(680, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(684, 24);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -340,14 +339,6 @@
             this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
             this.buildToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.buildToolStripMenuItem.Text = "&Build";
-            // 
-            // selectAppToolStripMenuItem
-            // 
-            this.selectAppToolStripMenuItem.Name = "selectAppToolStripMenuItem";
-            this.selectAppToolStripMenuItem.ShortcutKeyDisplayString = "CTRL-N";
-            this.selectAppToolStripMenuItem.Size = new System.Drawing.Size(313, 22);
-            this.selectAppToolStripMenuItem.Text = "Add &New File";
-            this.selectAppToolStripMenuItem.Click += new System.EventHandler(this.selectAppToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -397,31 +388,43 @@
             // 
             this.applicationName.HeaderText = "Name";
             this.applicationName.Name = "applicationName";
+            this.applicationName.ReadOnly = true;
+            this.applicationName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // filename
             // 
             this.filename.HeaderText = "Filename";
             this.filename.Name = "filename";
+            this.filename.ReadOnly = true;
+            this.filename.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // absolutePath
             // 
             this.absolutePath.HeaderText = "AbsolutePath";
             this.absolutePath.Name = "absolutePath";
+            this.absolutePath.ReadOnly = true;
+            this.absolutePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // relativePath
             // 
             this.relativePath.HeaderText = "Relative Path";
             this.relativePath.Name = "relativePath";
+            this.relativePath.ReadOnly = true;
+            this.relativePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // installSwitches
             // 
             this.installSwitches.HeaderText = "Switches";
             this.installSwitches.Name = "installSwitches";
+            this.installSwitches.ReadOnly = true;
+            this.installSwitches.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // version
             // 
             this.version.HeaderText = "Version";
             this.version.Name = "version";
+            this.version.ReadOnly = true;
+            this.version.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // architecture
             // 
@@ -429,11 +432,19 @@
             this.architecture.Name = "architecture";
             this.architecture.Visible = false;
             // 
+            // selectAppToolStripMenuItem
+            // 
+            this.selectAppToolStripMenuItem.Name = "selectAppToolStripMenuItem";
+            this.selectAppToolStripMenuItem.ShortcutKeyDisplayString = "CTRL-N";
+            this.selectAppToolStripMenuItem.Size = new System.Drawing.Size(313, 22);
+            this.selectAppToolStripMenuItem.Text = "Add &New File";
+            this.selectAppToolStripMenuItem.Click += new System.EventHandler(this.selectAppToolStripMenuItem_Click);
+            // 
             // ConfigBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(680, 407);
+            this.ClientSize = new System.Drawing.Size(684, 407);
             this.Controls.Add(this.cbArchitecture);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnClearDataGridView);
@@ -499,7 +510,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateConfigurationFromFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem selectAppToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Button btnClearDataGridView;
@@ -513,6 +523,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn installSwitches;
         private System.Windows.Forms.DataGridViewTextBoxColumn version;
         private System.Windows.Forms.DataGridViewTextBoxColumn architecture;
+        private System.Windows.Forms.ToolStripMenuItem selectAppToolStripMenuItem;
     }
 }
 

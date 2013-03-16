@@ -4,8 +4,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using ApplicationInstaller.Schemas;
 using ApplicationInstaller.Classes;
-
 
 namespace ApplicationInstaller
 {
@@ -15,12 +15,14 @@ namespace ApplicationInstaller
         {
             this.RowId = -1;
             InitializeComponent();
+            PopulateSwitches();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.O))
             {
+                clearRows();
                 OpenPreviousConfigFile();
                 return true;
             }
@@ -31,6 +33,7 @@ namespace ApplicationInstaller
             }
             else if (keyData == (Keys.Control | Keys.G))
             {
+                clearRows();
                 GenerateConfigurationFromFolder();
                 return true;
             }
@@ -38,23 +41,8 @@ namespace ApplicationInstaller
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        //I am not in love with this. Refactor and make it freaking work!!
-        private int rowId = -1;
         public int RowId
-        {
-            get { return rowId; }
-            set
-            {
-                if (value == 0 || value == -1)
-                {
-                    rowId = -1;
-                }
-                else
-                {
-                    rowId = value;
-                }
-            }
-        }
+        { get; set; }
 
         private bool WithErrors()
         {
@@ -78,14 +66,14 @@ namespace ApplicationInstaller
                 // Poorman's validation. It's bad and I should feel bad.
                 MessageBox.Show("A application name, filename, absolute and relative path are required");
             }
-            else if (WithErrors() == false && RowId == -1)
+            else if (WithErrors() == false && this.RowId == -1)
             {
                 // If a previously filled row isn't selected, add the application
                 // info to the datagridview
                 AddRowToBottomOfDataGridView();
                 clearFields();
             }
-            else if (WithErrors() == false && RowId != -1)
+            else if (WithErrors() == false && this.RowId != -1)
             {
                 // If we are editing a previous application info, add it back to the datagridview
                 AddToSelectRowOfDataGridView();
@@ -107,7 +95,7 @@ namespace ApplicationInstaller
 
         private void AddToSelectRowOfDataGridView()
         {
-            DataGridViewRow row = this.dgvApplicationList.Rows[RowId];
+            DataGridViewRow row = this.dgvApplicationList.Rows[this.RowId];
             row.Cells["applicationName"].Value = this.tbApplicationName.Text.ToString();
             row.Cells["filename"].Value = this.tbFilename.Text.ToString();
             row.Cells["relativePath"].Value = Regex.Replace(this.tbRelativePath.Text, @"[a-zA-Z][:]", "").ToString();
@@ -208,74 +196,19 @@ namespace ApplicationInstaller
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                List<String> appInfo = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName.ToString());
-                this.tbApplicationName.Text = appInfo[0];
-                this.tbFilename.Text = appInfo[1];
-                this.tbAbsolutePath.Text = appInfo[2];
-                this.tbRelativePath.Text = appInfo[3];
-                this.tbVersion.Text = appInfo[4];
-                this.cbArchitecture.Text = appInfo[5];
-            }
-        }
-
-        private void dgvApplicationList_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-
-                int lastRowIndex = this.dgvApplicationList.Rows.Count - 1;
-                if (e.RowIndex != lastRowIndex)
-                {
-                    this.RowId = e.RowIndex;
-                    updateGridDataRowSelected(this.dgvApplicationList.Rows[e.RowIndex]);
-                }
-                else
-                {
-                    clearFields();
-                }
-                
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void updateGridDataRowSelected(DataGridViewRow row)
-        {
-            // Take the info from the select rows and place it in the entry form 
-            this.tbApplicationName.Text = row.Cells["applicationName"].Value.ToString();
-            this.tbFilename.Text = row.Cells["filename"].Value.ToString();
-            this.tbRelativePath.Text = row.Cells["relativePath"].Value.ToString();
-            this.tbAbsolutePath.Text = row.Cells["absolutePath"].Value.ToString();
-            try
-            {
-                this.cbSwitches.Text = row.Cells["installSwitches"].Value.ToString();
-            }
-            catch (NullReferenceException)
-            {
-                this.cbSwitches.Text = String.Empty;
-            }
-            try
-            {
-                this.tbVersion.Text = row.Cells["version"].Value.ToString();
-            }
-            catch (NullReferenceException)
-            {
-                this.tbVersion.Text = String.Empty;
-            }
-            try
-            {
-                this.cbArchitecture.Text = row.Cells["architecture"].Value.ToString();
-            }
-            catch (NullReferenceException)
-            {
-                this.tbVersion.Text = String.Empty;
+                App app = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName.ToString());
+                this.tbApplicationName.Text = app.ApplicationName;
+                this.tbFilename.Text = app.Filename;
+                this.tbAbsolutePath.Text = app.AbsolutePath;
+                this.tbRelativePath.Text = app.RelativePath;
+                this.tbVersion.Text = app.Version;
+                this.cbArchitecture.Text = app.Architecture;
             }
         }
 
         private void GenerateConfigFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            clearRows();
             GenerateConfigurationFromFolder();
         }
 
@@ -299,8 +232,16 @@ namespace ApplicationInstaller
 
                 foreach (string file in files)
                 {
-                    List<String> appInfo = FileProperties.GetApplicationInfoFromFilePath(file.ToString());
-                    this.dgvApplicationList.Rows.Add(appInfo[0], appInfo[1], appInfo[2], appInfo[3], String.Empty, appInfo[4], String.Empty);
+                    App app = FileProperties.GetApplicationInfoFromFilePath(file.ToString());
+                    dgvApplicationList.Rows.Add(
+                        app.ApplicationName,
+                        app.Filename,
+                        app.AbsolutePath,
+                        app.RelativePath,
+                        String.Empty,
+                        app.Version,
+                        app.Architecture
+                    );
                 }
             }
         }
@@ -332,6 +273,7 @@ namespace ApplicationInstaller
 
         private void openConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            clearRows();
             OpenPreviousConfigFile();
         }
 
@@ -350,6 +292,7 @@ namespace ApplicationInstaller
             // Not really needed but maybe a little nicer to read clearRows()
             // instead of the long command below
             this.dgvApplicationList.Rows.Clear();
+            this.RowId = -1;
         }
 
         private void clearFields()
@@ -364,11 +307,44 @@ namespace ApplicationInstaller
             this.RowId = -1;
         }
 
+        private void updateGridDataRowSelected(DataGridViewRow row)
+        {
+            // Take the info from the select rows and place it in the entry form 
+            this.tbApplicationName.Text = row.Cells["applicationName"].Value.ToString();
+            this.tbFilename.Text = row.Cells["filename"].Value.ToString();
+            this.tbRelativePath.Text = row.Cells["relativePath"].Value.ToString();
+            this.tbAbsolutePath.Text = row.Cells["absolutePath"].Value.ToString();
+            try
+            {
+                this.cbSwitches.Text = row.Cells["installSwitches"].Value.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                this.cbSwitches.Text = String.Empty;
+            }
+            try
+            {
+                this.tbVersion.Text = row.Cells["version"].Value.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                this.tbVersion.Text = String.Empty;
+            }
+            try
+            {
+                this.cbArchitecture.Text = row.Cells["architecture"].Value.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                this.cbArchitecture.Text = String.Empty;
+            }
+        }
 
-        // Sort out DataGridView stuff
         private void gridviewApplicationList_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue == 38 || e.KeyValue == 40)
+            // PgUp, PgDn, Home, End, UpArrow, DownArrow
+            int[] keyvalues = new int[6] {33, 34, 35, 36, 38, 40};
+            if (keyvalues.Contains<int>(e.KeyValue))
             {
                 DataGridViewRow row = this.dgvApplicationList.SelectedRows[0];
                 this.RowId = row.Index;
@@ -377,34 +353,57 @@ namespace ApplicationInstaller
                 {
                     updateGridDataRowSelected(row);
                 }
-                else
-                {
-                    clearFields();
-                }
+                else {  clearFields();  }
             }
         }
 
-       private void dgvCellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-       {
-           // If right mouse click and selected index is not -1 -- clear all selected
-           // rows, select the row the mouse if over and show the context menu strip.
-           if (e.Button == MouseButtons.Right)
-           {
-               int rowSelected = e.RowIndex;
-               if (e.RowIndex != -1)
-               {
-                   this.dgvApplicationList.ClearSelection();
-                   this.dgvApplicationList.Rows[rowSelected].Selected = true;
-                   this.dgvApplicationList.ContextMenuStrip.Show(this.dgvApplicationList, e.Location);
-               }
-           }
-       }
+        private void dgvCellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // If right mouse click and selected index is not -1 -- clear all selected
+            // rows, select the row the mouse if over and show the context menu strip.
+            if (e.Button == MouseButtons.Left) { LeftMouseClickDGV(e); }
+            else if (e.Button == MouseButtons.Right) { RightMouseClickDGV(e); }
+        }
+
+        private void LeftMouseClickDGV(DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                int lastRowIndex = this.dgvApplicationList.Rows.Count - 1;
+                if (e.RowIndex != lastRowIndex)
+                {
+                    this.RowId = e.RowIndex;
+                    updateGridDataRowSelected(this.dgvApplicationList.Rows[e.RowIndex]);
+                }
+                else { clearFields(); }
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void RightMouseClickDGV(DataGridViewCellMouseEventArgs e)
+        {
+            int rowSelected = e.RowIndex;
+            if (e.RowIndex != -1)
+            {
+                this.dgvApplicationList.ClearSelection();
+                this.dgvApplicationList.Rows[rowSelected].Selected = true;
+                this.dgvApplicationList.ContextMenuStrip.Show(this.dgvApplicationList, e.Location);
+            }
+        }
 
        private void menuDeleteRowDeleteItem_Click(object sender, EventArgs e)
        {
            // Delete application from the DataGridView
            DataGridViewRow row = this.dgvApplicationList.SelectedRows[0];
            this.dgvApplicationList.Rows.Remove(row);
+       }
+
+       private void PopulateSwitches()
+       {
+           XmlProcessor processor = new XmlProcessor(@"Configs\Switches.xml");
        }
     }
 }

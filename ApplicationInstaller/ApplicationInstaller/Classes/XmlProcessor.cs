@@ -6,13 +6,13 @@ using System.Xml.Linq;
 using System.Xml;
 using System.IO;
 using System.Reflection;
-
+using ApplicationInstaller.Schemas;
 
 namespace ApplicationInstaller.Classes
 {
     class XmlProcessor
     {
-        public XDocument XdocApps
+        public XDocument XDoc
         { get; set; }
 
         public String FilePath
@@ -32,14 +32,14 @@ namespace ApplicationInstaller.Classes
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Applications.xsd");
+            //Stream xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Switches.xsd");
             Boolean valid = true;
-            //XDocument xdocApps;
             XmlSchemaSet xmlSchemaSet = new XmlSchemaSet();
             XmlReader schemaReader = XmlReader.Create(xsdStream);
             xmlSchemaSet.Add("", schemaReader);
-            XdocApps = XDocument.Load(FilePath);
+            XDoc = XDocument.Load(FilePath);
 
-            XdocApps.Validate(xmlSchemaSet, (o, err) =>
+            XDoc.Validate(xmlSchemaSet, (o, err) =>
             {
                 valid = false;
                 throw new XmlValidatorException(err.Message, err.Exception);
@@ -60,14 +60,12 @@ namespace ApplicationInstaller.Classes
             if (XmlFileValid())
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(List<App>));
-                XmlReader reader = XdocApps.CreateReader();
+                XmlReader reader = XDoc.CreateReader();
                 reader.MoveToContent();
                 List<App> apps = (List<App>)deserializer.Deserialize(reader);
 
                 foreach (App app in apps)
                 {
-                    // Something similar to python yield?
-                    // Or threading consumer and producer (this is producer)
                     List<String> appValues = new List<String>()
                     {
                         app.ApplicationName.ToString(),
