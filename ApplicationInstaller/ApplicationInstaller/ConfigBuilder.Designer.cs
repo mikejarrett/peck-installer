@@ -30,13 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.btnAddToList = new System.Windows.Forms.Button();
             this.tbFilename = new System.Windows.Forms.TextBox();
             this.tbRelativePath = new System.Windows.Forms.TextBox();
             this.tbApplicationName = new System.Windows.Forms.TextBox();
             this.tbVersion = new System.Windows.Forms.TextBox();
             this.dgvApplicationList = new System.Windows.Forms.DataGridView();
+            this.applicationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.absolutePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.relativePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.installSwitches = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.architecture = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuDeleteRow = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuDeleteRowDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbFilename = new System.Windows.Forms.LinkLabel();
@@ -57,19 +63,13 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.generateConfigurationFromFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClearDataGridView = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.cbArchitecture = new System.Windows.Forms.ComboBox();
-            this.applicationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.absolutePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.relativePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.installSwitches = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.version = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.architecture = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.selectAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblSwitches = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).BeginInit();
             this.menuDeleteRow.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -78,24 +78,15 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(358, 116);
+            this.label2.Location = new System.Drawing.Point(12, 141);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Version";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 116);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Switches / Arguments";
-            // 
             // btnAddToList
             // 
-            this.btnAddToList.Location = new System.Drawing.Point(561, 140);
+            this.btnAddToList.Location = new System.Drawing.Point(561, 138);
             this.btnAddToList.Name = "btnAddToList";
             this.btnAddToList.Size = new System.Drawing.Size(105, 23);
             this.btnAddToList.TabIndex = 7;
@@ -126,9 +117,9 @@
             // 
             // tbVersion
             // 
-            this.tbVersion.Location = new System.Drawing.Point(406, 113);
+            this.tbVersion.Location = new System.Drawing.Point(130, 139);
             this.tbVersion.Name = "tbVersion";
-            this.tbVersion.Size = new System.Drawing.Size(95, 20);
+            this.tbVersion.Size = new System.Drawing.Size(175, 20);
             this.tbVersion.TabIndex = 6;
             // 
             // dgvApplicationList
@@ -144,7 +135,7 @@
             this.version,
             this.architecture});
             this.dgvApplicationList.ContextMenuStrip = this.menuDeleteRow;
-            this.dgvApplicationList.Location = new System.Drawing.Point(15, 169);
+            this.dgvApplicationList.Location = new System.Drawing.Point(15, 167);
             this.dgvApplicationList.Name = "dgvApplicationList";
             this.dgvApplicationList.RowHeadersWidth = 49;
             this.dgvApplicationList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -152,6 +143,54 @@
             this.dgvApplicationList.TabIndex = 9;
             this.dgvApplicationList.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCellMouseDown);
             this.dgvApplicationList.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridviewApplicationList_KeyUp);
+            // 
+            // applicationName
+            // 
+            this.applicationName.HeaderText = "Name";
+            this.applicationName.Name = "applicationName";
+            this.applicationName.ReadOnly = true;
+            this.applicationName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // filename
+            // 
+            this.filename.HeaderText = "Filename";
+            this.filename.Name = "filename";
+            this.filename.ReadOnly = true;
+            this.filename.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // absolutePath
+            // 
+            this.absolutePath.HeaderText = "AbsolutePath";
+            this.absolutePath.Name = "absolutePath";
+            this.absolutePath.ReadOnly = true;
+            this.absolutePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // relativePath
+            // 
+            this.relativePath.HeaderText = "Relative Path";
+            this.relativePath.Name = "relativePath";
+            this.relativePath.ReadOnly = true;
+            this.relativePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // installSwitches
+            // 
+            this.installSwitches.HeaderText = "Switches";
+            this.installSwitches.Name = "installSwitches";
+            this.installSwitches.ReadOnly = true;
+            this.installSwitches.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // version
+            // 
+            this.version.HeaderText = "Version";
+            this.version.Name = "version";
+            this.version.ReadOnly = true;
+            this.version.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // architecture
+            // 
+            this.architecture.HeaderText = "Arch";
+            this.architecture.Name = "architecture";
+            this.architecture.Visible = false;
             // 
             // menuDeleteRow
             // 
@@ -202,7 +241,7 @@
             // 
             // btnWriteConfig
             // 
-            this.btnWriteConfig.Location = new System.Drawing.Point(591, 375);
+            this.btnWriteConfig.Location = new System.Drawing.Point(591, 373);
             this.btnWriteConfig.Name = "btnWriteConfig";
             this.btnWriteConfig.Size = new System.Drawing.Size(75, 23);
             this.btnWriteConfig.TabIndex = 8;
@@ -212,7 +251,7 @@
             // 
             // btnClearInput
             // 
-            this.btnClearInput.Location = new System.Drawing.Point(15, 140);
+            this.btnClearInput.Location = new System.Drawing.Point(480, 139);
             this.btnClearInput.Name = "btnClearInput";
             this.btnClearInput.Size = new System.Drawing.Size(75, 23);
             this.btnClearInput.TabIndex = 10;
@@ -287,7 +326,7 @@
             this.cbSwitches.FormattingEnabled = true;
             this.cbSwitches.Location = new System.Drawing.Point(130, 113);
             this.cbSwitches.Name = "cbSwitches";
-            this.cbSwitches.Size = new System.Drawing.Size(220, 21);
+            this.cbSwitches.Size = new System.Drawing.Size(522, 21);
             this.cbSwitches.TabIndex = 26;
             // 
             // menuStrip1
@@ -297,7 +336,7 @@
             this.buildToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(684, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(687, 24);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -340,6 +379,14 @@
             this.buildToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.buildToolStripMenuItem.Text = "&Build";
             // 
+            // selectAppToolStripMenuItem
+            // 
+            this.selectAppToolStripMenuItem.Name = "selectAppToolStripMenuItem";
+            this.selectAppToolStripMenuItem.ShortcutKeyDisplayString = "CTRL-N";
+            this.selectAppToolStripMenuItem.Size = new System.Drawing.Size(313, 22);
+            this.selectAppToolStripMenuItem.Text = "Add &New File";
+            this.selectAppToolStripMenuItem.Click += new System.EventHandler(this.selectAppToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -355,7 +402,7 @@
             // 
             // btnClearDataGridView
             // 
-            this.btnClearDataGridView.Location = new System.Drawing.Point(15, 375);
+            this.btnClearDataGridView.Location = new System.Drawing.Point(15, 373);
             this.btnClearDataGridView.Name = "btnClearDataGridView";
             this.btnClearDataGridView.Size = new System.Drawing.Size(75, 23);
             this.btnClearDataGridView.TabIndex = 28;
@@ -366,7 +413,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(507, 116);
+            this.label7.Location = new System.Drawing.Point(310, 142);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(64, 13);
             this.label7.TabIndex = 29;
@@ -379,72 +426,28 @@
             "",
             "x86",
             "x64"});
-            this.cbArchitecture.Location = new System.Drawing.Point(577, 113);
+            this.cbArchitecture.Location = new System.Drawing.Point(380, 138);
             this.cbArchitecture.Name = "cbArchitecture";
-            this.cbArchitecture.Size = new System.Drawing.Size(75, 21);
+            this.cbArchitecture.Size = new System.Drawing.Size(94, 21);
             this.cbArchitecture.TabIndex = 31;
             // 
-            // applicationName
+            // lblSwitches
             // 
-            this.applicationName.HeaderText = "Name";
-            this.applicationName.Name = "applicationName";
-            this.applicationName.ReadOnly = true;
-            this.applicationName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // filename
-            // 
-            this.filename.HeaderText = "Filename";
-            this.filename.Name = "filename";
-            this.filename.ReadOnly = true;
-            this.filename.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // absolutePath
-            // 
-            this.absolutePath.HeaderText = "AbsolutePath";
-            this.absolutePath.Name = "absolutePath";
-            this.absolutePath.ReadOnly = true;
-            this.absolutePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // relativePath
-            // 
-            this.relativePath.HeaderText = "Relative Path";
-            this.relativePath.Name = "relativePath";
-            this.relativePath.ReadOnly = true;
-            this.relativePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // installSwitches
-            // 
-            this.installSwitches.HeaderText = "Switches";
-            this.installSwitches.Name = "installSwitches";
-            this.installSwitches.ReadOnly = true;
-            this.installSwitches.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // version
-            // 
-            this.version.HeaderText = "Version";
-            this.version.Name = "version";
-            this.version.ReadOnly = true;
-            this.version.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // architecture
-            // 
-            this.architecture.HeaderText = "Arch";
-            this.architecture.Name = "architecture";
-            this.architecture.Visible = false;
-            // 
-            // selectAppToolStripMenuItem
-            // 
-            this.selectAppToolStripMenuItem.Name = "selectAppToolStripMenuItem";
-            this.selectAppToolStripMenuItem.ShortcutKeyDisplayString = "CTRL-N";
-            this.selectAppToolStripMenuItem.Size = new System.Drawing.Size(313, 22);
-            this.selectAppToolStripMenuItem.Text = "Add &New File";
-            this.selectAppToolStripMenuItem.Click += new System.EventHandler(this.selectAppToolStripMenuItem_Click);
+            this.lblSwitches.AutoSize = true;
+            this.lblSwitches.Location = new System.Drawing.Point(12, 116);
+            this.lblSwitches.Name = "lblSwitches";
+            this.lblSwitches.Size = new System.Drawing.Size(111, 13);
+            this.lblSwitches.TabIndex = 32;
+            this.lblSwitches.TabStop = true;
+            this.lblSwitches.Text = "Switches / Arguments";
+            this.lblSwitches.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblSwitches_LinkClicked);
             // 
             // ConfigBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 407);
+            this.ClientSize = new System.Drawing.Size(687, 403);
+            this.Controls.Add(this.lblSwitches);
             this.Controls.Add(this.cbArchitecture);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnClearDataGridView);
@@ -467,7 +470,6 @@
             this.Controls.Add(this.tbRelativePath);
             this.Controls.Add(this.tbFilename);
             this.Controls.Add(this.btnAddToList);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ConfigBuilder";
@@ -484,7 +486,6 @@
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnAddToList;
         private System.Windows.Forms.TextBox tbFilename;
         private System.Windows.Forms.TextBox tbRelativePath;
@@ -524,6 +525,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn version;
         private System.Windows.Forms.DataGridViewTextBoxColumn architecture;
         private System.Windows.Forms.ToolStripMenuItem selectAppToolStripMenuItem;
+        private System.Windows.Forms.LinkLabel lblSwitches;
     }
 }
 

@@ -1,5 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfSwitch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Switch>/S</Switch>
-  <Switch>/passive /norestart</Switch>
-</ArrayOfSwitch>
+<ArrayOfSwitches xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Switches>
+    <Switch>/passive /norestart</Switch>
+  </Switches>
+  <Switches>
+    <Switch>/Q</Switch>
+  </Switches>
+  <Switches>
+    <Switch>/quiet /passive /norestart</Switch>
+  </Switches>
+  <Switches>
+    <Switch>/s</Switch>
+  </Switches>
+  <Switches>
+    <Switch>/s /v/qn" IEXPLORER=1 MOZILLA=1 REBOOT=Suppress JAVAUPDATE=0 WEBSTARTICON=0"</Switch>
+  </Switches>
+  <Switches>
+    <Switch>/silent</Switch>
+  </Switches>
+  <Switches>
+    <Switch>/sPB /msi /norestart ALLUSERS=1 EULA_ACCEPT=YES</Switch>
+  </Switches>
+  <Switches>
+    <Switch>/verysilent /norestart</Switch>
+  </Switches>
+  <Switches>
+    <Switch>-install</Switch>
+  </Switches>
+  <Switches>
+    <Switch>-ms</Switch>
+  </Switches>
+  <Switches>
+    <Switch>-s</Switch>
+  </Switches>
+</ArrayOfSwitches>

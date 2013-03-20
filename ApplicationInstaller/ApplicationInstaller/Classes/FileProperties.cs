@@ -22,17 +22,17 @@ namespace ApplicationInstaller.Classes
             String x86Arch = @"x86";
 
             app.AbsolutePath = filepath;
-            app.ApplicationName = fileInfo.ProductName;
+            app.Name = fileInfo.ProductName;
             app.Filename = filename;
             app.RelativePath= Regex.Replace(filepath, @"[a-zA-Z][:]", "");
             app.Version = fileInfo.ProductVersion;
 
             // TODO: My String-Matching-Fu is a little weak as of late
-            if (app.ApplicationName == null || app.ApplicationName == String.Empty)
+            if (app.Name == null || app.Name == String.Empty)
             {
                 var FileNameNoEx = Path.GetFileNameWithoutExtension(filepath);
                 FileNameNoEx = Regex.Replace(Regex.Replace(FileNameNoEx, x86Arch, ""), x64Arch, "");
-                app.ApplicationName = Regex.Replace(FileNameNoEx, @"[^a-zA-Z]", "");
+                app.Name = Regex.Replace(FileNameNoEx, @"[^a-zA-Z]", "");
             }
 
             if (Regex.IsMatch(filename, x64Arch))

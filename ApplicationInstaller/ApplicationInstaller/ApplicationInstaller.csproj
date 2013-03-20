@@ -44,10 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Schemas\AppSchema.cs" />
+    <Compile Include="EditSwitches.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditSwitches.Designer.cs">
+      <DependentUpon>EditSwitches.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Schemas\Applications.cs" />
     <Compile Include="Classes\Exceptions.cs" />
     <Compile Include="Classes\FileProperties.cs" />
-    <Compile Include="Schemas\SwitchesSchema.cs" />
+    <Compile Include="Schemas\Switches.cs" />
     <Compile Include="ConfigBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +65,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ConfigBuilder.resx">
       <DependentUpon>ConfigBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditSwitches.resx">
+      <DependentUpon>EditSwitches.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -90,6 +99,7 @@
   <ItemGroup>
     <Content Include="Configs\Switches.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

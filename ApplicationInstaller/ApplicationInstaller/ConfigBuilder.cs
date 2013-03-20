@@ -11,6 +11,9 @@ namespace ApplicationInstaller
 {
     public partial class ConfigBuilder : Form
     {
+        public List<Switches> switches
+        { get; set; }
+
         public ConfigBuilder()
         {
             this.RowId = -1;
@@ -148,7 +151,7 @@ namespace ApplicationInstaller
             {
                 DataGridViewRow row = this.dgvApplicationList.Rows[i];
                 App application = new App();
-                application.ApplicationName = row.Cells["applicationName"].Value.ToString().Trim();
+                application.Name = row.Cells["applicationName"].Value.ToString().Trim();
                 application.Filename = row.Cells["filename"].Value.ToString().Trim();
                 application.RelativePath = row.Cells["relativePath"].Value.ToString();
                 application.AbsolutePath = row.Cells["absolutePath"].Value.ToString();
@@ -196,8 +199,8 @@ namespace ApplicationInstaller
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                App app = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName.ToString());
-                this.tbApplicationName.Text = app.ApplicationName;
+                var app = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName.ToString());
+                this.tbApplicationName.Text = app.Name;
                 this.tbFilename.Text = app.Filename;
                 this.tbAbsolutePath.Text = app.AbsolutePath;
                 this.tbRelativePath.Text = app.RelativePath;
@@ -232,9 +235,9 @@ namespace ApplicationInstaller
 
                 foreach (string file in files)
                 {
-                    App app = FileProperties.GetApplicationInfoFromFilePath(file.ToString());
+                    var app = FileProperties.GetApplicationInfoFromFilePath(file.ToString());
                     dgvApplicationList.Rows.Add(
-                        app.ApplicationName,
+                        app.Name,
                         app.Filename,
                         app.AbsolutePath,
                         app.RelativePath,
@@ -258,15 +261,18 @@ namespace ApplicationInstaller
                 var xmlvalidation = new XmlProcessor(openFileDialog.FileName);
                 try
                 {
-                    foreach (List<String> appValues in xmlvalidation.DeserializeXML())
+                    Boolean valid = App.XmlFileValid(openFileDialog.FileName);
+                    foreach (List<String> appValues in xmlvalidation.DeserializeAppXML(valid))
                     {
                         // Super brittle! I know I know! Looking into solving this
                         this.dgvApplicationList.Rows.Add(appValues[0], appValues[1], appValues[2], appValues[3], appValues[4], appValues[5]);
                     }
                 }
-                catch (Exception error)
+                catch (XmlValidatorException err)
                 {
-                    MessageBox.Show(error.Message.ToString(), "Bad Configuration File", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    String ExceptionMessage = err.Message.ToString();
+                    String ErrorMessage = String.Format("Couldn't load the applications config file with:\n\n{0}", ExceptionMessage);
+                    MessageBox.Show(ErrorMessage, "Couldn't load applications Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -403,7 +409,32 @@ namespace ApplicationInstaller
 
        private void PopulateSwitches()
        {
-           XmlProcessor processor = new XmlProcessor(@"Configs\Switches.xml");
+           String SwitchesConfigFile = @"Configs\Switches.xml";
+           if (File.Exists(SwitchesConfigFile))
+           {
+               var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
+               try
+               {
+                   switches = xmlvalidation.DeserializeSwitchXML(Switches.XmlFileValid(SwitchesConfigFile));
+                   cbSwitches.Items.Add(String.Empty);
+                   foreach (var s in switches)
+                   {
+                       cbSwitches.Items.Add(s.Switch.ToString());
+                   }
+               }
+               catch (XmlValidatorException err)
+               {
+                   String ExceptionMessage = err.Message.ToString();
+                   String ErrorMessage = String.Format("Couldn't load the switches config file with:\n\n{0}", ExceptionMessage);
+                   MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+               }
+           }
+       }
+
+       private void lblSwitches_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+       {
+           EditSwitches SwitchesForm = new EditSwitches(this, switches);
+           SwitchesForm.Show();
        }
     }
 }

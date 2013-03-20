@@ -12,9 +12,6 @@ namespace ApplicationInstaller.Classes
 {
     class XmlProcessor
     {
-        public XDocument XDoc
-        { get; set; }
-
         public String FilePath
         { get; set; }
 
@@ -23,43 +20,12 @@ namespace ApplicationInstaller.Classes
             FilePath = filepath;
         }
 
-        private Boolean XmlFileValid()
+        public IEnumerable<List<String>> DeserializeAppXML(Boolean XmlValid)
         {
-            if (FilePath.ToString() == String.Empty)
-            {
-                return false;
-            }
-
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Applications.xsd");
-            //Stream xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Switches.xsd");
-            Boolean valid = true;
-            XmlSchemaSet xmlSchemaSet = new XmlSchemaSet();
-            XmlReader schemaReader = XmlReader.Create(xsdStream);
-            xmlSchemaSet.Add("", schemaReader);
-            XDoc = XDocument.Load(FilePath);
-
-            XDoc.Validate(xmlSchemaSet, (o, err) =>
-            {
-                valid = false;
-                throw new XmlValidatorException(err.Message, err.Exception);
-            });
-
-            if (valid == true)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public IEnumerable<List<String>> DeserializeXML()
-        {
-            if (XmlFileValid())
+            if (XmlValid)
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(List<App>));
+                var XDoc = XDocument.Load(FilePath);
                 XmlReader reader = XDoc.CreateReader();
                 reader.MoveToContent();
                 List<App> apps = (List<App>)deserializer.Deserialize(reader);
@@ -68,7 +34,7 @@ namespace ApplicationInstaller.Classes
                 {
                     List<String> appValues = new List<String>()
                     {
-                        app.ApplicationName.ToString(),
+                        app.Name.ToString(),
                         app.Filename.ToString(),
                         app.AbsolutePath.ToString(),
                         app.RelativePath.ToString(),
@@ -91,6 +57,33 @@ namespace ApplicationInstaller.Classes
             TextWriter textWriter = new StreamWriter(filepath);
             serializer.Serialize(textWriter, apps);
             textWriter.Close();
+        }
+
+        public static void WriteSwitchesToXML(string filepath, List<Switches> switches)
+        {
+            // Write the apps out to the selected configuration files
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Switches>));
+            TextWriter textWriter = new StreamWriter(filepath);
+            serializer.Serialize(textWriter, switches);
+            textWriter.Close();
+        }
+
+        public List<Switches> DeserializeSwitchXML(Boolean XmlValid)
+        {
+            if (XmlValid)
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(List<Switches>));
+                var XDoc = XDocument.Load(FilePath);
+                XmlReader reader = XDoc.CreateReader();
+                reader.MoveToContent();
+                List<Switches> switches = (List<Switches>)deserializer.Deserialize(reader);
+                reader.Close();
+                return switches;
+            }
+            else
+            {
+                return new List<Switches>();
+            }
         }
     }
 }
