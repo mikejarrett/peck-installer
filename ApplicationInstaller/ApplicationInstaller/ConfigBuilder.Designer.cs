@@ -70,15 +70,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cbArchitecture = new System.Windows.Forms.ComboBox();
             this.lblSwitches = new System.Windows.Forms.LinkLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).BeginInit();
             this.menuDeleteRow.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 141);
+            this.label2.Location = new System.Drawing.Point(7, 119);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 1;
@@ -86,7 +88,7 @@
             // 
             // btnAddToList
             // 
-            this.btnAddToList.Location = new System.Drawing.Point(561, 138);
+            this.btnAddToList.Location = new System.Drawing.Point(556, 116);
             this.btnAddToList.Name = "btnAddToList";
             this.btnAddToList.Size = new System.Drawing.Size(105, 23);
             this.btnAddToList.TabIndex = 7;
@@ -96,28 +98,28 @@
             // 
             // tbFilename
             // 
-            this.tbFilename.Location = new System.Drawing.Point(432, 35);
+            this.tbFilename.Location = new System.Drawing.Point(427, 13);
             this.tbFilename.Name = "tbFilename";
             this.tbFilename.Size = new System.Drawing.Size(220, 20);
             this.tbFilename.TabIndex = 2;
             // 
             // tbRelativePath
             // 
-            this.tbRelativePath.Location = new System.Drawing.Point(130, 87);
+            this.tbRelativePath.Location = new System.Drawing.Point(125, 65);
             this.tbRelativePath.Name = "tbRelativePath";
             this.tbRelativePath.Size = new System.Drawing.Size(522, 20);
             this.tbRelativePath.TabIndex = 4;
             // 
             // tbApplicationName
             // 
-            this.tbApplicationName.Location = new System.Drawing.Point(130, 35);
+            this.tbApplicationName.Location = new System.Drawing.Point(125, 13);
             this.tbApplicationName.Name = "tbApplicationName";
             this.tbApplicationName.Size = new System.Drawing.Size(220, 20);
             this.tbApplicationName.TabIndex = 1;
             // 
             // tbVersion
             // 
-            this.tbVersion.Location = new System.Drawing.Point(130, 139);
+            this.tbVersion.Location = new System.Drawing.Point(125, 117);
             this.tbVersion.Name = "tbVersion";
             this.tbVersion.Size = new System.Drawing.Size(175, 20);
             this.tbVersion.TabIndex = 6;
@@ -135,7 +137,7 @@
             this.version,
             this.architecture});
             this.dgvApplicationList.ContextMenuStrip = this.menuDeleteRow;
-            this.dgvApplicationList.Location = new System.Drawing.Point(15, 167);
+            this.dgvApplicationList.Location = new System.Drawing.Point(10, 149);
             this.dgvApplicationList.Name = "dgvApplicationList";
             this.dgvApplicationList.RowHeadersWidth = 49;
             this.dgvApplicationList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -209,7 +211,7 @@
             // lbFilename
             // 
             this.lbFilename.AutoSize = true;
-            this.lbFilename.Location = new System.Drawing.Point(377, 38);
+            this.lbFilename.Location = new System.Drawing.Point(372, 16);
             this.lbFilename.Name = "lbFilename";
             this.lbFilename.Size = new System.Drawing.Size(49, 13);
             this.lbFilename.TabIndex = 15;
@@ -220,7 +222,7 @@
             // lbRelativePath
             // 
             this.lbRelativePath.AutoSize = true;
-            this.lbRelativePath.Location = new System.Drawing.Point(11, 90);
+            this.lbRelativePath.Location = new System.Drawing.Point(6, 68);
             this.lbRelativePath.Name = "lbRelativePath";
             this.lbRelativePath.Size = new System.Drawing.Size(101, 13);
             this.lbRelativePath.TabIndex = 16;
@@ -231,7 +233,7 @@
             // lbAppName
             // 
             this.lbAppName.AutoSize = true;
-            this.lbAppName.Location = new System.Drawing.Point(11, 38);
+            this.lbAppName.Location = new System.Drawing.Point(6, 16);
             this.lbAppName.Name = "lbAppName";
             this.lbAppName.Size = new System.Drawing.Size(90, 13);
             this.lbAppName.TabIndex = 17;
@@ -241,7 +243,7 @@
             // 
             // btnWriteConfig
             // 
-            this.btnWriteConfig.Location = new System.Drawing.Point(591, 373);
+            this.btnWriteConfig.Location = new System.Drawing.Point(586, 355);
             this.btnWriteConfig.Name = "btnWriteConfig";
             this.btnWriteConfig.Size = new System.Drawing.Size(75, 23);
             this.btnWriteConfig.TabIndex = 8;
@@ -251,7 +253,7 @@
             // 
             // btnClearInput
             // 
-            this.btnClearInput.Location = new System.Drawing.Point(480, 139);
+            this.btnClearInput.Location = new System.Drawing.Point(475, 117);
             this.btnClearInput.Name = "btnClearInput";
             this.btnClearInput.Size = new System.Drawing.Size(75, 23);
             this.btnClearInput.TabIndex = 10;
@@ -264,7 +266,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(358, 36);
+            this.label1.Location = new System.Drawing.Point(353, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(13, 17);
             this.label1.TabIndex = 20;
@@ -275,7 +277,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(658, 36);
+            this.label4.Location = new System.Drawing.Point(653, 14);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(13, 17);
             this.label4.TabIndex = 21;
@@ -286,7 +288,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(658, 88);
+            this.label5.Location = new System.Drawing.Point(653, 66);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(13, 17);
             this.label5.TabIndex = 22;
@@ -295,7 +297,7 @@
             // lbAbsolutePath
             // 
             this.lbAbsolutePath.AutoSize = true;
-            this.lbAbsolutePath.Location = new System.Drawing.Point(11, 64);
+            this.lbAbsolutePath.Location = new System.Drawing.Point(6, 42);
             this.lbAbsolutePath.Name = "lbAbsolutePath";
             this.lbAbsolutePath.Size = new System.Drawing.Size(103, 13);
             this.lbAbsolutePath.TabIndex = 23;
@@ -305,7 +307,7 @@
             // 
             // tbAbsolutePath
             // 
-            this.tbAbsolutePath.Location = new System.Drawing.Point(130, 61);
+            this.tbAbsolutePath.Location = new System.Drawing.Point(125, 39);
             this.tbAbsolutePath.Name = "tbAbsolutePath";
             this.tbAbsolutePath.Size = new System.Drawing.Size(522, 20);
             this.tbAbsolutePath.TabIndex = 3;
@@ -315,7 +317,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Red;
-            this.label6.Location = new System.Drawing.Point(658, 62);
+            this.label6.Location = new System.Drawing.Point(653, 40);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(13, 17);
             this.label6.TabIndex = 25;
@@ -324,7 +326,7 @@
             // cbSwitches
             // 
             this.cbSwitches.FormattingEnabled = true;
-            this.cbSwitches.Location = new System.Drawing.Point(130, 113);
+            this.cbSwitches.Location = new System.Drawing.Point(125, 91);
             this.cbSwitches.Name = "cbSwitches";
             this.cbSwitches.Size = new System.Drawing.Size(522, 21);
             this.cbSwitches.TabIndex = 26;
@@ -337,7 +339,7 @@
             this.buildToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(687, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(716, 24);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -403,7 +405,7 @@
             // 
             // btnClearDataGridView
             // 
-            this.btnClearDataGridView.Location = new System.Drawing.Point(15, 373);
+            this.btnClearDataGridView.Location = new System.Drawing.Point(9, 355);
             this.btnClearDataGridView.Name = "btnClearDataGridView";
             this.btnClearDataGridView.Size = new System.Drawing.Size(75, 23);
             this.btnClearDataGridView.TabIndex = 28;
@@ -414,7 +416,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(310, 142);
+            this.label7.Location = new System.Drawing.Point(305, 120);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(64, 13);
             this.label7.TabIndex = 29;
@@ -427,7 +429,7 @@
             "",
             "x86",
             "x64"});
-            this.cbArchitecture.Location = new System.Drawing.Point(380, 138);
+            this.cbArchitecture.Location = new System.Drawing.Point(375, 116);
             this.cbArchitecture.Name = "cbArchitecture";
             this.cbArchitecture.Size = new System.Drawing.Size(94, 21);
             this.cbArchitecture.TabIndex = 31;
@@ -435,7 +437,7 @@
             // lblSwitches
             // 
             this.lblSwitches.AutoSize = true;
-            this.lblSwitches.Location = new System.Drawing.Point(12, 116);
+            this.lblSwitches.Location = new System.Drawing.Point(7, 94);
             this.lblSwitches.Name = "lblSwitches";
             this.lblSwitches.Size = new System.Drawing.Size(111, 13);
             this.lblSwitches.TabIndex = 32;
@@ -443,35 +445,44 @@
             this.lblSwitches.Text = "Switches / Arguments";
             this.lblSwitches.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblSwitches_LinkClicked);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lbAppName);
+            this.groupBox1.Controls.Add(this.btnClearDataGridView);
+            this.groupBox1.Controls.Add(this.lblSwitches);
+            this.groupBox1.Controls.Add(this.btnWriteConfig);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.dgvApplicationList);
+            this.groupBox1.Controls.Add(this.cbArchitecture);
+            this.groupBox1.Controls.Add(this.btnAddToList);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.tbFilename);
+            this.groupBox1.Controls.Add(this.tbRelativePath);
+            this.groupBox1.Controls.Add(this.cbSwitches);
+            this.groupBox1.Controls.Add(this.tbApplicationName);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.tbVersion);
+            this.groupBox1.Controls.Add(this.tbAbsolutePath);
+            this.groupBox1.Controls.Add(this.lbFilename);
+            this.groupBox1.Controls.Add(this.lbAbsolutePath);
+            this.groupBox1.Controls.Add(this.lbRelativePath);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.btnClearInput);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(21, 29);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(673, 388);
+            this.groupBox1.TabIndex = 33;
+            this.groupBox1.TabStop = false;
+            // 
             // ConfigBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 403);
-            this.Controls.Add(this.lblSwitches);
-            this.Controls.Add(this.cbArchitecture);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.btnClearDataGridView);
+            this.ClientSize = new System.Drawing.Size(716, 436);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.cbSwitches);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.tbAbsolutePath);
-            this.Controls.Add(this.lbAbsolutePath);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnClearInput);
-            this.Controls.Add(this.btnWriteConfig);
-            this.Controls.Add(this.lbAppName);
-            this.Controls.Add(this.lbRelativePath);
-            this.Controls.Add(this.lbFilename);
-            this.Controls.Add(this.dgvApplicationList);
-            this.Controls.Add(this.tbVersion);
-            this.Controls.Add(this.tbApplicationName);
-            this.Controls.Add(this.tbRelativePath);
-            this.Controls.Add(this.tbFilename);
-            this.Controls.Add(this.btnAddToList);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.groupBox1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ConfigBuilder";
             this.Text = "Application Builder";
@@ -479,6 +490,8 @@
             this.menuDeleteRow.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -527,6 +540,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn architecture;
         private System.Windows.Forms.ToolStripMenuItem selectAppToolStripMenuItem;
         private System.Windows.Forms.LinkLabel lblSwitches;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
