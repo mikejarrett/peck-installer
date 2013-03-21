@@ -417,10 +417,7 @@ namespace ApplicationInstaller
                {
                    switches = xmlvalidation.DeserializeSwitchXML(Switches.XmlFileValid(SwitchesConfigFile));
                    cbSwitches.Items.Add(String.Empty);
-                   foreach (var s in switches)
-                   {
-                       cbSwitches.Items.Add(s.Switch.ToString());
-                   }
+                   AddSwitchToComboBoxSwitches();
                }
                catch (XmlValidatorException err)
                {
@@ -431,10 +428,23 @@ namespace ApplicationInstaller
            }
        }
 
+       private void AddSwitchToComboBoxSwitches()
+       {
+           foreach (var s in switches)
+           {
+               cbSwitches.Items.Add(s.Switch.ToString());
+           }
+       }
+
        private void lblSwitches_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
        {
            EditSwitches SwitchesForm = new EditSwitches(this, switches);
            SwitchesForm.Show();
+       }
+
+       private void cbSwitches_Click(object sender, MouseEventArgs e)
+       {
+           cbSwitches.DroppedDown = true;
        }
     }
 }

@@ -15,6 +15,14 @@ namespace ApplicationInstaller.Schemas
         public string Switch
         { get; set; }
 
+        public Switches()
+        { }
+
+        public Switches(String switchValue)
+        {
+            Switch = switchValue;
+        }
+
         public static Boolean XmlFileValid(String FilePath)
         {
             if (FilePath.ToString() == String.Empty)

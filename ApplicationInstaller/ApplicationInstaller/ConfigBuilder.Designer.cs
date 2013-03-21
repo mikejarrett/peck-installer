@@ -328,6 +328,7 @@
             this.cbSwitches.Name = "cbSwitches";
             this.cbSwitches.Size = new System.Drawing.Size(522, 21);
             this.cbSwitches.TabIndex = 26;
+            this.cbSwitches.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbSwitches_Click);
             // 
             // menuStrip1
             // 
