@@ -10,6 +10,7 @@
               <xsd:element name="Name" type="xsd:string" />
               <xsd:element name="Architecture" type="xsd:string" />
               <xsd:element name="Filename" type="xsd:string" />
+              <xsd:element name="Filesize" type="xsd:float" />
               <xsd:element name="InstallSwitch" />
               <xsd:element name="RelativePath" type="xsd:string" />
               <xsd:element name="Version" type="xsd:string" />

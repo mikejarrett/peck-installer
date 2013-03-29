@@ -11,6 +11,11 @@ namespace ApplicationInstaller.Schemas
 {
     public class App
     {
+        public override String ToString() 
+        {
+            return this.Name;
+        }
+
         [XmlElement("AbsolutePath")]
         public string AbsolutePath
         { get; set; }
@@ -25,6 +30,10 @@ namespace ApplicationInstaller.Schemas
 
         [XmlElement("Filename")]
         public string Filename
+        { get; set; }
+
+        [XmlElement("Filesize")]
+        public Double FileSize
         { get; set; }
 
         [XmlElement("InstallSwitch")]

@@ -15,6 +15,7 @@ namespace ApplicationInstaller.Classes
             // the data entry form
             App app = new App();
             FileVersionInfo fileInfo = FileVersionInfo.GetVersionInfo(filepath);
+            
             String directoryPath = Path.GetDirectoryName(filepath);
             String filename = Path.GetFileName(filepath);
             String arch;
@@ -26,6 +27,7 @@ namespace ApplicationInstaller.Classes
             app.Filename = filename;
             app.RelativePath= Regex.Replace(filepath, @"[a-zA-Z][:]", "");
             app.Version = fileInfo.ProductVersion;
+            app.FileSize = ConvertToMegabytes(new FileInfo(filepath).Length);
 
             // TODO: My String-Matching-Fu is a little weak as of late
             if (app.Name == null || app.Name == String.Empty)
@@ -53,6 +55,11 @@ namespace ApplicationInstaller.Classes
             }
     
             return app;
+        }
+
+        private static float ConvertToMegabytes(long bytes)
+        {
+            return (bytes / 1024f) / 1024f;
         }
     }
 }
