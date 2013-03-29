@@ -92,7 +92,8 @@ namespace ApplicationInstaller
                 Regex.Replace(this.tbRelativePath.Text, @"[a-zA-Z][:]", ""),
                 this.cbSwitches.Text,
                 this.tbVersion.Text,
-                this.cbArchitecture.Text
+                this.cbArchitecture.Text,
+                this.tbFileSize.Text
             );
         }
 
@@ -106,6 +107,7 @@ namespace ApplicationInstaller
             row.Cells["installSwitches"].Value = this.cbSwitches.Text.ToString();
             row.Cells["version"].Value = this.tbVersion.Text.ToString();
             row.Cells["architecture"].Value = this.cbArchitecture.Text.ToString();
+            row.Cells["FileSize"].Value = Convert.ToDouble(this.tbFileSize.Text.ToString());
             clearFields();
         }
 
@@ -158,6 +160,7 @@ namespace ApplicationInstaller
                 application.InstallSwitch = row.Cells["installSwitches"].Value.ToString().Trim();
                 application.Version = row.Cells["version"].Value.ToString().Trim();
                 application.Architecture = row.Cells["architecture"].Selected.ToString();
+                application.FileSize = Convert.ToDouble(row.Cells["FileSize"].Value.ToString());
                 apps.Add(application);
             }
             return apps;
@@ -206,12 +209,12 @@ namespace ApplicationInstaller
                 this.tbRelativePath.Text = app.RelativePath;
                 this.tbVersion.Text = app.Version;
                 this.cbArchitecture.Text = app.Architecture;
+                this.tbFileSize.Text = app.FileSize.ToString();
             }
         }
 
         private void GenerateConfigFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clearRows();
             GenerateConfigurationFromFolder();
         }
 
@@ -224,6 +227,7 @@ namespace ApplicationInstaller
             folderBrowserDialog.Description = "Select folder to process...";
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
+                clearRows();
                 var files = Directory.EnumerateFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories)
                     .Where(s =>
                         s.EndsWith(".exe", StringComparison.OrdinalIgnoreCase) ||
@@ -243,7 +247,8 @@ namespace ApplicationInstaller
                         app.RelativePath,
                         String.Empty,
                         app.Version,
-                        app.Architecture
+                        app.Architecture,
+                        app.FileSize
                     );
                 }
             }
@@ -258,6 +263,7 @@ namespace ApplicationInstaller
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                clearRows();
                 var xmlvalidation = new XmlProcessor(openFileDialog.FileName);
                 try
                 {
@@ -265,7 +271,8 @@ namespace ApplicationInstaller
                     foreach (List<String> appValues in xmlvalidation.DeserializeAppXML(valid))
                     {
                         // Super brittle! I know I know! Looking into solving this
-                        this.dgvApplicationList.Rows.Add(appValues[0], appValues[1], appValues[2], appValues[3], appValues[4], appValues[5]);
+                        this.dgvApplicationList.Rows.Add(appValues[0], appValues[1], appValues[2],
+                            appValues[3], appValues[4], appValues[5], appValues[6], appValues[7]);
                     }
                 }
                 catch (XmlValidatorException err)
@@ -279,7 +286,6 @@ namespace ApplicationInstaller
 
         private void openConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clearRows();
             OpenPreviousConfigFile();
         }
 
@@ -310,6 +316,7 @@ namespace ApplicationInstaller
             this.cbSwitches.Text = String.Empty;
             this.tbVersion.Text = String.Empty;
             this.cbArchitecture.Text = String.Empty;
+            this.tbFileSize.Text = String.Empty;
             this.RowId = -1;
         }
 
@@ -320,6 +327,7 @@ namespace ApplicationInstaller
             this.tbFilename.Text = row.Cells["filename"].Value.ToString();
             this.tbRelativePath.Text = row.Cells["relativePath"].Value.ToString();
             this.tbAbsolutePath.Text = row.Cells["absolutePath"].Value.ToString();
+            this.tbFileSize.Text = row.Cells["FileSize"].Value.ToString();
             try
             {
                 this.cbSwitches.Text = row.Cells["installSwitches"].Value.ToString();
