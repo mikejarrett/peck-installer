@@ -24,11 +24,7 @@ namespace ApplicationInstaller.Classes
         {
             if (XmlValid)
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<App>));
-                var XDoc = XDocument.Load(FilePath);
-                XmlReader reader = XDoc.CreateReader();
-                reader.MoveToContent();
-                List<App> apps = (List<App>)deserializer.Deserialize(reader);
+                List<App> apps = GetListOfApps();
 
                 foreach (App app in apps)
                 {
@@ -39,7 +35,9 @@ namespace ApplicationInstaller.Classes
                         app.AbsolutePath.ToString(),
                         app.RelativePath.ToString(),
                         app.InstallSwitch.ToString(),
-                        app.Version.ToString()
+                        app.Version.ToString(),
+                        app.Architecture.ToString(),
+                        app.FileSize.ToString()
                     };
                     yield return appValues;
                 }
@@ -48,6 +46,28 @@ namespace ApplicationInstaller.Classes
             {
                 yield break;
             }
+        }
+
+        public List<App> GetListOfApps()
+        {
+            XmlSerializer deserializer = new XmlSerializer(typeof(List<App>));
+            var XDoc = XDocument.Load(FilePath);
+            XmlReader reader = XDoc.CreateReader();
+            reader.MoveToContent();
+            List<App> apps = (List<App>)deserializer.Deserialize(reader);
+            // Sort first on if there are switches associated with the install file
+            // then on file size. Larger files are installed first.
+            apps.Sort(delegate(App app1, App app2)
+                       {
+                           return
+                             (
+                                  app2.InstallSwitch.CompareTo(app1.InstallSwitch) != 0
+                                  ? app2.InstallSwitch.CompareTo(app1.InstallSwitch)
+                                   : app2.FileSize.CompareTo(app1.FileSize)
+                             ); 
+                       }
+            );
+            return apps;
         }
 
         public static void WriteToXML(string filepath, List<App> apps)
