@@ -1,9 +1,7 @@
-﻿using System;
+﻿using ApplicationInstaller.Schemas;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ApplicationInstaller.Schemas;
 
 namespace ApplicationInstaller.Classes
 {

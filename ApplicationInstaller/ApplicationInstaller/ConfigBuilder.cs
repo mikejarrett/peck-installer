@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using System.IO;
-using System.Text.RegularExpressions;
+﻿using ApplicationInstaller.Classes;
 using ApplicationInstaller.Schemas;
-using ApplicationInstaller.Classes;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace ApplicationInstaller
 {

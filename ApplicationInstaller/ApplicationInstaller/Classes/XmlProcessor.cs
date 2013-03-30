@@ -1,12 +1,10 @@
-﻿using System;
+﻿using ApplicationInstaller.Schemas;
+using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using System.Xml.Schema;
-using System.Xml.Linq;
-using System.Xml;
 using System.IO;
-using System.Reflection;
-using ApplicationInstaller.Schemas;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace ApplicationInstaller.Classes
 {
