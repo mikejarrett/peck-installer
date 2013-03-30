@@ -30,6 +30,15 @@ namespace ApplicationInstaller
         public List<String> registryFiles
         { get; set; }
 
+        public String servicePackFilePath
+        { get; set; }
+
+        public String servicePackSwitches
+        { get; set; }
+
+        public InstallInformationHolder installInformationHolder
+        { get; set; }
+
         public ApplicationInstaller()
         {
             InitializeComponent();
@@ -108,7 +117,9 @@ namespace ApplicationInstaller
         private void cbAppToggle_CheckedChanged(object sender, EventArgs e)
         {
             for (int i = 0; i < checkedListBoxApps.Items.Count; i++)
+            {
                 checkedListBoxApps.SetItemCheckState(i, (cbAppToggle.Checked ? CheckState.Checked : CheckState.Unchecked));
+            }
             if (cbAppToggle.Checked)
             {
                 cbAppToggle.Text = "Unselect all applications";
@@ -121,77 +132,35 @@ namespace ApplicationInstaller
 
         private void linkLabelInstall_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            DisableAllItems();
-            this.Width = 720;
-            WhatIsGoingToBeInstalled();
-            SetProgressBarMax();
-            InstallUpdates();
-            InstallApplications();
-            ProcessAdditionalConfigs();
-            ProcessReigstryFiles();
+            BuildHolder();
+            InstallPrompt();
         }
 
-        private void WhatIsGoingToBeInstalled()
+        private void BuildHolder()
         {
-            rtbInstallationInfo.AppendText("Installing and applying the following:\n");
-            rtbInstallationInfo.AppendText(String.Format("Updates: {0}\n", listUpdates.Count.ToString()));
-            rtbInstallationInfo.AppendText(String.Format("Applications: {0}\n", checkedListBoxApps.SelectedItems.Count.ToString()));
-            rtbInstallationInfo.AppendText(String.Format("Additional Config: {0}\n", clbAdditionalConfigurations.SelectedItems.Count.ToString()));
-            rtbInstallationInfo.AppendText(String.Format("Registry: {0}\n", clbRegistryFiles.SelectedItems.Count.ToString()));
-            rtbInstallationInfo.AppendText("======================================\n");
-        }
-
-        private void InstallUpdates()
-        {
+            int updateCount = 0;
             if (cbWindowsUpdates.Checked)
             {
-                foreach (App update in listUpdates)
-                {
-                    rtbInstallationInfo.AppendText(String.Format("{0}...\n", update.ToString()));
-                    progressBar1.Value += 1;
-                }
+                updateCount = listUpdates.Count;
             }
-        }
 
-        private void InstallApplications()
-        {
-            foreach (String appName in checkedListBoxApps.CheckedItems)
-            {
-                var app = listApps.Find(item => item.Name == appName.ToString());
-                rtbInstallationInfo.AppendText(String.Format("{0} ({1})...\n", app.ToString(), app.Version));
-                progressBar1.Value += 1;
-            }
-        }
+            installInformationHolder = new InstallInformationHolder(cbWindowsUpdates.Checked);
 
-        private void ProcessAdditionalConfigs()
-        {
-            foreach (String appName in clbAdditionalConfigurations.CheckedItems)
-            {
-                var app = additionalConfigApps.Find(item => item.Name == appName.ToString());
-                rtbInstallationInfo.AppendText(String.Format("{0} ({1})...\n", app.ToString(), app.Version));
-                progressBar1.Value += 1;
-            }
-        }
+            // Update information
+            installInformationHolder.updateCount = updateCount;
+            installInformationHolder.updatesToInstall = listUpdates;
 
-        private void ProcessReigstryFiles()
-        {
-            foreach (String filename in clbRegistryFiles.CheckedItems)
-            {
-                rtbInstallationInfo.AppendText(String.Format("Applying: {0}...\n", filename.ToString()));
-                progressBar1.Value += 1;
-            }
-        }
+            // Application information
+            installInformationHolder.applicationCount = checkedListBoxApps.CheckedItems.Count;
+            installInformationHolder.BuildAppsList(checkedListBoxApps.CheckedItems.Cast<String>().ToList(), listApps);
 
-        private void SetProgressBarMax()
-        {
-            progressBar1.Value = 0;
-            int count = 0;
-            if (cbWindowsUpdates.Checked)
-            {
-                count += listUpdates.Count;
-            }
-            progressBar1.Maximum = count + checkedListBoxApps.CheckedItems.Count + clbRegistryFiles.CheckedItems.Count
-                + clbAdditionalConfigurations.CheckedItems.Count;
+            // Additional configuration information
+            installInformationHolder.additionalCount = clbAdditionalConfigurations.CheckedItems.Count;
+            installInformationHolder.BuildAdditionalList(clbAdditionalConfigurations.CheckedItems.Cast<String>().ToList(), additionalConfigApps);
+
+            // Registry information
+            installInformationHolder.registryCount = clbRegistryFiles.CheckedItems.Count;
+            installInformationHolder.registryToInstall = clbRegistryFiles.CheckedItems.Cast<String>().ToList();
         }
 
         private void DisableAllItems()
@@ -203,7 +172,6 @@ namespace ApplicationInstaller
             linkAddRegistryFiles.Enabled = false;
             clbAdditionalConfigurations.Enabled = false;
             linkAdditionalConfigs.Enabled = false;
-            linkStartInstall.Enabled = false;
         }
 
         private void EnableAllitems()
@@ -258,6 +226,58 @@ namespace ApplicationInstaller
                     }
                 }
             }
+        }
+
+        private void cbServicePack_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbServicePack.Checked)
+            {
+                DisableAllItems();
+                OpenFileDialog servicePackDialog = new OpenFileDialog();
+                servicePackDialog.Filter = "Executables (*.EXE;*.MSI;*.MSU)|*.EXE;*.MSI;*.MSU|All files (*.*)|*.*";
+                servicePackDialog.Multiselect = false;
+                servicePackDialog.Title = "Select Service Pack";
+                if (servicePackDialog.ShowDialog() == DialogResult.OK)
+                {
+                    servicePackFilePath = servicePackDialog.FileName;
+                    servicePackSwitches = "/unattend /warnrestart";
+                    servicePackSwitches = Prompt(servicePackSwitches);
+                }
+            }
+            else
+            {
+                EnableAllitems();
+                servicePackFilePath = String.Empty;
+                servicePackSwitches = "/unattend /warnrestart";
+            }
+        }
+
+        private String Prompt(String defaultSwitch)
+        {
+            Form prompt = new Form();
+            prompt.Width = 373;
+            prompt.Height = 100;
+            prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+            prompt.Text = "Service Pack Switches";
+            Label textLabel = new Label() { Left = 10, Top = 10, Width = 120, Text = "Service Pack Switches" };
+            TextBox textBox = new TextBox() { Left = 130, Top = 8, Width = 220, Text = defaultSwitch};
+            Button confirmation = new Button() { Text = "OK", Left = 270, Width = 80, Top = 33 };
+            confirmation.Click += (sender, e) => { prompt.Close(); };
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(textLabel);
+            prompt.Controls.Add(textBox);
+            prompt.ShowDialog();
+            return textBox.Text;
+        }
+
+        private void InstallPrompt()
+        {
+            this.Hide();
+            InstallInfoform installInfoForm = new InstallInfoform(installInformationHolder);
+            installInfoForm.ShowDialog();
+            this.Show();
+            EnableAllitems();
+            linkStartInstall.Enabled = true;
         }
     }
 }

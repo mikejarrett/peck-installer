@@ -28,7 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationInstaller));
             this.gbName = new System.Windows.Forms.GroupBox();
+            this.cbServicePack = new System.Windows.Forms.CheckBox();
+            this.clbAdditionalConfigurations = new System.Windows.Forms.CheckedListBox();
+            this.linkAdditionalConfigs = new System.Windows.Forms.LinkLabel();
             this.checkedListBoxApps = new System.Windows.Forms.CheckedListBox();
             this.linkStartInstall = new System.Windows.Forms.LinkLabel();
             this.cbAppToggle = new System.Windows.Forms.CheckBox();
@@ -38,20 +42,15 @@
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configBuilderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rtbInstallationInfo = new System.Windows.Forms.RichTextBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabpageUpdatesAndApps = new System.Windows.Forms.TabPage();
             this.tabpageSettings = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
-            this.linkAdditionalConfigs = new System.Windows.Forms.LinkLabel();
-            this.clbAdditionalConfigurations = new System.Windows.Forms.CheckedListBox();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabpageUpdatesAndApps.SuspendLayout();
             this.tabpageSettings.SuspendLayout();
@@ -60,32 +59,63 @@
             // 
             // gbName
             // 
+            this.gbName.Controls.Add(this.cbServicePack);
             this.gbName.Controls.Add(this.clbAdditionalConfigurations);
             this.gbName.Controls.Add(this.linkAdditionalConfigs);
             this.gbName.Controls.Add(this.checkedListBoxApps);
-            this.gbName.Controls.Add(this.linkStartInstall);
             this.gbName.Controls.Add(this.cbAppToggle);
             this.gbName.Controls.Add(this.cbWindowsUpdates);
             this.gbName.Location = new System.Drawing.Point(6, 6);
             this.gbName.Name = "gbName";
-            this.gbName.Size = new System.Drawing.Size(318, 337);
+            this.gbName.Size = new System.Drawing.Size(318, 324);
             this.gbName.TabIndex = 3;
             this.gbName.TabStop = false;
             this.gbName.Text = "OS Version";
+            // 
+            // cbServicePack
+            // 
+            this.cbServicePack.AutoSize = true;
+            this.cbServicePack.Location = new System.Drawing.Point(9, 23);
+            this.cbServicePack.Name = "cbServicePack";
+            this.cbServicePack.Size = new System.Drawing.Size(120, 17);
+            this.cbServicePack.TabIndex = 6;
+            this.cbServicePack.Text = "Install Service Pack";
+            this.cbServicePack.UseVisualStyleBackColor = true;
+            this.cbServicePack.CheckedChanged += new System.EventHandler(this.cbServicePack_CheckedChanged);
+            // 
+            // clbAdditionalConfigurations
+            // 
+            this.clbAdditionalConfigurations.CheckOnClick = true;
+            this.clbAdditionalConfigurations.FormattingEnabled = true;
+            this.clbAdditionalConfigurations.Location = new System.Drawing.Point(6, 224);
+            this.clbAdditionalConfigurations.Name = "clbAdditionalConfigurations";
+            this.clbAdditionalConfigurations.Size = new System.Drawing.Size(306, 94);
+            this.clbAdditionalConfigurations.TabIndex = 5;
+            // 
+            // linkAdditionalConfigs
+            // 
+            this.linkAdditionalConfigs.AutoSize = true;
+            this.linkAdditionalConfigs.Location = new System.Drawing.Point(6, 205);
+            this.linkAdditionalConfigs.Name = "linkAdditionalConfigs";
+            this.linkAdditionalConfigs.Size = new System.Drawing.Size(192, 13);
+            this.linkAdditionalConfigs.TabIndex = 4;
+            this.linkAdditionalConfigs.TabStop = true;
+            this.linkAdditionalConfigs.Text = "Load Additional Application Config Files";
+            this.linkAdditionalConfigs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAdditionalConfigs_LinkClicked);
             // 
             // checkedListBoxApps
             // 
             this.checkedListBoxApps.CheckOnClick = true;
             this.checkedListBoxApps.FormattingEnabled = true;
-            this.checkedListBoxApps.Location = new System.Drawing.Point(6, 65);
+            this.checkedListBoxApps.Location = new System.Drawing.Point(6, 92);
             this.checkedListBoxApps.Name = "checkedListBoxApps";
-            this.checkedListBoxApps.Size = new System.Drawing.Size(306, 124);
+            this.checkedListBoxApps.Size = new System.Drawing.Size(306, 109);
             this.checkedListBoxApps.TabIndex = 1;
             // 
             // linkStartInstall
             // 
             this.linkStartInstall.AutoSize = true;
-            this.linkStartInstall.Location = new System.Drawing.Point(230, 321);
+            this.linkStartInstall.Location = new System.Drawing.Point(264, 392);
             this.linkStartInstall.Name = "linkStartInstall";
             this.linkStartInstall.Size = new System.Drawing.Size(82, 13);
             this.linkStartInstall.TabIndex = 3;
@@ -98,7 +128,7 @@
             this.cbAppToggle.AutoSize = true;
             this.cbAppToggle.Checked = true;
             this.cbAppToggle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbAppToggle.Location = new System.Drawing.Point(9, 42);
+            this.cbAppToggle.Location = new System.Drawing.Point(9, 69);
             this.cbAppToggle.Name = "cbAppToggle";
             this.cbAppToggle.Size = new System.Drawing.Size(140, 17);
             this.cbAppToggle.TabIndex = 2;
@@ -111,7 +141,7 @@
             this.cbWindowsUpdates.AutoSize = true;
             this.cbWindowsUpdates.Checked = true;
             this.cbWindowsUpdates.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbWindowsUpdates.Location = new System.Drawing.Point(9, 19);
+            this.cbWindowsUpdates.Location = new System.Drawing.Point(9, 46);
             this.cbWindowsUpdates.Name = "cbWindowsUpdates";
             this.cbWindowsUpdates.Size = new System.Drawing.Size(157, 17);
             this.cbWindowsUpdates.TabIndex = 0;
@@ -125,12 +155,14 @@
             this.configurationToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(689, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(357, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -147,41 +179,15 @@
             // configBuilderToolStripMenuItem
             // 
             this.configBuilderToolStripMenuItem.Name = "configBuilderToolStripMenuItem";
-            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.configBuilderToolStripMenuItem.Text = "Config Builder";
             this.configBuilderToolStripMenuItem.Click += new System.EventHandler(this.configBuilderToolStripMenuItem_Click);
             // 
             // switchEditorToolStripMenuItem
             // 
             this.switchEditorToolStripMenuItem.Name = "switchEditorToolStripMenuItem";
-            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.switchEditorToolStripMenuItem.Text = "Switch Editor";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.rtbInstallationInfo);
-            this.groupBox1.Controls.Add(this.progressBar1);
-            this.groupBox1.Location = new System.Drawing.Point(356, 27);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(329, 378);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Installing...";
-            // 
-            // rtbInstallationInfo
-            // 
-            this.rtbInstallationInfo.Location = new System.Drawing.Point(6, 19);
-            this.rtbInstallationInfo.Name = "rtbInstallationInfo";
-            this.rtbInstallationInfo.Size = new System.Drawing.Size(317, 324);
-            this.rtbInstallationInfo.TabIndex = 1;
-            this.rtbInstallationInfo.Text = "";
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(6, 349);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(317, 23);
-            this.progressBar1.TabIndex = 0;
             // 
             // tabControl1
             // 
@@ -190,7 +196,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(338, 372);
+            this.tabControl1.Size = new System.Drawing.Size(338, 362);
             this.tabControl1.TabIndex = 4;
             // 
             // tabpageUpdatesAndApps
@@ -199,7 +205,7 @@
             this.tabpageUpdatesAndApps.Location = new System.Drawing.Point(4, 22);
             this.tabpageUpdatesAndApps.Name = "tabpageUpdatesAndApps";
             this.tabpageUpdatesAndApps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabpageUpdatesAndApps.Size = new System.Drawing.Size(330, 346);
+            this.tabpageUpdatesAndApps.Size = new System.Drawing.Size(330, 336);
             this.tabpageUpdatesAndApps.TabIndex = 0;
             this.tabpageUpdatesAndApps.Text = "Updates and Apps";
             this.tabpageUpdatesAndApps.UseVisualStyleBackColor = true;
@@ -210,7 +216,7 @@
             this.tabpageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabpageSettings.Name = "tabpageSettings";
             this.tabpageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabpageSettings.Size = new System.Drawing.Size(330, 346);
+            this.tabpageSettings.Size = new System.Drawing.Size(330, 336);
             this.tabpageSettings.TabIndex = 1;
             this.tabpageSettings.Text = "Settings";
             this.tabpageSettings.UseVisualStyleBackColor = true;
@@ -246,42 +252,32 @@
             this.linkAddRegistryFiles.Text = "Add Registry Files";
             this.linkAddRegistryFiles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAddRegistryFiles_LinkClicked);
             // 
-            // linkAdditionalConfigs
+            // exitToolStripMenuItem
             // 
-            this.linkAdditionalConfigs.AutoSize = true;
-            this.linkAdditionalConfigs.Location = new System.Drawing.Point(6, 197);
-            this.linkAdditionalConfigs.Name = "linkAdditionalConfigs";
-            this.linkAdditionalConfigs.Size = new System.Drawing.Size(192, 13);
-            this.linkAdditionalConfigs.TabIndex = 4;
-            this.linkAdditionalConfigs.TabStop = true;
-            this.linkAdditionalConfigs.Text = "Load Additional Application Config Files";
-            this.linkAdditionalConfigs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAdditionalConfigs_LinkClicked);
-            // 
-            // clbAdditionalConfigurations
-            // 
-            this.clbAdditionalConfigurations.CheckOnClick = true;
-            this.clbAdditionalConfigurations.FormattingEnabled = true;
-            this.clbAdditionalConfigurations.Location = new System.Drawing.Point(6, 218);
-            this.clbAdditionalConfigurations.Name = "clbAdditionalConfigurations";
-            this.clbAdditionalConfigurations.Size = new System.Drawing.Size(306, 94);
-            this.clbAdditionalConfigurations.TabIndex = 5;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
             // 
             // ApplicationInstaller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(689, 412);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(357, 412);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.linkStartInstall);
             this.Controls.Add(this.tabControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(720, 450);
             this.Name = "ApplicationInstaller";
             this.Text = "ApplicationInstaller";
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabpageUpdatesAndApps.ResumeLayout(false);
             this.tabpageSettings.ResumeLayout(false);
@@ -304,9 +300,6 @@
         private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configBuilderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem switchEditorToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RichTextBox rtbInstallationInfo;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabpageUpdatesAndApps;
         private System.Windows.Forms.TabPage tabpageSettings;
@@ -315,6 +308,8 @@
         private System.Windows.Forms.LinkLabel linkAddRegistryFiles;
         private System.Windows.Forms.LinkLabel linkAdditionalConfigs;
         private System.Windows.Forms.CheckedListBox clbAdditionalConfigurations;
+        private System.Windows.Forms.CheckBox cbServicePack;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 
     }
 }
