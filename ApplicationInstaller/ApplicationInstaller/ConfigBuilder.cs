@@ -159,7 +159,7 @@ namespace ApplicationInstaller
                 application.AbsolutePath = row.Cells["absolutePath"].Value.ToString();
                 application.InstallSwitch = row.Cells["installSwitches"].Value.ToString().Trim();
                 application.Version = row.Cells["version"].Value.ToString().Trim();
-                application.Architecture = row.Cells["architecture"].Selected.ToString();
+                application.Architecture = row.Cells["architecture"].Value.ToString();
                 application.FileSize = Convert.ToDouble(row.Cells["FileSize"].Value.ToString());
                 apps.Add(application);
             }

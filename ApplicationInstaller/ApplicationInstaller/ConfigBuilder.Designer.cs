@@ -36,6 +36,14 @@
             this.tbApplicationName = new System.Windows.Forms.TextBox();
             this.tbVersion = new System.Windows.Forms.TextBox();
             this.dgvApplicationList = new System.Windows.Forms.DataGridView();
+            this.applicationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.absolutePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.relativePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.installSwitches = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.architecture = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuDeleteRow = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuDeleteRowDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbFilename = new System.Windows.Forms.LinkLabel();
@@ -64,16 +72,8 @@
             this.cbArchitecture = new System.Windows.Forms.ComboBox();
             this.lblSwitches = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbFileSize = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.applicationName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.absolutePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.relativePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.installSwitches = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.version = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.architecture = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbFileSize = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).BeginInit();
             this.menuDeleteRow.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -149,6 +149,60 @@
             this.dgvApplicationList.TabIndex = 9;
             this.dgvApplicationList.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCellMouseDown);
             this.dgvApplicationList.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridviewApplicationList_KeyUp);
+            // 
+            // applicationName
+            // 
+            this.applicationName.HeaderText = "Name";
+            this.applicationName.Name = "applicationName";
+            this.applicationName.ReadOnly = true;
+            this.applicationName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // filename
+            // 
+            this.filename.HeaderText = "Filename";
+            this.filename.Name = "filename";
+            this.filename.ReadOnly = true;
+            this.filename.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // absolutePath
+            // 
+            this.absolutePath.HeaderText = "AbsolutePath";
+            this.absolutePath.Name = "absolutePath";
+            this.absolutePath.ReadOnly = true;
+            this.absolutePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // relativePath
+            // 
+            this.relativePath.HeaderText = "Relative Path";
+            this.relativePath.Name = "relativePath";
+            this.relativePath.ReadOnly = true;
+            this.relativePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // installSwitches
+            // 
+            this.installSwitches.HeaderText = "Switches";
+            this.installSwitches.Name = "installSwitches";
+            this.installSwitches.ReadOnly = true;
+            this.installSwitches.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // version
+            // 
+            this.version.HeaderText = "Version";
+            this.version.Name = "version";
+            this.version.ReadOnly = true;
+            this.version.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // architecture
+            // 
+            this.architecture.HeaderText = "Arch";
+            this.architecture.Name = "architecture";
+            this.architecture.Visible = false;
+            // 
+            // FileSize
+            // 
+            this.FileSize.HeaderText = "File Size (MB)";
+            this.FileSize.Name = "FileSize";
+            this.FileSize.Visible = false;
             // 
             // menuDeleteRow
             // 
@@ -434,14 +488,6 @@
             this.groupBox1.TabIndex = 33;
             this.groupBox1.TabStop = false;
             // 
-            // tbFileSize
-            // 
-            this.tbFileSize.Location = new System.Drawing.Point(125, 118);
-            this.tbFileSize.Name = "tbFileSize";
-            this.tbFileSize.ReadOnly = true;
-            this.tbFileSize.Size = new System.Drawing.Size(61, 20);
-            this.tbFileSize.TabIndex = 33;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -451,65 +497,19 @@
             this.label3.TabIndex = 34;
             this.label3.Text = "File Size (MB)";
             // 
-            // applicationName
+            // tbFileSize
             // 
-            this.applicationName.HeaderText = "Name";
-            this.applicationName.Name = "applicationName";
-            this.applicationName.ReadOnly = true;
-            this.applicationName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // filename
-            // 
-            this.filename.HeaderText = "Filename";
-            this.filename.Name = "filename";
-            this.filename.ReadOnly = true;
-            this.filename.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // absolutePath
-            // 
-            this.absolutePath.HeaderText = "AbsolutePath";
-            this.absolutePath.Name = "absolutePath";
-            this.absolutePath.ReadOnly = true;
-            this.absolutePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // relativePath
-            // 
-            this.relativePath.HeaderText = "Relative Path";
-            this.relativePath.Name = "relativePath";
-            this.relativePath.ReadOnly = true;
-            this.relativePath.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // installSwitches
-            // 
-            this.installSwitches.HeaderText = "Switches";
-            this.installSwitches.Name = "installSwitches";
-            this.installSwitches.ReadOnly = true;
-            this.installSwitches.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // version
-            // 
-            this.version.HeaderText = "Version";
-            this.version.Name = "version";
-            this.version.ReadOnly = true;
-            this.version.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // architecture
-            // 
-            this.architecture.HeaderText = "Arch";
-            this.architecture.Name = "architecture";
-            this.architecture.Visible = false;
-            // 
-            // FileSize
-            // 
-            this.FileSize.HeaderText = "File Size (MB)";
-            this.FileSize.Name = "FileSize";
-            this.FileSize.Visible = false;
+            this.tbFileSize.Location = new System.Drawing.Point(125, 118);
+            this.tbFileSize.Name = "tbFileSize";
+            this.tbFileSize.ReadOnly = true;
+            this.tbFileSize.Size = new System.Drawing.Size(61, 20);
+            this.tbFileSize.TabIndex = 33;
             // 
             // ConfigBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 436);
+            this.ClientSize = new System.Drawing.Size(699, 426);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupBox1);
             this.MainMenuStrip = this.menuStrip1;
