@@ -197,7 +197,7 @@ namespace ApplicationInstaller
             // Parse the file and path and attempt to retrieve filename, version, absolute and
             // relative paths.
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Executables & Scripts|*.exe;*.cmd;*.bat;|All Files|*.*";
+            openFileDialog.Filter = "Executables & Scripts|*.exe;*.cmd;*.bat;*.msu;*.msi|All Files|*.*";
             openFileDialog.Title = "Select a file";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)

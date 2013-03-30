@@ -21,6 +21,8 @@ namespace ApplicationInstaller.Classes
             String arch;
             String x64Arch = @"x64|win64";
             String x86Arch = @"x86";
+            String updateRegex = @"kb ?\d+|KB ?\d+";
+            String kbNumber = Regex.Match(filename, updateRegex).ToString();
 
             app.AbsolutePath = filepath;
             app.Name = fileInfo.ProductName;
@@ -32,9 +34,16 @@ namespace ApplicationInstaller.Classes
             // TODO: My String-Matching-Fu is a little weak as of late
             if (app.Name == null || app.Name == String.Empty)
             {
-                var FileNameNoEx = Path.GetFileNameWithoutExtension(filepath);
-                FileNameNoEx = Regex.Replace(Regex.Replace(FileNameNoEx, x86Arch, ""), x64Arch, "");
-                app.Name = Regex.Replace(FileNameNoEx, @"[^a-zA-Z]", "");
+                if (kbNumber == null || kbNumber == String.Empty)
+                {
+                    var FileNameNoEx = Path.GetFileNameWithoutExtension(filepath);
+                    FileNameNoEx = Regex.Replace(Regex.Replace(FileNameNoEx, x86Arch, ""), x64Arch, "");
+                    app.Name = Regex.Replace(FileNameNoEx, @"[^a-zA-Z]", "");
+                }
+                else
+                {
+                    app.Name = kbNumber;
+                }
             }
 
             if (Regex.IsMatch(filename, x64Arch))
