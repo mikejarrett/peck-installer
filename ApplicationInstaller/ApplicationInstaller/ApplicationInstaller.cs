@@ -320,5 +320,51 @@ namespace ApplicationInstaller
         {
             this.Close();
         }
+
+        private void LastNameChanged(object sender, EventArgs e)
+        {
+            updateComputerName();
+            updateDescription();
+        }
+
+        private void firstNameChanged(object sender, EventArgs e)
+        {
+            updateComputerName();
+            updateDescription();
+        }
+
+        private void updateComputerName()
+        {
+            if (tbFirstName.Text.ToString().Length > 0)
+            {
+                computerName.Text = "ws" + tbFirstName.Text.ToString()[0] + tbLastName.Text.ToString();
+            }
+        }
+
+        private void updateDescription()
+        {
+            tbDescription.Text = tbFirstName.Text.ToString() + " " + tbLastName.Text.ToString() + "'s Computer";
+        }
+
+        private void switchEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String SwitchesConfigFile = @"Configs\Switches.xml";
+            if (File.Exists(SwitchesConfigFile))
+            {
+                var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
+                try
+                {
+                    var switches = xmlvalidation.DeserializeSwitchXML(Switches.XmlFileValid(SwitchesConfigFile));
+                    EditSwitches SwitchesForm = new EditSwitches(this, switches);
+                    SwitchesForm.ShowDialog();
+                }
+                catch (XmlValidatorException err)
+                {
+                    String ExceptionMessage = err.Message.ToString();
+                    String ErrorMessage = String.Format("Couldn't load the switches config file with:\n\n{0}", ExceptionMessage);
+                    MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+        }
     }
 }
