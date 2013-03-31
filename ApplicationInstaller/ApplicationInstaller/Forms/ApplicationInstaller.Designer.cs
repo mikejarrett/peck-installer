@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationInstaller));
             this.gbName = new System.Windows.Forms.GroupBox();
+            this.cbAdditional = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.linkSingleApp = new System.Windows.Forms.LinkLabel();
@@ -71,6 +72,7 @@
             // 
             // gbName
             // 
+            this.gbName.Controls.Add(this.cbAdditional);
             this.gbName.Controls.Add(this.label3);
             this.gbName.Controls.Add(this.label2);
             this.gbName.Controls.Add(this.linkSingleApp);
@@ -87,10 +89,21 @@
             this.gbName.TabStop = false;
             this.gbName.Text = "OS Version";
             // 
+            // cbAdditional
+            // 
+            this.cbAdditional.AutoSize = true;
+            this.cbAdditional.Location = new System.Drawing.Point(8, 205);
+            this.cbAdditional.Name = "cbAdditional";
+            this.cbAdditional.Size = new System.Drawing.Size(35, 17);
+            this.cbAdditional.TabIndex = 10;
+            this.cbAdditional.Text = "---";
+            this.cbAdditional.UseVisualStyleBackColor = true;
+            this.cbAdditional.CheckedChanged += new System.EventHandler(this.cbAdditional_CheckedChanged);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(200, 205);
+            this.label3.Location = new System.Drawing.Point(233, 206);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(16, 13);
             this.label3.TabIndex = 9;
@@ -99,7 +112,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 205);
+            this.label2.Location = new System.Drawing.Point(39, 206);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 8;
@@ -108,7 +121,7 @@
             // linkSingleApp
             // 
             this.linkSingleApp.AutoSize = true;
-            this.linkSingleApp.Location = new System.Drawing.Point(216, 205);
+            this.linkSingleApp.Location = new System.Drawing.Point(249, 206);
             this.linkSingleApp.Name = "linkSingleApp";
             this.linkSingleApp.Size = new System.Drawing.Size(59, 13);
             this.linkSingleApp.TabIndex = 5;
@@ -139,7 +152,7 @@
             // linkAdditionalConfigs
             // 
             this.linkAdditionalConfigs.AutoSize = true;
-            this.linkAdditionalConfigs.Location = new System.Drawing.Point(84, 205);
+            this.linkAdditionalConfigs.Location = new System.Drawing.Point(117, 206);
             this.linkAdditionalConfigs.Name = "linkAdditionalConfigs";
             this.linkAdditionalConfigs.Size = new System.Drawing.Size(116, 13);
             this.linkAdditionalConfigs.TabIndex = 4;
@@ -449,6 +462,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel linkSingleApp;
+        private System.Windows.Forms.CheckBox cbAdditional;
 
     }
 }

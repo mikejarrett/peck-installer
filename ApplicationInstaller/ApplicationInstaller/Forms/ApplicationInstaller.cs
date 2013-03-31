@@ -211,9 +211,18 @@ namespace ApplicationInstaller
             addRegistryFilesDialog.InitialDirectory = Path.Combine(Application.StartupPath, @"Configs");
             if (addRegistryFilesDialog.ShowDialog() == DialogResult.OK)
             {
+                cbAdditional.CheckState = CheckState.Checked;
                 foreach (String filename in addRegistryFilesDialog.FileNames)
                 {
-                    Boolean xmlValid = App.XmlFileValid(filename);
+                    Boolean xmlValid = false;
+                    try
+                    {
+                        xmlValid = App.XmlFileValid(filename);
+                    }
+                    catch (XmlValidatorException)
+                    {
+                        xmlValid = false;
+                    }
                     if (xmlValid)
                     {
                         var additionalApps = new XmlProcessor(filename).GetListOfApps();
@@ -376,6 +385,14 @@ namespace ApplicationInstaller
             else 
             {
                 Directory.CreateDirectory(@"Configs");
+            }
+        }
+
+        private void cbAdditional_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < clbAdditionalConfigurations.Items.Count; i++)
+            {
+                clbAdditionalConfigurations.SetItemCheckState(i, (cbAdditional.Checked ? CheckState.Checked : CheckState.Unchecked));
             }
         }
     }
