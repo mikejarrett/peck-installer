@@ -79,7 +79,7 @@ namespace ApplicationInstaller.Classes
 
         public static void WriteSwitchesToXML(string filepath, List<Switches> switches)
         {
-            // Write the apps out to the selected configuration files
+            // Write the switches out to the selected configuration files
             XmlSerializer serializer = new XmlSerializer(typeof(List<Switches>));
             TextWriter textWriter = new StreamWriter(filepath);
             serializer.Serialize(textWriter, switches);

@@ -12,11 +12,18 @@ namespace ApplicationInstaller
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ApplicationInstaller());
+            if (args.Length > 0 && args[0].ToLower() == "--config")
+            {
+                Application.Run(new ConfigBuilder());
+            }
+            else
+            {
+                Application.Run(new ApplicationInstaller());
+            }
         }
     }
 }

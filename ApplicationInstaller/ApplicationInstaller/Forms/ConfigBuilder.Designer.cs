@@ -74,6 +74,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbFileSize = new System.Windows.Forms.TextBox();
+            this.switchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).BeginInit();
             this.menuDeleteRow.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -346,7 +347,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.buildToolStripMenuItem});
+            this.buildToolStripMenuItem,
+            this.switchesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(699, 24);
@@ -505,6 +507,13 @@
             this.tbFileSize.Size = new System.Drawing.Size(61, 20);
             this.tbFileSize.TabIndex = 33;
             // 
+            // switchesToolStripMenuItem
+            // 
+            this.switchesToolStripMenuItem.Name = "switchesToolStripMenuItem";
+            this.switchesToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
+            this.switchesToolStripMenuItem.Text = "Switch Editor";
+            this.switchesToolStripMenuItem.Click += new System.EventHandler(this.switchesToolStripMenuItem_Click);
+            // 
             // ConfigBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -513,6 +522,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupBox1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "ConfigBuilder";
             this.Text = "Application Builder";
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).EndInit();
@@ -573,6 +583,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn version;
         private System.Windows.Forms.DataGridViewTextBoxColumn architecture;
         private System.Windows.Forms.DataGridViewTextBoxColumn FileSize;
+        private System.Windows.Forms.ToolStripMenuItem switchesToolStripMenuItem;
     }
 }
 

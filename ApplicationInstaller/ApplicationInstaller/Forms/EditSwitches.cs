@@ -98,5 +98,12 @@ namespace ApplicationInstaller
                 MessageBox.Show("Nothing to write to configuration file");
             }
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int index = lbSwitches.SelectedIndex;
+            lbSwitches.Items.RemoveAt(index);
+            lbSwitches.EndUpdate();
+        }
     }
 }

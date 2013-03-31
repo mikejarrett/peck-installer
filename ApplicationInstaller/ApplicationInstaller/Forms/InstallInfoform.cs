@@ -32,6 +32,7 @@ namespace ApplicationInstaller
 
         private void ProcessUpdates(object args)
         {
+            InstallServicePack();
             InstallUpdates();
             InstallApplications();
             ProcessAdditionalConfigs();
@@ -42,6 +43,24 @@ namespace ApplicationInstaller
         private void EnableDoneLink()
         {
             linkDone.Enabled = true;
+        }
+
+        private void InstallServicePack()
+        {
+            if (installInformationHolder.installServicePack)
+            {
+                this.Invoke(new RichTextDelegate(UpdateRichText), String.Format("Installing Service Pack..."));
+                try
+                {
+                    installInformationHolder.servicePack.Install();
+                    this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
+                }
+                catch (Exception err)
+                {
+                    this.Invoke(new RichTextDelegate(UpdateRichText), " ! Installation cancelled");
+                }
+                this.Invoke(new RichTextDelegate(UpdateRichText), "");
+            }
         }
 
         private void InstallUpdates()

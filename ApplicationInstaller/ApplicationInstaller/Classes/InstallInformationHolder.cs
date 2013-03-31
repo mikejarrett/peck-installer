@@ -30,7 +30,13 @@ namespace ApplicationInstaller.Classes
         public List<String> registryToInstall
         { get; set; }
 
+        public Boolean installServicePack
+        { get; set; }
+
         public Boolean installUpdates
+        { get; set; }
+
+        public App servicePack
         { get; set; }
 
         public InstallInformationHolder(Boolean InstallUpdates)

@@ -442,19 +442,30 @@ namespace ApplicationInstaller
 
        private void AddSwitchToComboBoxSwitches()
        {
+           cbSwitches.Items.Clear();
            foreach (var s in switches)
            {
                cbSwitches.Items.Add(s.Switch.ToString());
            }
        }
 
+       private void SwitchEditor()
+       {
+           EditSwitches SwitchesForm = new EditSwitches(this, switches);
+           this.Hide();
+           SwitchesForm.ShowDialog();
+           this.Show();
+           PopulateSwitches();
+       }
+
        private void lblSwitches_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
        {
-           MessageBox.Show("o_O   Currently disabled... Sorry!");
-           /*
-           EditSwitches SwitchesForm = new EditSwitches(this, switches);
-           SwitchesForm.ShowDialog();
-            */
+           SwitchEditor();
+       }
+
+       private void switchesToolStripMenuItem_Click(object sender, EventArgs e)
+       {
+           SwitchEditor();
        }
 
        private void cbSwitches_Click(object sender, MouseEventArgs e)

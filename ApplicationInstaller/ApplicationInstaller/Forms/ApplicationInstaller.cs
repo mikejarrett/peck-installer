@@ -32,6 +32,9 @@ namespace ApplicationInstaller
         public String servicePackSwitches
         { get; set; }
 
+        public App servicePack
+        { get; set; }
+
         public InstallInformationHolder installInformationHolder
         { get; set; }
 
@@ -114,8 +117,10 @@ namespace ApplicationInstaller
 
         private void configBuilderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Hide();
             Form ConfigBuilder = new ConfigBuilder();
-            ConfigBuilder.Show();
+            ConfigBuilder.ShowDialog();
+            this.Show();
         }
 
         private void cbAppToggle_CheckedChanged(object sender, EventArgs e)
@@ -138,27 +143,38 @@ namespace ApplicationInstaller
         {
             BuildHolder();
             InstallPrompt();
+            installInformationHolder = null;
         }
 
         private void BuildHolder()
         {
             installInformationHolder = new InstallInformationHolder(cbWindowsUpdates.Checked);
 
-            // Update information
-            installInformationHolder.updateCount = (cbWindowsUpdates.Checked) ? listUpdates.Count : 0; 
-            installInformationHolder.updatesToInstall = listUpdates;
+            // Service Pack Information
+            installInformationHolder.installServicePack = false;
+            if (servicePack != null)
+            {
+                installInformationHolder.installServicePack = true;
+                installInformationHolder.servicePack = servicePack;
+            }
+            else
+            {
+                // Update information
+                installInformationHolder.updateCount = (cbWindowsUpdates.Checked) ? listUpdates.Count : 0;
+                installInformationHolder.updatesToInstall = listUpdates;
 
-            // Application information
-            installInformationHolder.applicationCount = checkedListBoxApps.CheckedItems.Count;
-            installInformationHolder.BuildAppsList(checkedListBoxApps.CheckedItems.Cast<String>().ToList(), listApps);
+                // Application information
+                installInformationHolder.applicationCount = checkedListBoxApps.CheckedItems.Count;
+                installInformationHolder.BuildAppsList(checkedListBoxApps.CheckedItems.Cast<String>().ToList(), listApps);
 
-            // Additional configuration information
-            installInformationHolder.additionalCount = clbAdditionalConfigurations.CheckedItems.Count;
-            installInformationHolder.BuildAdditionalList(clbAdditionalConfigurations.CheckedItems.Cast<String>().ToList(), additionalConfigApps);
+                // Additional configuration information
+                installInformationHolder.additionalCount = clbAdditionalConfigurations.CheckedItems.Count;
+                installInformationHolder.BuildAdditionalList(clbAdditionalConfigurations.CheckedItems.Cast<String>().ToList(), additionalConfigApps);
 
-            // Registry information
-            installInformationHolder.registryCount = clbRegistryFiles.CheckedItems.Count;
-            installInformationHolder.registryToInstall = clbRegistryFiles.CheckedItems.Cast<String>().ToList();
+                // Registry information
+                installInformationHolder.registryCount = clbRegistryFiles.CheckedItems.Count;
+                installInformationHolder.registryToInstall = clbRegistryFiles.CheckedItems.Cast<String>().ToList();
+            }
         }
 
         private void DisableAllItems()
@@ -249,9 +265,9 @@ namespace ApplicationInstaller
                 servicePackDialog.Title = "Select Service Pack";
                 if (servicePackDialog.ShowDialog() == DialogResult.OK)
                 {
-                    servicePackFilePath = servicePackDialog.FileName;
+                    servicePack = FileProperties.GetApplicationInfoFromFilePath(servicePackDialog.FileName);
                     servicePackSwitches = "/unattend /warnrestart";
-                    servicePackSwitches = Prompt(servicePackSwitches);
+                    servicePack.InstallSwitch = Prompt(servicePackSwitches);
                 }
                 else
                 {
@@ -393,6 +409,33 @@ namespace ApplicationInstaller
             for (int i = 0; i < clbAdditionalConfigurations.Items.Count; i++)
             {
                 clbAdditionalConfigurations.SetItemCheckState(i, (cbAdditional.Checked ? CheckState.Checked : CheckState.Unchecked));
+            }
+        }
+
+        private void switchEditorToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            
+            String SwitchesConfigFile = @"Configs\Switches.xml";
+            if (File.Exists(SwitchesConfigFile))
+            {
+                var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
+                try
+                {
+                    this.Hide();
+                    var switches = xmlvalidation.DeserializeSwitchXML(Switches.XmlFileValid(SwitchesConfigFile));
+                    EditSwitches switchesForm = new EditSwitches(this, switches);
+                    switchesForm.ShowDialog();
+                }
+                catch (XmlValidatorException err)
+                {
+                    String ExceptionMessage = err.Message.ToString();
+                    String ErrorMessage = String.Format("Couldn't load the switches config file with:\n\n{0}", ExceptionMessage);
+                    MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                finally
+                {
+                    this.Show();
+                }
             }
         }
     }
