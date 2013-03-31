@@ -30,35 +30,51 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationInstaller));
             this.gbName = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.linkSingleApp = new System.Windows.Forms.LinkLabel();
             this.cbServicePack = new System.Windows.Forms.CheckBox();
             this.clbAdditionalConfigurations = new System.Windows.Forms.CheckedListBox();
             this.linkAdditionalConfigs = new System.Windows.Forms.LinkLabel();
             this.checkedListBoxApps = new System.Windows.Forms.CheckedListBox();
-            this.linkStartInstall = new System.Windows.Forms.LinkLabel();
             this.cbAppToggle = new System.Windows.Forms.CheckBox();
             this.cbWindowsUpdates = new System.Windows.Forms.CheckBox();
+            this.linkStartInstall = new System.Windows.Forms.LinkLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configBuilderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabpageUpdatesAndApps = new System.Windows.Forms.TabPage();
             this.tabpageSettings = new System.Windows.Forms.TabPage();
+            this.gbComputerInfo = new System.Windows.Forms.GroupBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelLast = new System.Windows.Forms.Label();
+            this.labelFirstName = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.labelComputerName = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabpageUpdatesAndApps.SuspendLayout();
             this.tabpageSettings.SuspendLayout();
+            this.gbComputerInfo.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbName
             // 
+            this.gbName.Controls.Add(this.label3);
+            this.gbName.Controls.Add(this.label2);
+            this.gbName.Controls.Add(this.linkSingleApp);
             this.gbName.Controls.Add(this.cbServicePack);
             this.gbName.Controls.Add(this.clbAdditionalConfigurations);
             this.gbName.Controls.Add(this.linkAdditionalConfigs);
@@ -72,13 +88,42 @@
             this.gbName.TabStop = false;
             this.gbName.Text = "OS Version";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(200, 205);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(16, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "or";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 205);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Load Additional";
+            // 
+            // linkSingleApp
+            // 
+            this.linkSingleApp.AutoSize = true;
+            this.linkSingleApp.Location = new System.Drawing.Point(216, 205);
+            this.linkSingleApp.Name = "linkSingleApp";
+            this.linkSingleApp.Size = new System.Drawing.Size(59, 13);
+            this.linkSingleApp.TabIndex = 5;
+            this.linkSingleApp.TabStop = true;
+            this.linkSingleApp.Text = "Application";
+            this.linkSingleApp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSingleApp_LinkClicked);
+            // 
             // cbServicePack
             // 
             this.cbServicePack.AutoSize = true;
             this.cbServicePack.Location = new System.Drawing.Point(9, 23);
             this.cbServicePack.Name = "cbServicePack";
             this.cbServicePack.Size = new System.Drawing.Size(120, 17);
-            this.cbServicePack.TabIndex = 6;
+            this.cbServicePack.TabIndex = 1;
             this.cbServicePack.Text = "Install Service Pack";
             this.cbServicePack.UseVisualStyleBackColor = true;
             this.cbServicePack.CheckedChanged += new System.EventHandler(this.cbServicePack_CheckedChanged);
@@ -90,17 +135,17 @@
             this.clbAdditionalConfigurations.Location = new System.Drawing.Point(6, 224);
             this.clbAdditionalConfigurations.Name = "clbAdditionalConfigurations";
             this.clbAdditionalConfigurations.Size = new System.Drawing.Size(306, 94);
-            this.clbAdditionalConfigurations.TabIndex = 5;
+            this.clbAdditionalConfigurations.TabIndex = 7;
             // 
             // linkAdditionalConfigs
             // 
             this.linkAdditionalConfigs.AutoSize = true;
-            this.linkAdditionalConfigs.Location = new System.Drawing.Point(6, 205);
+            this.linkAdditionalConfigs.Location = new System.Drawing.Point(84, 205);
             this.linkAdditionalConfigs.Name = "linkAdditionalConfigs";
-            this.linkAdditionalConfigs.Size = new System.Drawing.Size(192, 13);
+            this.linkAdditionalConfigs.Size = new System.Drawing.Size(116, 13);
             this.linkAdditionalConfigs.TabIndex = 4;
             this.linkAdditionalConfigs.TabStop = true;
-            this.linkAdditionalConfigs.Text = "Load Additional Application Config Files";
+            this.linkAdditionalConfigs.Text = "Application Config Files";
             this.linkAdditionalConfigs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAdditionalConfigs_LinkClicked);
             // 
             // checkedListBoxApps
@@ -110,18 +155,7 @@
             this.checkedListBoxApps.Location = new System.Drawing.Point(6, 92);
             this.checkedListBoxApps.Name = "checkedListBoxApps";
             this.checkedListBoxApps.Size = new System.Drawing.Size(306, 109);
-            this.checkedListBoxApps.TabIndex = 1;
-            // 
-            // linkStartInstall
-            // 
-            this.linkStartInstall.AutoSize = true;
-            this.linkStartInstall.Location = new System.Drawing.Point(264, 392);
-            this.linkStartInstall.Name = "linkStartInstall";
-            this.linkStartInstall.Size = new System.Drawing.Size(82, 13);
-            this.linkStartInstall.TabIndex = 3;
-            this.linkStartInstall.TabStop = true;
-            this.linkStartInstall.Text = "Start Installation";
-            this.linkStartInstall.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelInstall_LinkClicked);
+            this.checkedListBoxApps.TabIndex = 6;
             // 
             // cbAppToggle
             // 
@@ -131,7 +165,7 @@
             this.cbAppToggle.Location = new System.Drawing.Point(9, 69);
             this.cbAppToggle.Name = "cbAppToggle";
             this.cbAppToggle.Size = new System.Drawing.Size(140, 17);
-            this.cbAppToggle.TabIndex = 2;
+            this.cbAppToggle.TabIndex = 3;
             this.cbAppToggle.Text = "Unselect all applications";
             this.cbAppToggle.UseVisualStyleBackColor = true;
             this.cbAppToggle.CheckedChanged += new System.EventHandler(this.cbAppToggle_CheckedChanged);
@@ -144,9 +178,20 @@
             this.cbWindowsUpdates.Location = new System.Drawing.Point(9, 46);
             this.cbWindowsUpdates.Name = "cbWindowsUpdates";
             this.cbWindowsUpdates.Size = new System.Drawing.Size(157, 17);
-            this.cbWindowsUpdates.TabIndex = 0;
+            this.cbWindowsUpdates.TabIndex = 2;
             this.cbWindowsUpdates.Text = "Install All Windows Updates";
             this.cbWindowsUpdates.UseVisualStyleBackColor = true;
+            // 
+            // linkStartInstall
+            // 
+            this.linkStartInstall.AutoSize = true;
+            this.linkStartInstall.Location = new System.Drawing.Point(264, 392);
+            this.linkStartInstall.Name = "linkStartInstall";
+            this.linkStartInstall.Size = new System.Drawing.Size(82, 13);
+            this.linkStartInstall.TabIndex = 6;
+            this.linkStartInstall.TabStop = true;
+            this.linkStartInstall.Text = "Start Installation";
+            this.linkStartInstall.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelInstall_LinkClicked);
             // 
             // menuStrip1
             // 
@@ -167,6 +212,14 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // configurationToolStripMenuItem
             // 
             this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -179,14 +232,14 @@
             // configBuilderToolStripMenuItem
             // 
             this.configBuilderToolStripMenuItem.Name = "configBuilderToolStripMenuItem";
-            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.configBuilderToolStripMenuItem.Text = "Config Builder";
             this.configBuilderToolStripMenuItem.Click += new System.EventHandler(this.configBuilderToolStripMenuItem_Click);
             // 
             // switchEditorToolStripMenuItem
             // 
             this.switchEditorToolStripMenuItem.Name = "switchEditorToolStripMenuItem";
-            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.switchEditorToolStripMenuItem.Text = "Switch Editor";
             // 
             // tabControl1
@@ -212,6 +265,7 @@
             // 
             // tabpageSettings
             // 
+            this.tabpageSettings.Controls.Add(this.gbComputerInfo);
             this.tabpageSettings.Controls.Add(this.groupBox2);
             this.tabpageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabpageSettings.Name = "tabpageSettings";
@@ -221,13 +275,94 @@
             this.tabpageSettings.Text = "Settings";
             this.tabpageSettings.UseVisualStyleBackColor = true;
             // 
+            // gbComputerInfo
+            // 
+            this.gbComputerInfo.Controls.Add(this.textBox4);
+            this.gbComputerInfo.Controls.Add(this.textBox2);
+            this.gbComputerInfo.Controls.Add(this.textBox1);
+            this.gbComputerInfo.Controls.Add(this.label1);
+            this.gbComputerInfo.Controls.Add(this.labelLast);
+            this.gbComputerInfo.Controls.Add(this.labelFirstName);
+            this.gbComputerInfo.Controls.Add(this.textBox3);
+            this.gbComputerInfo.Controls.Add(this.labelComputerName);
+            this.gbComputerInfo.Location = new System.Drawing.Point(6, 6);
+            this.gbComputerInfo.Name = "gbComputerInfo";
+            this.gbComputerInfo.Size = new System.Drawing.Size(315, 130);
+            this.gbComputerInfo.TabIndex = 1;
+            this.gbComputerInfo.TabStop = false;
+            this.gbComputerInfo.Text = "Computer Information";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(95, 97);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(214, 20);
+            this.textBox4.TabIndex = 3;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(95, 45);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(214, 20);
+            this.textBox2.TabIndex = 1;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(95, 19);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(214, 20);
+            this.textBox1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 100);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Description";
+            // 
+            // labelLast
+            // 
+            this.labelLast.AutoSize = true;
+            this.labelLast.Location = new System.Drawing.Point(5, 48);
+            this.labelLast.Name = "labelLast";
+            this.labelLast.Size = new System.Drawing.Size(58, 13);
+            this.labelLast.TabIndex = 1;
+            this.labelLast.Text = "Last Name";
+            // 
+            // labelFirstName
+            // 
+            this.labelFirstName.AutoSize = true;
+            this.labelFirstName.Location = new System.Drawing.Point(6, 22);
+            this.labelFirstName.Name = "labelFirstName";
+            this.labelFirstName.Size = new System.Drawing.Size(57, 13);
+            this.labelFirstName.TabIndex = 0;
+            this.labelFirstName.Text = "First Name";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(95, 71);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(214, 20);
+            this.textBox3.TabIndex = 2;
+            // 
+            // labelComputerName
+            // 
+            this.labelComputerName.AutoSize = true;
+            this.labelComputerName.Location = new System.Drawing.Point(6, 74);
+            this.labelComputerName.Name = "labelComputerName";
+            this.labelComputerName.Size = new System.Drawing.Size(83, 13);
+            this.labelComputerName.TabIndex = 4;
+            this.labelComputerName.Text = "Computer Name";
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.clbRegistryFiles);
             this.groupBox2.Controls.Add(this.linkAddRegistryFiles);
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Location = new System.Drawing.Point(9, 142);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(318, 120);
+            this.groupBox2.Size = new System.Drawing.Size(312, 120);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Registry Tweaks";
@@ -238,8 +373,8 @@
             this.clbRegistryFiles.FormattingEnabled = true;
             this.clbRegistryFiles.Location = new System.Drawing.Point(6, 32);
             this.clbRegistryFiles.Name = "clbRegistryFiles";
-            this.clbRegistryFiles.Size = new System.Drawing.Size(306, 79);
-            this.clbRegistryFiles.TabIndex = 1;
+            this.clbRegistryFiles.Size = new System.Drawing.Size(300, 79);
+            this.clbRegistryFiles.TabIndex = 5;
             // 
             // linkAddRegistryFiles
             // 
@@ -247,17 +382,10 @@
             this.linkAddRegistryFiles.Location = new System.Drawing.Point(6, 16);
             this.linkAddRegistryFiles.Name = "linkAddRegistryFiles";
             this.linkAddRegistryFiles.Size = new System.Drawing.Size(91, 13);
-            this.linkAddRegistryFiles.TabIndex = 0;
+            this.linkAddRegistryFiles.TabIndex = 4;
             this.linkAddRegistryFiles.TabStop = true;
             this.linkAddRegistryFiles.Text = "Add Registry Files";
             this.linkAddRegistryFiles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAddRegistryFiles_LinkClicked);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
             // 
             // ApplicationInstaller
             // 
@@ -281,6 +409,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabpageUpdatesAndApps.ResumeLayout(false);
             this.tabpageSettings.ResumeLayout(false);
+            this.gbComputerInfo.ResumeLayout(false);
+            this.gbComputerInfo.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -310,6 +440,18 @@
         private System.Windows.Forms.CheckedListBox clbAdditionalConfigurations;
         private System.Windows.Forms.CheckBox cbServicePack;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.GroupBox gbComputerInfo;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label labelComputerName;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label labelLast;
+        private System.Windows.Forms.Label labelFirstName;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel linkSingleApp;
 
     }
 }

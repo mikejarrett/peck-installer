@@ -1,5 +1,6 @@
 ﻿using ApplicationInstaller.Classes;
 using ApplicationInstaller.Schemas;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,8 +37,8 @@ namespace ApplicationInstaller
 
         public ApplicationInstaller()
         {
+            additionalConfigApps = new List<App>();
             InitializeComponent();
-            this.Width = 373;
             OsName = OsInformation.getOSName();
             gbName.Text = OsName;
             LoadWindowsUpdatesCofig();
@@ -133,16 +134,10 @@ namespace ApplicationInstaller
 
         private void BuildHolder()
         {
-            int updateCount = 0;
-            if (cbWindowsUpdates.Checked)
-            {
-                updateCount = listUpdates.Count;
-            }
-
             installInformationHolder = new InstallInformationHolder(cbWindowsUpdates.Checked);
 
             // Update information
-            installInformationHolder.updateCount = updateCount;
+            installInformationHolder.updateCount = (cbWindowsUpdates.Checked) ? listUpdates.Count : 0; 
             installInformationHolder.updatesToInstall = listUpdates;
 
             // Application information
@@ -211,8 +206,9 @@ namespace ApplicationInstaller
                     Boolean xmlValid = App.XmlFileValid(filename);
                     if (xmlValid)
                     {
-                        additionalConfigApps = new XmlProcessor(filename).GetListOfApps();
-                        foreach (App app in additionalConfigApps)
+                        var additionalApps = new XmlProcessor(filename).GetListOfApps();
+                        additionalConfigApps.AddRange(additionalApps);
+                        foreach (App app in additionalApps)
                         {
                             clbAdditionalConfigurations.Items.Add(app.ToString());
                             int idx = clbAdditionalConfigurations.Items.Count - 1;
@@ -267,12 +263,54 @@ namespace ApplicationInstaller
 
         private void InstallPrompt()
         {
+            DisableSecurityZones();
             this.Hide();
             InstallInfoform installInfoForm = new InstallInfoform(installInformationHolder);
             installInfoForm.ShowDialog();
             this.Show();
             EnableAllitems();
+            EnableSecurityZones();
             linkStartInstall.Enabled = true;
+        }
+
+        private void DisableSecurityZones()
+        {
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\0").SetValue("1806", 0);
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\1").SetValue("1806", 0);
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\2").SetValue("1806", 0);
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3").SetValue("1806", 0);
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4").SetValue("1806", 0);
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3").SetValue("CurrentLevel", 0);
+            Registry.CurrentUser.Flush();
+        }
+
+        private void EnableSecurityZones()
+        {
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\2").SetValue("1806", 1);
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3").SetValue("1806", 1);
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4").SetValue("1806", 3);
+            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3").SetValue("CurrentLevel", 0x11500);
+            Registry.CurrentUser.Flush();
+        }
+
+        private void linkSingleApp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Executables (*.EXE;*.MSI;*.MSU;*.BAT;*.CMD)|*.EXE;*.MSI;*.MSU;*.BAT;*.CMD";
+            openFileDialog.Multiselect = false;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var app = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName);
+                additionalConfigApps.Add(app);
+                clbAdditionalConfigurations.Items.Add(app.ToString());
+                int idx = clbAdditionalConfigurations.Items.Count - 1;
+                clbAdditionalConfigurations.SetItemCheckState(idx, CheckState.Checked);
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

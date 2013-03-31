@@ -1,5 +1,6 @@
 ﻿using ApplicationInstaller.Classes;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Xml;
@@ -13,7 +14,7 @@ namespace ApplicationInstaller.Schemas
     {
         public override String ToString() 
         {
-            return this.Name;
+            return String.Format("{0} ({1:0.00} MB)", Name, FileSize);
         }
 
         [XmlElement("AbsolutePath")]
@@ -76,6 +77,27 @@ namespace ApplicationInstaller.Schemas
             else
             {
                 return false;
+            }
+        }
+
+        public void Install()
+        {
+            if (File.Exists(RelativePath))
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = RelativePath;
+                p.StartInfo.Arguments = InstallSwitch;
+                p.StartInfo.UseShellExecute = true;
+                p.Start();
+                p.WaitForExit();
+            }
+            else if (File.Exists(AbsolutePath))
+            {
+                Process p = new Process();
+                p.StartInfo.FileName = RelativePath;
+                p.StartInfo.Arguments = InstallSwitch;
+                p.Start();
+                p.WaitForExit();
             }
         }
     }

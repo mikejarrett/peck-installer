@@ -153,7 +153,7 @@
             // 
             this.linkDone.AutoSize = true;
             this.linkDone.Enabled = false;
-            this.linkDone.Location = new System.Drawing.Point(160, 390);
+            this.linkDone.Location = new System.Drawing.Point(156, 390);
             this.linkDone.Name = "linkDone";
             this.linkDone.Size = new System.Drawing.Size(33, 13);
             this.linkDone.TabIndex = 1;

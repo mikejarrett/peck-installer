@@ -1,11 +1,18 @@
 ﻿using ApplicationInstaller.Classes;
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ApplicationInstaller
 {
     public partial class InstallInfoform : Form
     {
+        public delegate void ProgressBarDelegate();
+        public delegate void RichTextDelegate(String updateRichText);
+        public delegate void EnableDoneDelegate();
+
         InstallInformationHolder installInformationHolder
         { set; get; }
 
@@ -20,15 +27,20 @@ namespace ApplicationInstaller
             lblRegistry.Text = installInfoHolder.registryCount.ToString();
             progressBar1.Maximum = installInfoHolder.GetTotal();
 
-            ProcessUpdates();
+            ThreadPool.QueueUserWorkItem(new WaitCallback(ProcessUpdates), null);
         }
 
-        private void ProcessUpdates()
+        private void ProcessUpdates(object args)
         {
             InstallUpdates();
             InstallApplications();
             ProcessAdditionalConfigs();
             ProcessReigstryFiles();
+            this.Invoke(new EnableDoneDelegate(EnableDoneLink));
+        }
+
+        private void EnableDoneLink()
+        {
             linkDone.Enabled = true;
         }
 
@@ -36,31 +48,43 @@ namespace ApplicationInstaller
         {
             if (installInformationHolder.installUpdates)
             {
-                rtbInstallationInfo.AppendText("Installing Update...");
-                rtbInstallationInfo.AppendText(Environment.NewLine);
+                this.Invoke(new RichTextDelegate(UpdateRichText), String.Format("Installing Update..."));
                 foreach (var update in installInformationHolder.updatesToInstall)
                 {
-                    rtbInstallationInfo.AppendText(String.Format(" * {0}...", update.ToString()));
-                    rtbInstallationInfo.AppendText(Environment.NewLine);
-                    progressBar1.Value += 1;
+                    this.Invoke(new RichTextDelegate(UpdateRichText), String.Format(" * {0}...", update.ToString()));
+                    try
+                    {
+                        update.Install();
+                        this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
+                    }
+                    catch (Exception exc)
+                    {
+                        this.Invoke(new RichTextDelegate(UpdateRichText), " ! Installation cancelled");
+                    }
                 }
-                rtbInstallationInfo.AppendText(Environment.NewLine);
+                this.Invoke(new RichTextDelegate(UpdateRichText), "");
             }
         }
-
+        
         private void InstallApplications()
         {
             if (installInformationHolder.applicationCount > 0)
             {
-                rtbInstallationInfo.AppendText("Installing Applications...");
-                rtbInstallationInfo.AppendText(Environment.NewLine);
+                this.Invoke(new RichTextDelegate(UpdateRichText), "Installing Applications...");
                 foreach (var app in installInformationHolder.appsToInstall)
                 {
-                    rtbInstallationInfo.AppendText(String.Format(" * {0} ({1})...", app.ToString(), app.Version));
-                    rtbInstallationInfo.AppendText(Environment.NewLine);
-                    progressBar1.Value += 1;
+                    this.Invoke(new RichTextDelegate(UpdateRichText), String.Format(" * {0} ({1})...", app.ToString(), app.Version));
+                    try
+                    {
+                        app.Install();
+                        this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
+                    }
+                    catch (Exception exc)
+                    {
+                        
+                        this.Invoke(new RichTextDelegate(UpdateRichText), " ! Installation cancelled");
+                    }
                 }
-                rtbInstallationInfo.AppendText(Environment.NewLine);
             }
         }
 
@@ -68,15 +92,21 @@ namespace ApplicationInstaller
         {
             if (installInformationHolder.additionalCount > 0)
             {
-                rtbInstallationInfo.AppendText("\nInstalling Additional Applications...");
-                rtbInstallationInfo.AppendText(Environment.NewLine);
+                this.Invoke(new RichTextDelegate(UpdateRichText), "Installing Additional Applications...");
                 foreach (var app in installInformationHolder.additionalToInstall)
                 {
-                    rtbInstallationInfo.AppendText(String.Format(" * {0} ({1})...", app.ToString(), app.Version));
-                    rtbInstallationInfo.AppendText(Environment.NewLine);
-                    progressBar1.Value += 1;
+                    this.Invoke(new RichTextDelegate(UpdateRichText), String.Format(" * {0} ({1})...", app.ToString(), app.Version));
+                    try
+                    {
+                        app.Install();
+                        this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
+                    }
+                    catch (Exception exc)
+                    {
+                        this.Invoke(new RichTextDelegate(UpdateRichText), " ! Installation cancelled");
+                    }
                 }
-                rtbInstallationInfo.AppendText(Environment.NewLine);
+                this.Invoke(new RichTextDelegate(UpdateRichText), "");
             }
         }
 
@@ -84,15 +114,39 @@ namespace ApplicationInstaller
         {
             if (installInformationHolder.registryCount > 0)
             {
-                rtbInstallationInfo.AppendText("Processing Registry Files...");
-                rtbInstallationInfo.AppendText(Environment.NewLine);
+                this.Invoke(new RichTextDelegate(UpdateRichText), "Processing Registry Files...");
                 foreach (String filename in installInformationHolder.registryToInstall)
                 {
-                    rtbInstallationInfo.AppendText(String.Format(" * Applying: {0}...", filename.ToString()));
-                    rtbInstallationInfo.AppendText(Environment.NewLine);
-                    progressBar1.Value += 1;
+                    if (File.Exists(filename))
+                    {
+                        this.Invoke(new RichTextDelegate(UpdateRichText), String.Format(" * Applying: {0}...", filename.ToString()));
+                        Process regeditProcess = Process.Start("regedit.exe", String.Format("/s {0}", filename.ToString()));
+                        regeditProcess.WaitForExit();
+                    }
+                    else
+                    {
+                        this.Invoke(new RichTextDelegate(UpdateRichText), String.Format(" * Couldn't find: {0}...", filename.ToString()));
+                    }
+                    this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
                 }
-                rtbInstallationInfo.AppendText(Environment.NewLine);
+                this.Invoke(new RichTextDelegate(UpdateRichText), "");
+            }
+        }
+
+        public void UpdateRichText(String updateString)
+        {
+            if (updateString != "")
+            {
+                rtbInstallationInfo.AppendText(updateString);
+            }
+            rtbInstallationInfo.AppendText(Environment.NewLine);
+        }
+
+        private void UpdateProgressBar()
+        {
+            if (progressBar1.Value != progressBar1.Maximum)
+            {
+                progressBar1.Value++;
             }
         }
 
