@@ -82,10 +82,16 @@ namespace ApplicationInstaller
 
             if (switches.Count > 0)
             {
-                switches.Sort();
+                switches.Sort(
+                    delegate(Switches sw1, Switches sw2)
+                    { 
+                        return ( sw1.Switch.CompareTo(sw2.Switch) ); 
+                    } 
+                );
                 String filePath = @"Configs\Switches.xml";
-                XmlProcessor.WriteSwitchesToXML(filePath, switches);                
+                XmlProcessor.WriteSwitchesToXML(filePath, switches);
                 MessageBox.Show("Config written successfully to: " + filePath);
+                this.Close();
             }
             else
             {

@@ -45,18 +45,17 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configBuilderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.switchEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabpageUpdatesAndApps = new System.Windows.Forms.TabPage();
             this.tabpageSettings = new System.Windows.Forms.TabPage();
             this.gbComputerInfo = new System.Windows.Forms.GroupBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbDescription = new System.Windows.Forms.TextBox();
+            this.tbLastName = new System.Windows.Forms.TextBox();
+            this.tbFirstName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.labelLast = new System.Windows.Forms.Label();
             this.labelFirstName = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.computerName = new System.Windows.Forms.TextBox();
             this.labelComputerName = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
@@ -223,8 +222,7 @@
             // configurationToolStripMenuItem
             // 
             this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configBuilderToolStripMenuItem,
-            this.switchEditorToolStripMenuItem});
+            this.configBuilderToolStripMenuItem});
             this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
             this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
             this.configurationToolStripMenuItem.Text = "Configuration";
@@ -232,15 +230,9 @@
             // configBuilderToolStripMenuItem
             // 
             this.configBuilderToolStripMenuItem.Name = "configBuilderToolStripMenuItem";
-            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.configBuilderToolStripMenuItem.Text = "Config Builder";
             this.configBuilderToolStripMenuItem.Click += new System.EventHandler(this.configBuilderToolStripMenuItem_Click);
-            // 
-            // switchEditorToolStripMenuItem
-            // 
-            this.switchEditorToolStripMenuItem.Name = "switchEditorToolStripMenuItem";
-            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.switchEditorToolStripMenuItem.Text = "Switch Editor";
             // 
             // tabControl1
             // 
@@ -277,41 +269,43 @@
             // 
             // gbComputerInfo
             // 
-            this.gbComputerInfo.Controls.Add(this.textBox4);
-            this.gbComputerInfo.Controls.Add(this.textBox2);
-            this.gbComputerInfo.Controls.Add(this.textBox1);
+            this.gbComputerInfo.Controls.Add(this.tbDescription);
+            this.gbComputerInfo.Controls.Add(this.tbLastName);
+            this.gbComputerInfo.Controls.Add(this.labelComputerName);
+            this.gbComputerInfo.Controls.Add(this.tbFirstName);
             this.gbComputerInfo.Controls.Add(this.label1);
             this.gbComputerInfo.Controls.Add(this.labelLast);
             this.gbComputerInfo.Controls.Add(this.labelFirstName);
-            this.gbComputerInfo.Controls.Add(this.textBox3);
-            this.gbComputerInfo.Controls.Add(this.labelComputerName);
+            this.gbComputerInfo.Controls.Add(this.computerName);
             this.gbComputerInfo.Location = new System.Drawing.Point(6, 6);
             this.gbComputerInfo.Name = "gbComputerInfo";
-            this.gbComputerInfo.Size = new System.Drawing.Size(315, 130);
+            this.gbComputerInfo.Size = new System.Drawing.Size(315, 129);
             this.gbComputerInfo.TabIndex = 1;
             this.gbComputerInfo.TabStop = false;
             this.gbComputerInfo.Text = "Computer Information";
             // 
-            // textBox4
+            // tbDescription
             // 
-            this.textBox4.Location = new System.Drawing.Point(95, 97);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(214, 20);
-            this.textBox4.TabIndex = 3;
+            this.tbDescription.Location = new System.Drawing.Point(95, 97);
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.Size = new System.Drawing.Size(214, 20);
+            this.tbDescription.TabIndex = 3;
             // 
-            // textBox2
+            // tbLastName
             // 
-            this.textBox2.Location = new System.Drawing.Point(95, 45);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(214, 20);
-            this.textBox2.TabIndex = 1;
+            this.tbLastName.Location = new System.Drawing.Point(95, 45);
+            this.tbLastName.Name = "tbLastName";
+            this.tbLastName.Size = new System.Drawing.Size(214, 20);
+            this.tbLastName.TabIndex = 1;
+            this.tbLastName.TextChanged += new System.EventHandler(this.LastNameChanged);
             // 
-            // textBox1
+            // tbFirstName
             // 
-            this.textBox1.Location = new System.Drawing.Point(95, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(214, 20);
-            this.textBox1.TabIndex = 0;
+            this.tbFirstName.Location = new System.Drawing.Point(95, 19);
+            this.tbFirstName.Name = "tbFirstName";
+            this.tbFirstName.Size = new System.Drawing.Size(214, 20);
+            this.tbFirstName.TabIndex = 0;
+            this.tbFirstName.TextChanged += new System.EventHandler(this.firstNameChanged);
             // 
             // label1
             // 
@@ -325,7 +319,7 @@
             // labelLast
             // 
             this.labelLast.AutoSize = true;
-            this.labelLast.Location = new System.Drawing.Point(5, 48);
+            this.labelLast.Location = new System.Drawing.Point(6, 48);
             this.labelLast.Name = "labelLast";
             this.labelLast.Size = new System.Drawing.Size(58, 13);
             this.labelLast.TabIndex = 1;
@@ -340,12 +334,12 @@
             this.labelFirstName.TabIndex = 0;
             this.labelFirstName.Text = "First Name";
             // 
-            // textBox3
+            // computerName
             // 
-            this.textBox3.Location = new System.Drawing.Point(95, 71);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(214, 20);
-            this.textBox3.TabIndex = 2;
+            this.computerName.Location = new System.Drawing.Point(95, 71);
+            this.computerName.Name = "computerName";
+            this.computerName.Size = new System.Drawing.Size(214, 20);
+            this.computerName.TabIndex = 2;
             // 
             // labelComputerName
             // 
@@ -360,9 +354,9 @@
             // 
             this.groupBox2.Controls.Add(this.clbRegistryFiles);
             this.groupBox2.Controls.Add(this.linkAddRegistryFiles);
-            this.groupBox2.Location = new System.Drawing.Point(9, 142);
+            this.groupBox2.Location = new System.Drawing.Point(6, 141);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(312, 120);
+            this.groupBox2.Size = new System.Drawing.Size(312, 180);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Registry Tweaks";
@@ -373,7 +367,7 @@
             this.clbRegistryFiles.FormattingEnabled = true;
             this.clbRegistryFiles.Location = new System.Drawing.Point(6, 32);
             this.clbRegistryFiles.Name = "clbRegistryFiles";
-            this.clbRegistryFiles.Size = new System.Drawing.Size(300, 79);
+            this.clbRegistryFiles.Size = new System.Drawing.Size(300, 139);
             this.clbRegistryFiles.TabIndex = 5;
             // 
             // linkAddRegistryFiles
@@ -429,7 +423,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configBuilderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem switchEditorToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabpageUpdatesAndApps;
         private System.Windows.Forms.TabPage tabpageSettings;
@@ -441,13 +434,13 @@
         private System.Windows.Forms.CheckBox cbServicePack;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.GroupBox gbComputerInfo;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox computerName;
         private System.Windows.Forms.Label labelComputerName;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbLastName;
+        private System.Windows.Forms.TextBox tbFirstName;
         private System.Windows.Forms.Label labelLast;
         private System.Windows.Forms.Label labelFirstName;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;

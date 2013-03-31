@@ -450,8 +450,11 @@ namespace ApplicationInstaller
 
        private void lblSwitches_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
        {
+           MessageBox.Show("o_O   Currently disabled... Sorry!");
+           /*
            EditSwitches SwitchesForm = new EditSwitches(this, switches);
-           SwitchesForm.Show();
+           SwitchesForm.ShowDialog();
+            */
        }
 
        private void cbSwitches_Click(object sender, MouseEventArgs e)
