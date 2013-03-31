@@ -143,9 +143,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Validation\Applications.xsd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Validation\Applications.xsd" />
     <EmbeddedResource Include="Validation\Switches.xsd" />
   </ItemGroup>
   <ItemGroup>
