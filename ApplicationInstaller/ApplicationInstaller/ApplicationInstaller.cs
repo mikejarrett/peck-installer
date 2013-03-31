@@ -190,6 +190,7 @@ namespace ApplicationInstaller
             addRegistryFilesDialog.Filter = "Registry Files (*.REG)|*.REG;";
             addRegistryFilesDialog.Multiselect = true;
             addRegistryFilesDialog.Title = "Select Registry Files";
+            addRegistryFilesDialog.InitialDirectory = Path.Combine(Application.StartupPath, @"Registry");
             if (addRegistryFilesDialog.ShowDialog() == DialogResult.OK)
             {
                 foreach (String filename in addRegistryFilesDialog.FileNames)
@@ -200,13 +201,14 @@ namespace ApplicationInstaller
                 }
             }
         }
-
+        
         private void linkAdditionalConfigs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             OpenFileDialog addRegistryFilesDialog = new OpenFileDialog();
             addRegistryFilesDialog.Filter = "Registry Files (*.XML)|*.XML;";
             addRegistryFilesDialog.Multiselect = true;
             addRegistryFilesDialog.Title = "Additional Config Files";
+            addRegistryFilesDialog.InitialDirectory = Path.Combine(Application.StartupPath, @"Configs");
             if (addRegistryFilesDialog.ShowDialog() == DialogResult.OK)
             {
                 foreach (String filename in addRegistryFilesDialog.FileNames)
@@ -242,6 +244,11 @@ namespace ApplicationInstaller
                     servicePackSwitches = "/unattend /warnrestart";
                     servicePackSwitches = Prompt(servicePackSwitches);
                 }
+                else
+                {
+                    cbServicePack.CheckState = CheckState.Unchecked;
+                }
+
             }
             else
             {
@@ -306,6 +313,7 @@ namespace ApplicationInstaller
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Executables (*.EXE;*.MSI;*.MSU;*.BAT;*.CMD)|*.EXE;*.MSI;*.MSU;*.BAT;*.CMD";
             openFileDialog.Multiselect = false;
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var app = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName);
@@ -364,6 +372,10 @@ namespace ApplicationInstaller
                     String ErrorMessage = String.Format("Couldn't load the switches config file with:\n\n{0}", ExceptionMessage);
                     MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+            }
+            else 
+            {
+                Directory.CreateDirectory(@"Configs");
             }
         }
     }

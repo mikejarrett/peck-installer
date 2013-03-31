@@ -51,12 +51,12 @@
             this.gbComputerInfo = new System.Windows.Forms.GroupBox();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.tbLastName = new System.Windows.Forms.TextBox();
+            this.labelComputerName = new System.Windows.Forms.Label();
             this.tbFirstName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.labelLast = new System.Windows.Forms.Label();
             this.labelFirstName = new System.Windows.Forms.Label();
             this.computerName = new System.Windows.Forms.TextBox();
-            this.labelComputerName = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
@@ -215,7 +215,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -230,7 +230,7 @@
             // configBuilderToolStripMenuItem
             // 
             this.configBuilderToolStripMenuItem.Name = "configBuilderToolStripMenuItem";
-            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.configBuilderToolStripMenuItem.Text = "Config Builder";
             this.configBuilderToolStripMenuItem.Click += new System.EventHandler(this.configBuilderToolStripMenuItem_Click);
             // 
@@ -286,6 +286,7 @@
             // 
             // tbDescription
             // 
+            this.tbDescription.Enabled = false;
             this.tbDescription.Location = new System.Drawing.Point(95, 97);
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.Size = new System.Drawing.Size(214, 20);
@@ -293,14 +294,25 @@
             // 
             // tbLastName
             // 
+            this.tbLastName.Enabled = false;
             this.tbLastName.Location = new System.Drawing.Point(95, 45);
             this.tbLastName.Name = "tbLastName";
             this.tbLastName.Size = new System.Drawing.Size(214, 20);
             this.tbLastName.TabIndex = 1;
             this.tbLastName.TextChanged += new System.EventHandler(this.LastNameChanged);
             // 
+            // labelComputerName
+            // 
+            this.labelComputerName.AutoSize = true;
+            this.labelComputerName.Location = new System.Drawing.Point(6, 74);
+            this.labelComputerName.Name = "labelComputerName";
+            this.labelComputerName.Size = new System.Drawing.Size(83, 13);
+            this.labelComputerName.TabIndex = 4;
+            this.labelComputerName.Text = "Computer Name";
+            // 
             // tbFirstName
             // 
+            this.tbFirstName.Enabled = false;
             this.tbFirstName.Location = new System.Drawing.Point(95, 19);
             this.tbFirstName.Name = "tbFirstName";
             this.tbFirstName.Size = new System.Drawing.Size(214, 20);
@@ -336,19 +348,11 @@
             // 
             // computerName
             // 
+            this.computerName.Enabled = false;
             this.computerName.Location = new System.Drawing.Point(95, 71);
             this.computerName.Name = "computerName";
             this.computerName.Size = new System.Drawing.Size(214, 20);
             this.computerName.TabIndex = 2;
-            // 
-            // labelComputerName
-            // 
-            this.labelComputerName.AutoSize = true;
-            this.labelComputerName.Location = new System.Drawing.Point(6, 74);
-            this.labelComputerName.Name = "labelComputerName";
-            this.labelComputerName.Size = new System.Drawing.Size(83, 13);
-            this.labelComputerName.TabIndex = 4;
-            this.labelComputerName.Text = "Computer Name";
             // 
             // groupBox2
             // 
