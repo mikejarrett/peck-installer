@@ -11,6 +11,7 @@
     <AssemblyName>ApplicationInstaller</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -69,60 +69,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationInstaller.cs">
+    <Compile Include="Forms\ApplicationInstaller.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ApplicationInstaller.Designer.cs">
+    <Compile Include="Forms\ApplicationInstaller.Designer.cs">
       <DependentUpon>ApplicationInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Installer.cs" />
     <Compile Include="Classes\InstallInformationHolder.cs" />
     <Compile Include="Classes\OsInformation.cs" />
     <Compile Include="Classes\Slugifier.cs" />
-    <Compile Include="EditSwitches.cs">
+    <Compile Include="Forms\EditSwitches.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditSwitches.Designer.cs">
+    <Compile Include="Forms\EditSwitches.Designer.cs">
       <DependentUpon>EditSwitches.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Forms\InstallInfoform.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="InstallInfoform.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="InstallInfoform.Designer.cs">
+    <Compile Include="Forms\InstallInfoform.Designer.cs">
       <DependentUpon>InstallInfoform.cs</DependentUpon>
     </Compile>
     <Compile Include="Schemas\Applications.cs" />
     <Compile Include="Classes\Exceptions.cs" />
     <Compile Include="Classes\FileProperties.cs" />
     <Compile Include="Schemas\Switches.cs" />
-    <Compile Include="ConfigBuilder.cs">
+    <Compile Include="Forms\ConfigBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigBuilder.Designer.cs">
+    <Compile Include="Forms\ConfigBuilder.Designer.cs">
       <DependentUpon>ConfigBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\XmlProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ApplicationInstaller.resx">
+    <EmbeddedResource Include="Forms\ApplicationInstaller.resx">
       <DependentUpon>ApplicationInstaller.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConfigBuilder.resx">
+    <EmbeddedResource Include="Forms\ConfigBuilder.resx">
       <DependentUpon>ConfigBuilder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditSwitches.resx">
+    <EmbeddedResource Include="Forms\EditSwitches.resx">
       <DependentUpon>EditSwitches.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="InstallInfoform.resx">
+    <EmbeddedResource Include="Forms\InstallInfoform.resx">
       <DependentUpon>InstallInfoform.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -203,10 +193,7 @@
     </Content>
     <Content Include="Updates.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Includes\" />
-    <Folder Include="Registry\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
