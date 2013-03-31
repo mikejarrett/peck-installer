@@ -95,12 +95,20 @@ namespace ApplicationInstaller
 
         private void LoadRegistryFiles()
         {
-            var files = Directory.EnumerateFiles(@"Registry\", "*.reg", SearchOption.AllDirectories);
-            foreach (String filename in files)
+            DirectoryInfo dir = new DirectoryInfo(@"Registry\");
+            if (!dir.Exists)
             {
-                clbRegistryFiles.Items.Add(filename);
-                int idx = clbRegistryFiles.Items.Count - 1;
-                clbRegistryFiles.SetItemCheckState(idx, CheckState.Checked);
+                dir.Create();
+            }
+            else
+            {
+                var files = Directory.EnumerateFiles(@"Registry\", "*.reg", SearchOption.AllDirectories);
+                foreach (String filename in files)
+                {
+                    clbRegistryFiles.Items.Add(filename);
+                    int idx = clbRegistryFiles.Items.Count - 1;
+                    clbRegistryFiles.SetItemCheckState(idx, CheckState.Checked);
+                }
             }
         }
 
