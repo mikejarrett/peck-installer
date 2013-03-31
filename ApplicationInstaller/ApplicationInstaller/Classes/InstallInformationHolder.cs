@@ -51,7 +51,7 @@ namespace ApplicationInstaller.Classes
         {
             foreach (String name in appNames)
             {
-                appsToInstall.Add(appList.Find(item => item.Name == name));
+                appsToInstall.Add(appList.Find(item => item.ToString() == name));
             }
         }
 
@@ -59,7 +59,7 @@ namespace ApplicationInstaller.Classes
         {
             foreach (String name in appNames)
             {
-                additionalToInstall.Add(additionalList.Find(item => item.Name == name));
+                additionalToInstall.Add(additionalList.Find(item => item.ToString() == name));
             }
         }
 
