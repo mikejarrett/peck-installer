@@ -289,8 +289,8 @@ namespace ApplicationInstaller
             prompt.Width = 373;
             prompt.Height = 100;
             prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
-            prompt.Text = "Service Pack Switches";
-            Label textLabel = new Label() { Left = 10, Top = 10, Width = 120, Text = "Service Pack Switches" };
+            prompt.Text = "Switches / Arguments";
+            Label textLabel = new Label() { Left = 10, Top = 10, Width = 120, Text = prompt.Text.ToString() };
             TextBox textBox = new TextBox() { Left = 130, Top = 8, Width = 220, Text = defaultSwitch};
             Button confirmation = new Button() { Text = "OK", Left = 270, Width = 80, Top = 33 };
             confirmation.Click += (sender, e) => { prompt.Close(); };
@@ -342,6 +342,7 @@ namespace ApplicationInstaller
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var app = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName);
+                app.InstallSwitch = Prompt("");
                 additionalConfigApps.Add(app);
                 clbAdditionalConfigurations.Items.Add(app.ToString());
                 int idx = clbAdditionalConfigurations.Items.Count - 1;
@@ -410,6 +411,14 @@ namespace ApplicationInstaller
             {
                 clbAdditionalConfigurations.SetItemCheckState(i, (cbAdditional.Checked ? CheckState.Checked : CheckState.Unchecked));
             }
+            if (cbAdditional.Checked)
+            {
+                cbAdditional.Text = "Unselect all applications";
+            }
+            else
+            {
+                cbAdditional.Text = "Select all applications";
+            }
         }
 
         private void switchEditorToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -442,9 +451,8 @@ namespace ApplicationInstaller
         private void writeCurrentSelectionToBatchFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog scriptFileDialog = new SaveFileDialog();
-            scriptFileDialog.Filter = "Command File (*.CMD)|*.CMD;|Batch File (*.BAT)|*.BAT";
+            scriptFileDialog.Filter = "Command File (*.CMD)|*.cmd;|Batch File (*.BAT)|*.bat";
             scriptFileDialog.Title = "Generate Script File";
-            //scriptFileDialog.InitialDirectory = Path.Combine(Application.StartupPath, @"Registry");
             if (scriptFileDialog.ShowDialog() == DialogResult.OK)
             {
                 BuildHolder();

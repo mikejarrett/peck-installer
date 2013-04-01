@@ -46,6 +46,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configBuilderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.switchEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabpageUpdatesAndApps = new System.Windows.Forms.TabPage();
             this.tabpageSettings = new System.Windows.Forms.TabPage();
@@ -61,9 +64,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
-            this.switchEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.writeCurrentSelectionToBatchFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -95,27 +95,27 @@
             // cbAdditional
             // 
             this.cbAdditional.AutoSize = true;
-            this.cbAdditional.Location = new System.Drawing.Point(8, 205);
+            this.cbAdditional.Location = new System.Drawing.Point(9, 205);
             this.cbAdditional.Name = "cbAdditional";
-            this.cbAdditional.Size = new System.Drawing.Size(35, 17);
+            this.cbAdditional.Size = new System.Drawing.Size(128, 17);
             this.cbAdditional.TabIndex = 10;
-            this.cbAdditional.Text = "---";
+            this.cbAdditional.Text = "Select all applications";
             this.cbAdditional.UseVisualStyleBackColor = true;
             this.cbAdditional.CheckedChanged += new System.EventHandler(this.cbAdditional_CheckedChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(233, 206);
+            this.label3.Location = new System.Drawing.Point(197, 186);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(16, 13);
+            this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 9;
-            this.label3.Text = "or";
+            this.label3.Text = "or an";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 206);
+            this.label2.Location = new System.Drawing.Point(6, 186);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 8;
@@ -124,7 +124,7 @@
             // linkSingleApp
             // 
             this.linkSingleApp.AutoSize = true;
-            this.linkSingleApp.Location = new System.Drawing.Point(249, 206);
+            this.linkSingleApp.Location = new System.Drawing.Point(227, 186);
             this.linkSingleApp.Name = "linkSingleApp";
             this.linkSingleApp.Size = new System.Drawing.Size(59, 13);
             this.linkSingleApp.TabIndex = 5;
@@ -155,7 +155,7 @@
             // linkAdditionalConfigs
             // 
             this.linkAdditionalConfigs.AutoSize = true;
-            this.linkAdditionalConfigs.Location = new System.Drawing.Point(117, 206);
+            this.linkAdditionalConfigs.Location = new System.Drawing.Point(83, 186);
             this.linkAdditionalConfigs.Name = "linkAdditionalConfigs";
             this.linkAdditionalConfigs.Size = new System.Drawing.Size(116, 13);
             this.linkAdditionalConfigs.TabIndex = 4;
@@ -167,7 +167,7 @@
             // 
             this.checkedListBoxApps.CheckOnClick = true;
             this.checkedListBoxApps.FormattingEnabled = true;
-            this.checkedListBoxApps.Location = new System.Drawing.Point(6, 92);
+            this.checkedListBoxApps.Location = new System.Drawing.Point(6, 69);
             this.checkedListBoxApps.Name = "checkedListBoxApps";
             this.checkedListBoxApps.Size = new System.Drawing.Size(306, 109);
             this.checkedListBoxApps.TabIndex = 6;
@@ -177,7 +177,7 @@
             this.cbAppToggle.AutoSize = true;
             this.cbAppToggle.Checked = true;
             this.cbAppToggle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbAppToggle.Location = new System.Drawing.Point(9, 69);
+            this.cbAppToggle.Location = new System.Drawing.Point(9, 46);
             this.cbAppToggle.Name = "cbAppToggle";
             this.cbAppToggle.Size = new System.Drawing.Size(140, 17);
             this.cbAppToggle.TabIndex = 3;
@@ -190,7 +190,7 @@
             this.cbWindowsUpdates.AutoSize = true;
             this.cbWindowsUpdates.Checked = true;
             this.cbWindowsUpdates.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbWindowsUpdates.Location = new System.Drawing.Point(9, 46);
+            this.cbWindowsUpdates.Location = new System.Drawing.Point(135, 23);
             this.cbWindowsUpdates.Name = "cbWindowsUpdates";
             this.cbWindowsUpdates.Size = new System.Drawing.Size(157, 17);
             this.cbWindowsUpdates.TabIndex = 2;
@@ -232,7 +232,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -248,9 +248,31 @@
             // configBuilderToolStripMenuItem
             // 
             this.configBuilderToolStripMenuItem.Name = "configBuilderToolStripMenuItem";
-            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.configBuilderToolStripMenuItem.Text = "Config Builder";
             this.configBuilderToolStripMenuItem.Click += new System.EventHandler(this.configBuilderToolStripMenuItem_Click);
+            // 
+            // switchEditorToolStripMenuItem
+            // 
+            this.switchEditorToolStripMenuItem.Name = "switchEditorToolStripMenuItem";
+            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.switchEditorToolStripMenuItem.Text = "Switch Editor";
+            this.switchEditorToolStripMenuItem.Click += new System.EventHandler(this.switchEditorToolStripMenuItem_Click_1);
+            // 
+            // scriptToolStripMenuItem
+            // 
+            this.scriptToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem});
+            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
+            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.scriptToolStripMenuItem.Text = "Scripts";
+            // 
+            // writeCurrentSelectionToBatchFileToolStripMenuItem
+            // 
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Name = "writeCurrentSelectionToBatchFileToolStripMenuItem";
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Text = "Generate Script File";
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Click += new System.EventHandler(this.writeCurrentSelectionToBatchFileToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -402,28 +424,6 @@
             this.linkAddRegistryFiles.TabStop = true;
             this.linkAddRegistryFiles.Text = "Add Registry Files";
             this.linkAddRegistryFiles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAddRegistryFiles_LinkClicked);
-            // 
-            // switchEditorToolStripMenuItem
-            // 
-            this.switchEditorToolStripMenuItem.Name = "switchEditorToolStripMenuItem";
-            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.switchEditorToolStripMenuItem.Text = "Switch Editor";
-            this.switchEditorToolStripMenuItem.Click += new System.EventHandler(this.switchEditorToolStripMenuItem_Click_1);
-            // 
-            // scriptToolStripMenuItem
-            // 
-            this.scriptToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.writeCurrentSelectionToBatchFileToolStripMenuItem});
-            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
-            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.scriptToolStripMenuItem.Text = "Scripts";
-            // 
-            // writeCurrentSelectionToBatchFileToolStripMenuItem
-            // 
-            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Name = "writeCurrentSelectionToBatchFileToolStripMenuItem";
-            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Text = "Generate Script File";
-            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Click += new System.EventHandler(this.writeCurrentSelectionToBatchFileToolStripMenuItem_Click);
             // 
             // ApplicationInstaller
             // 

@@ -67,6 +67,7 @@
             this.selectAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.generateConfigurationFromFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.switchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClearDataGridView = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.cbArchitecture = new System.Windows.Forms.ComboBox();
@@ -74,7 +75,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbFileSize = new System.Windows.Forms.TextBox();
-            this.switchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).BeginInit();
             this.menuDeleteRow.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -95,7 +95,7 @@
             this.btnAddToList.Location = new System.Drawing.Point(542, 116);
             this.btnAddToList.Name = "btnAddToList";
             this.btnAddToList.Size = new System.Drawing.Size(105, 23);
-            this.btnAddToList.TabIndex = 7;
+            this.btnAddToList.TabIndex = 9;
             this.btnAddToList.Text = "Add App To List";
             this.btnAddToList.UseVisualStyleBackColor = true;
             this.btnAddToList.Click += new System.EventHandler(this.btnAddToList_Click);
@@ -147,7 +147,7 @@
             this.dgvApplicationList.RowHeadersWidth = 49;
             this.dgvApplicationList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvApplicationList.Size = new System.Drawing.Size(660, 205);
-            this.dgvApplicationList.TabIndex = 9;
+            this.dgvApplicationList.TabIndex = 15;
             this.dgvApplicationList.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCellMouseDown);
             this.dgvApplicationList.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridviewApplicationList_KeyUp);
             // 
@@ -225,7 +225,7 @@
             this.lbFilename.Location = new System.Drawing.Point(372, 16);
             this.lbFilename.Name = "lbFilename";
             this.lbFilename.Size = new System.Drawing.Size(49, 13);
-            this.lbFilename.TabIndex = 15;
+            this.lbFilename.TabIndex = 11;
             this.lbFilename.TabStop = true;
             this.lbFilename.Text = "Filename";
             this.lbFilename.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbFilename_LinkClicked);
@@ -236,7 +236,7 @@
             this.lbRelativePath.Location = new System.Drawing.Point(6, 68);
             this.lbRelativePath.Name = "lbRelativePath";
             this.lbRelativePath.Size = new System.Drawing.Size(101, 13);
-            this.lbRelativePath.TabIndex = 16;
+            this.lbRelativePath.TabIndex = 13;
             this.lbRelativePath.TabStop = true;
             this.lbRelativePath.Text = "Relative Install Path";
             this.lbRelativePath.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbRelativePath_LinkClicked);
@@ -247,7 +247,7 @@
             this.lbAppName.Location = new System.Drawing.Point(6, 16);
             this.lbAppName.Name = "lbAppName";
             this.lbAppName.Size = new System.Drawing.Size(90, 13);
-            this.lbAppName.TabIndex = 17;
+            this.lbAppName.TabIndex = 10;
             this.lbAppName.TabStop = true;
             this.lbAppName.Text = "Application Name";
             this.lbAppName.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbAppName_LinkClicked);
@@ -257,7 +257,7 @@
             this.btnWriteConfig.Location = new System.Drawing.Point(586, 355);
             this.btnWriteConfig.Name = "btnWriteConfig";
             this.btnWriteConfig.Size = new System.Drawing.Size(75, 23);
-            this.btnWriteConfig.TabIndex = 8;
+            this.btnWriteConfig.TabIndex = 17;
             this.btnWriteConfig.Text = "Write Config";
             this.btnWriteConfig.UseVisualStyleBackColor = true;
             this.btnWriteConfig.Click += new System.EventHandler(this.btnWriteConfig_Click);
@@ -267,7 +267,7 @@
             this.btnClearInput.Location = new System.Drawing.Point(461, 116);
             this.btnClearInput.Name = "btnClearInput";
             this.btnClearInput.Size = new System.Drawing.Size(75, 23);
-            this.btnClearInput.TabIndex = 10;
+            this.btnClearInput.TabIndex = 8;
             this.btnClearInput.Text = "Clear";
             this.btnClearInput.UseVisualStyleBackColor = true;
             this.btnClearInput.Click += new System.EventHandler(this.btnClearInput_Click);
@@ -311,7 +311,7 @@
             this.lbAbsolutePath.Location = new System.Drawing.Point(6, 42);
             this.lbAbsolutePath.Name = "lbAbsolutePath";
             this.lbAbsolutePath.Size = new System.Drawing.Size(103, 13);
-            this.lbAbsolutePath.TabIndex = 23;
+            this.lbAbsolutePath.TabIndex = 12;
             this.lbAbsolutePath.TabStop = true;
             this.lbAbsolutePath.Text = "Absolute Install Path";
             this.lbAbsolutePath.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbAbsolutePath_LinkClicked);
@@ -340,7 +340,7 @@
             this.cbSwitches.Location = new System.Drawing.Point(125, 91);
             this.cbSwitches.Name = "cbSwitches";
             this.cbSwitches.Size = new System.Drawing.Size(522, 21);
-            this.cbSwitches.TabIndex = 26;
+            this.cbSwitches.TabIndex = 5;
             this.cbSwitches.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbSwitches_Click);
             // 
             // menuStrip1
@@ -415,12 +415,19 @@
             this.generateConfigurationFromFolderToolStripMenuItem.Text = "&Generate Configuration From Folder";
             this.generateConfigurationFromFolderToolStripMenuItem.Click += new System.EventHandler(this.GenerateConfigFolderToolStripMenuItem_Click);
             // 
+            // switchesToolStripMenuItem
+            // 
+            this.switchesToolStripMenuItem.Name = "switchesToolStripMenuItem";
+            this.switchesToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
+            this.switchesToolStripMenuItem.Text = "Switch Editor";
+            this.switchesToolStripMenuItem.Click += new System.EventHandler(this.switchesToolStripMenuItem_Click);
+            // 
             // btnClearDataGridView
             // 
             this.btnClearDataGridView.Location = new System.Drawing.Point(9, 355);
             this.btnClearDataGridView.Name = "btnClearDataGridView";
             this.btnClearDataGridView.Size = new System.Drawing.Size(75, 23);
-            this.btnClearDataGridView.TabIndex = 28;
+            this.btnClearDataGridView.TabIndex = 16;
             this.btnClearDataGridView.Text = "Clear List";
             this.btnClearDataGridView.UseVisualStyleBackColor = true;
             this.btnClearDataGridView.Click += new System.EventHandler(this.btnClearDataGridView_Click);
@@ -444,7 +451,7 @@
             this.cbArchitecture.Location = new System.Drawing.Point(379, 117);
             this.cbArchitecture.Name = "cbArchitecture";
             this.cbArchitecture.Size = new System.Drawing.Size(61, 21);
-            this.cbArchitecture.TabIndex = 31;
+            this.cbArchitecture.TabIndex = 7;
             // 
             // lblSwitches
             // 
@@ -452,7 +459,7 @@
             this.lblSwitches.Location = new System.Drawing.Point(6, 94);
             this.lblSwitches.Name = "lblSwitches";
             this.lblSwitches.Size = new System.Drawing.Size(111, 13);
-            this.lblSwitches.TabIndex = 32;
+            this.lblSwitches.TabIndex = 14;
             this.lblSwitches.TabStop = true;
             this.lblSwitches.Text = "Switches / Arguments";
             this.lblSwitches.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblSwitches_LinkClicked);
@@ -506,13 +513,6 @@
             this.tbFileSize.ReadOnly = true;
             this.tbFileSize.Size = new System.Drawing.Size(61, 20);
             this.tbFileSize.TabIndex = 33;
-            // 
-            // switchesToolStripMenuItem
-            // 
-            this.switchesToolStripMenuItem.Name = "switchesToolStripMenuItem";
-            this.switchesToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
-            this.switchesToolStripMenuItem.Text = "Switch Editor";
-            this.switchesToolStripMenuItem.Click += new System.EventHandler(this.switchesToolStripMenuItem_Click);
             // 
             // ConfigBuilder
             // 
