@@ -14,7 +14,12 @@ namespace ApplicationInstaller.Schemas
     {
         public override String ToString() 
         {
-            return String.Format("{0} ({1:0.00} MB)", Name, FileSize);
+            String swithces = "(N)";
+            if (InstallSwitch != String.Empty)
+            {
+                swithces = "(S)";
+            }
+            return String.Format("{0} {1} ({2:0.00} MB)", swithces, Name, FileSize);
         }
 
         [XmlElement("AbsolutePath")]
