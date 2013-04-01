@@ -438,5 +438,18 @@ namespace ApplicationInstaller
                 }
             }
         }
+
+        private void writeCurrentSelectionToBatchFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog scriptFileDialog = new SaveFileDialog();
+            scriptFileDialog.Filter = "Command File (*.CMD)|*.CMD;|Batch File (*.BAT)|*.BAT";
+            scriptFileDialog.Title = "Generate Script File";
+            //scriptFileDialog.InitialDirectory = Path.Combine(Application.StartupPath, @"Registry");
+            if (scriptFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                BuildHolder();
+                installInformationHolder.WriteScriptFile(scriptFileDialog.FileName);
+            }
+        }
     }
 }

@@ -62,6 +62,8 @@
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
             this.switchEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -210,7 +212,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.configurationToolStripMenuItem});
+            this.configurationToolStripMenuItem,
+            this.scriptToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(357, 24);
@@ -229,7 +232,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -407,6 +410,21 @@
             this.switchEditorToolStripMenuItem.Text = "Switch Editor";
             this.switchEditorToolStripMenuItem.Click += new System.EventHandler(this.switchEditorToolStripMenuItem_Click_1);
             // 
+            // scriptToolStripMenuItem
+            // 
+            this.scriptToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem});
+            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
+            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.scriptToolStripMenuItem.Text = "Scripts";
+            // 
+            // writeCurrentSelectionToBatchFileToolStripMenuItem
+            // 
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Name = "writeCurrentSelectionToBatchFileToolStripMenuItem";
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Text = "Generate Script File";
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Click += new System.EventHandler(this.writeCurrentSelectionToBatchFileToolStripMenuItem_Click);
+            // 
             // ApplicationInstaller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -473,6 +491,8 @@
         private System.Windows.Forms.LinkLabel linkSingleApp;
         private System.Windows.Forms.CheckBox cbAdditional;
         private System.Windows.Forms.ToolStripMenuItem switchEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem writeCurrentSelectionToBatchFileToolStripMenuItem;
 
     }
 }
