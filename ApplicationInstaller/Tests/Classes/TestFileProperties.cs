@@ -11,33 +11,33 @@ namespace Tests
         public void TestNoArchitecture()
         {
             var app = FileProperties.GetApplicationInfoFromFilePath(@"TestFiles\Test.file");
-            Assert.AreEqual(app.Architecture, null);
-            Assert.AreEqual(app.Name, "Application Installer");
-            Assert.AreEqual(app.Filename, "Test.file");
-            Assert.AreEqual(app.FileSize, 0.2021484375);
-            Assert.AreEqual(app.ToString(), "(S) Application Installer (0.20 MB)");
-            Assert.AreEqual(app.Version, "1.0.0.0");
+            Assert.AreEqual(null, app.Architecture);
+            Assert.AreEqual("Application Installer", app.Name);
+            Assert.AreEqual("Test.file", app.Filename);
+            Assert.AreEqual(0.2021484375, app.FileSize);
+            Assert.AreEqual("(S) Application Installer (0.20 MB)", app.ToString());
+            Assert.AreEqual("1.0.0.0", app.Version);
         }
 
         [TestMethod]
         public void TestArchitecture()
         {
             var app = FileProperties.GetApplicationInfoFromFilePath(@"TestFiles\Test-x64.file");
-            Assert.AreEqual(app.Architecture, "x64");
+            Assert.AreEqual("x64", app.Architecture);
 
             app = FileProperties.GetApplicationInfoFromFilePath(@"TestFiles\Test-win64.file");
-            Assert.AreEqual(app.Architecture, "x64");
+            Assert.AreEqual("x64", app.Architecture);
 
             app = FileProperties.GetApplicationInfoFromFilePath(@"TestFiles\Test-x86.file");
-            Assert.AreEqual(app.Architecture, "x86"); 
+            Assert.AreEqual("x86", app.Architecture); 
         }
 
         [TestMethod]
         public void TestKnowledgeBase()
         {
             var app = FileProperties.GetApplicationInfoFromFilePath(@"TestFiles\Test-KB1234567-x64.file");
-            Assert.AreEqual(app.Name, "KB1234567");
-            Assert.AreEqual(app.Architecture, "x64");
+            Assert.AreEqual("KB1234567", app.Name);
+            Assert.AreEqual("x64", app.Architecture);
         }
     }
 }

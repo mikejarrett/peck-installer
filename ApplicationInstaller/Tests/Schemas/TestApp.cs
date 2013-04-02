@@ -6,7 +6,7 @@ using ApplicationInstaller.Classes;
 namespace Tests
 {
     [TestClass]
-    public class TestAppClass
+    public class TestApp
     {
         [TestMethod]
         public void TestToString()
@@ -15,10 +15,10 @@ namespace Tests
             testApp.Name = "Test App";
             testApp.FileSize = 1.566;
             testApp.InstallSwitch = String.Empty;
-            Assert.AreEqual(testApp.ToString(), "(N) Test App (1.57 MB)");
+            Assert.AreEqual("(N) Test App (1.57 MB)", testApp.ToString());
 
             testApp.InstallSwitch = "/nonsense -switch";
-            Assert.AreEqual(testApp.ToString(), "(S) Test App (1.57 MB)");
+            Assert.AreEqual("(S) Test App (1.57 MB)", testApp.ToString());
         }
 
         [TestMethod]
@@ -33,6 +33,13 @@ namespace Tests
         {
             Boolean isValid = App.XmlFileValid(@"TestFiles/App-Valid.xml");
             Assert.IsTrue(isValid);
+        }
+
+        [TestMethod]
+        public void TesEmptyFilePath()
+        {
+            Boolean isValid = App.XmlFileValid("");
+            Assert.IsFalse(isValid);
         }
     }
 }

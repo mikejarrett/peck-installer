@@ -11,6 +11,15 @@ namespace ApplicationInstaller.Schemas
 {
     public class Switches
     {
+        public override String ToString()
+        {
+            if (Switch == null)
+            {
+                return "Instance of " + typeof(Switches).ToString();
+            }
+            return Switch.ToString();
+        }
+
         [XmlElement("Switch")]
         public string Switch
         { get; set; }

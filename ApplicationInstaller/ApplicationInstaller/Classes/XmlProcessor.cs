@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace ApplicationInstaller.Classes
 {
-    class XmlProcessor
+    public class XmlProcessor
     {
         public String FilePath
         { get; set; }
