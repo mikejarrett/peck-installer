@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace ApplicationInstaller.Classes
 {
     [Serializable]
-    class XmlValidatorException : Exception
+    public class XmlValidatorException : Exception
     {
         public XmlValidatorException() : base() { }
 

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace ApplicationInstaller.Classes
 {
-    static class Slugifier
+    public static class Slugifier
     {
         // Slight modified from https://gist.github.com/onebeatconsumer/1329568
         /// <summary>

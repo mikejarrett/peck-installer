@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace ApplicationInstaller.Classes
 {
-    static class FileProperties
+    public static class FileProperties
     {
         public static App GetApplicationInfoFromFilePath(string filepath)
         {

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <App>
+    <AbsolutePath>C:\Test\TestApp1.exe</AbsolutePath>
+    <Name>Test App 1</Name>
+    <Architecture>x86</Architecture>
+    <Filename>TestApp2.msi</Filename>
+    <Filesize>26.578</Filesize>
+    <InstallSwitch />
+    <RelativePath>Test\TestApp2.msi</RelativePath>
+    <Version>11.0.02.0</Version>
+  </App>
+  <App>
+    <AbsolutePath>C:\Test\TestApp2.msi</AbsolutePath>
+    <Name>Test App 2</Name>
+    <Architecture>x64</Architecture>
+    <Filename>TestApp2.msi</Filename>
+    <Filesize>16.578727722168</Filesize>
+    <InstallSwitch>-silent</InstallSwitch>
+    <RelativePath>Test\TestApp2.msi</RelativePath>
+    <Version>3.6</Version>
+  </App>
+</ArrayOfApp>
