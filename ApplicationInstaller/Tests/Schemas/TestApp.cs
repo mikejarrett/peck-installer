@@ -41,5 +41,38 @@ namespace Tests
             Boolean isValid = App.XmlFileValid("");
             Assert.IsFalse(isValid);
         }
+
+        [TestMethod]
+        public void TestNoArchitecture()
+        {
+            var app = new App(@"TestFiles\Test.file");
+            Assert.AreEqual(String.Empty, app.Architecture);
+            Assert.AreEqual("Application Installer", app.Name);
+            Assert.AreEqual("Test.file", app.Filename);
+            Assert.AreEqual(0.2021484375, app.FileSize);
+            Assert.AreEqual("(S) Application Installer (0.20 MB)", app.ToString());
+            Assert.AreEqual("1.0.0.0", app.Version);
+        }
+
+        [TestMethod]
+        public void TestArchitecture()
+        {
+            var app = new App(@"TestFiles\Test-x64.file");
+            Assert.AreEqual("x64", app.Architecture);
+
+            app = new App(@"TestFiles\Test-win64.file");
+            Assert.AreEqual("x64", app.Architecture);
+
+            app = new App(@"TestFiles\Test-x86.file");
+            Assert.AreEqual("x86", app.Architecture);
+        }
+
+        [TestMethod]
+        public void TestKnowledgeBase()
+        {
+            var app = new App(@"TestFiles\Test-KB1234567-x64.file");
+            Assert.AreEqual("KB1234567", app.Name);
+            Assert.AreEqual("x64", app.Architecture);
+        }
     }
 }

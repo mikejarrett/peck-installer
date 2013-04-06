@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -12,16 +13,6 @@ namespace ApplicationInstaller.Schemas
 {
     public class App
     {
-        public override String ToString() 
-        {
-            String swithces = "(N)";
-            if (InstallSwitch != String.Empty)
-            {
-                swithces = "(S)";
-            }
-            return String.Format("{0} {1} ({2:0.00} MB)", swithces, Name, FileSize);
-        }
-
         [XmlElement("AbsolutePath")]
         public string AbsolutePath
         { get; set; }
@@ -54,6 +45,89 @@ namespace ApplicationInstaller.Schemas
         public string Version
         { get; set; }
 
+        public App()
+        { }
+
+        public App(String FilePath)
+        {
+            FileVersionInfo fileInfo = FileVersionInfo.GetVersionInfo(FilePath);
+
+            String directoryPath = Path.GetDirectoryName(FilePath);
+            String filename = Path.GetFileName(FilePath);
+            String x64Arch = @"x64|win64";
+            String x86Arch = @"x86";
+            String updateFileNameRegex = @"kb ?\d+|KB ?\d+";
+            String kbNumber = Regex.Match(filename, updateFileNameRegex).ToString();
+
+            AbsolutePath = FilePath;
+            Name = fileInfo.ProductName;
+            Filename = filename;
+            RelativePath = Regex.Replace(FilePath, @"[a-zA-Z][:]", "");
+            Version = fileInfo.ProductVersion;
+
+            FileSize = ConvertToMegabytes(new FileInfo(FilePath).Length);
+            Name = GetApplicationNameFromFile(FilePath, x64Arch, x86Arch, kbNumber);
+            Architecture = GetFileArchitecture(filename, x64Arch, x86Arch);
+            SetVersionFromFile(filename, x64Arch, x86Arch);
+        }
+
+        private String GetApplicationNameFromFile(String FilePath, String x64Arch, String x86Arch, String kbNumber)
+        {
+            String name = "";
+            // TODO: My String-Matching-Fu is a little weak as of late
+            if (Name == null || Name == String.Empty)
+            {
+                if (kbNumber == null || kbNumber == String.Empty)
+                {
+                    var fileNameNoEx = Path.GetFileNameWithoutExtension(FilePath);
+                    fileNameNoEx = Regex.Replace(Regex.Replace(fileNameNoEx, x86Arch, ""), x64Arch, "");
+                    name = Regex.Replace(fileNameNoEx, @"[^a-zA-Z]", "");
+                }
+                else
+                {
+                    name = kbNumber;
+                }
+            }
+            else
+            {
+                name = Name;
+            }
+            return name;
+        }
+
+        private String GetFileArchitecture(String filename, String x64Arch, String x86Arch)
+        {
+            String arch = String.Empty;
+            if (Regex.IsMatch(filename, x64Arch))
+            {
+                arch = "x64";
+            }
+            else if (Regex.IsMatch(filename, x86Arch))
+            {
+                arch = "x86";
+            }
+            return arch;
+        }
+
+        private void SetVersionFromFile(String filename, String x64Arch, String x86Arch)
+        {
+            if (Version == String.Empty || Version == null)
+            {
+                filename = Regex.Replace(Regex.Replace(filename, x86Arch, ""), x64Arch, "");
+                Version = Regex.Replace(filename, @"\D", "");
+            }
+        }
+
+        public override String ToString()
+        {
+            String swithces = "(N)";
+            if (InstallSwitch != String.Empty)
+            {
+                swithces = "(S)";
+            }
+            return String.Format("{0} {1} ({2:0.00} MB)", swithces, Name, FileSize);
+        }
+
         public static Boolean XmlFileValid(String FilePath)
         {
             if (FilePath.ToString() == String.Empty)
@@ -83,6 +157,11 @@ namespace ApplicationInstaller.Schemas
             {
                 return false;
             }
+        }
+
+        private static float ConvertToMegabytes(long bytes)
+        {
+            return (bytes / 1024f) / 1024f;
         }
 
         public void Install()

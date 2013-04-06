@@ -92,7 +92,6 @@
     </Compile>
     <Compile Include="Schemas\Applications.cs" />
     <Compile Include="Classes\Exceptions.cs" />
-    <Compile Include="Classes\FileProperties.cs" />
     <Compile Include="Schemas\Switches.cs" />
     <Compile Include="Forms\ConfigBuilder.cs">
       <SubType>Form</SubType>

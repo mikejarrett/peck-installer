@@ -265,7 +265,7 @@ namespace ApplicationInstaller
                 servicePackDialog.Title = "Select Service Pack";
                 if (servicePackDialog.ShowDialog() == DialogResult.OK)
                 {
-                    servicePack = FileProperties.GetApplicationInfoFromFilePath(servicePackDialog.FileName);
+                    servicePack = new App(servicePackDialog.FileName);
                     servicePackSwitches = "/unattend /warnrestart";
                     servicePack.InstallSwitch = Prompt(servicePackSwitches);
                 }
@@ -341,7 +341,7 @@ namespace ApplicationInstaller
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                var app = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName);
+                App app = new App(openFileDialog.FileName);
                 app.InstallSwitch = Prompt("");
                 additionalConfigApps.Add(app);
                 clbAdditionalConfigurations.Items.Add(app.ToString());

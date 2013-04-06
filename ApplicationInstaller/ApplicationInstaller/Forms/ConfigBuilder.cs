@@ -206,7 +206,7 @@ namespace ApplicationInstaller
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                var app = FileProperties.GetApplicationInfoFromFilePath(openFileDialog.FileName.ToString());
+                App app = new App(openFileDialog.FileName.ToString());
                 this.tbApplicationName.Text = app.Name;
                 this.tbFilename.Text = app.Filename;
                 this.tbAbsolutePath.Text = app.AbsolutePath;
@@ -243,7 +243,7 @@ namespace ApplicationInstaller
 
                 foreach (string file in files)
                 {
-                    var app = FileProperties.GetApplicationInfoFromFilePath(file.ToString());
+                    App app = new App(file.ToString());
                     dgvApplicationList.Rows.Add(
                         app.Name,
                         app.Filename,
