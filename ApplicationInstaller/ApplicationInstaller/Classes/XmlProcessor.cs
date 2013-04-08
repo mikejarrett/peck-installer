@@ -1,7 +1,6 @@
 ﻿using ApplicationInstaller.Schemas;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -66,42 +65,6 @@ namespace ApplicationInstaller.Classes
                        }
             );
             return apps;
-        }
-
-        public static void WriteToXML(string filepath, List<App> apps)
-        {
-            // Write the apps out to the selected configuration files
-            XmlSerializer serializer = new XmlSerializer(typeof(List<App>));
-            TextWriter textWriter = new StreamWriter(filepath);
-            serializer.Serialize(textWriter, apps);
-            textWriter.Close();
-        }
-
-        public static void WriteSwitchesToXML(string filepath, List<Switches> switches)
-        {
-            // Write the switches out to the selected configuration files
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Switches>));
-            TextWriter textWriter = new StreamWriter(filepath);
-            serializer.Serialize(textWriter, switches);
-            textWriter.Close();
-        }
-
-        public List<Switches> DeserializeSwitchXML(Boolean XmlValid)
-        {
-            if (XmlValid)
-            {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<Switches>));
-                var XDoc = XDocument.Load(FilePath);
-                XmlReader reader = XDoc.CreateReader();
-                reader.MoveToContent();
-                List<Switches> switches = (List<Switches>)deserializer.Deserialize(reader);
-                reader.Close();
-                return switches;
-            }
-            else
-            {
-                return new List<Switches>();
-            }
         }
     }
 }

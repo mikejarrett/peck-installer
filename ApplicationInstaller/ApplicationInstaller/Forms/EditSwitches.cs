@@ -89,7 +89,7 @@ namespace ApplicationInstaller
                     } 
                 );
                 String filePath = @"Configs\Switches.xml";
-                XmlProcessor.WriteSwitchesToXML(filePath, switches);
+                GenericXmlProcessor<Switches>.WriteToXML(filePath, switches);
                 MessageBox.Show("Config written successfully to: " + filePath);
                 this.Close();
             }

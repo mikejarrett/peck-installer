@@ -60,7 +60,7 @@ namespace ApplicationInstaller
                     cbWindowsUpdates.Text = String.Format("{0} ({1})", cbWindowsUpdates.Text, listUpdates.Count);
                 }
             }
-            catch (Exception err)
+            catch (XmlValidatorException)
             {
                 cbWindowsUpdates.Checked = false;
                 cbWindowsUpdates.Enabled = false;
@@ -71,15 +71,14 @@ namespace ApplicationInstaller
         {
             try
             {
-                Boolean xmlValid = App.XmlFileValid(filePath);
-                if (String.IsNullOrEmpty(filePath) || !xmlValid)
+                //Boolean xmlValid = App.XmlFileValid(filePath);
+                if (String.IsNullOrEmpty(filePath) || !GenericXmlProcessor<App>.XmlFileValid(filePath))
                 {
                     cbAppToggle.Enabled = false;
                     checkedListBoxApps.Enabled = false;
                 }
                 else
                 {
-                    
                     listApps = new XmlProcessor(filePath).GetListOfApps();
                     foreach (App app in listApps)
                     {
@@ -89,7 +88,7 @@ namespace ApplicationInstaller
                     }
                 }
             }
-            catch (Exception err)
+            catch (XmlValidatorException)
             {
                 cbAppToggle.Enabled = false;
                 checkedListBoxApps.Enabled = false;
@@ -233,7 +232,7 @@ namespace ApplicationInstaller
                     Boolean xmlValid = false;
                     try
                     {
-                        xmlValid = App.XmlFileValid(filename);
+                        xmlValid = GenericXmlProcessor<App>.XmlFileValid(filename);
                     }
                     catch (XmlValidatorException)
                     {
@@ -385,10 +384,11 @@ namespace ApplicationInstaller
             String SwitchesConfigFile = @"Configs\Switches.xml";
             if (File.Exists(SwitchesConfigFile))
             {
-                var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
+                //var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
                 try
                 {
-                    var switches = xmlvalidation.DeserializeSwitchXML(Switches.XmlFileValid(SwitchesConfigFile));
+                    Boolean switchFileValid = GenericXmlProcessor<Switches>.XmlFileValid(SwitchesConfigFile);
+                    var switches = GenericXmlProcessor<Switches>.DeserializeXML(switchFileValid, SwitchesConfigFile);
                     EditSwitches SwitchesForm = new EditSwitches(this, switches);
                     SwitchesForm.ShowDialog();
                 }
@@ -427,11 +427,12 @@ namespace ApplicationInstaller
             String SwitchesConfigFile = @"Configs\Switches.xml";
             if (File.Exists(SwitchesConfigFile))
             {
-                var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
+                //var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
                 try
                 {
                     this.Hide();
-                    var switches = xmlvalidation.DeserializeSwitchXML(Switches.XmlFileValid(SwitchesConfigFile));
+                    Boolean switchFileValid = GenericXmlProcessor<Switches>.XmlFileValid(SwitchesConfigFile);
+                    var switches = GenericXmlProcessor<Switches>.DeserializeXML(switchFileValid, SwitchesConfigFile);
                     EditSwitches switchesForm = new EditSwitches(this, switches);
                     switchesForm.ShowDialog();
                 }

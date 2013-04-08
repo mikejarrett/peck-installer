@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\GenericXmlProcessor.cs" />
     <Compile Include="Forms\ApplicationInstaller.cs">
       <SubType>Form</SubType>
     </Compile>

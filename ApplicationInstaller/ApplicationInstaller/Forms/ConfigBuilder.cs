@@ -132,7 +132,7 @@ namespace ApplicationInstaller
                     List<App> apps = ProcessDataGridViewRows();
                     if (apps.Count > 0)
                     {
-                        XmlProcessor.WriteToXML(saveFileDialog.FileName, apps);
+                        GenericXmlProcessor<App>.WriteToXML(saveFileDialog.FileName, apps);
                         clearRows();
                         MessageBox.Show("Config written successfully to: " + saveFileDialog.FileName);
                     }
@@ -271,7 +271,7 @@ namespace ApplicationInstaller
                 var xmlvalidation = new XmlProcessor(openFileDialog.FileName);
                 try
                 {
-                    Boolean valid = App.XmlFileValid(openFileDialog.FileName);
+                    Boolean valid = GenericXmlProcessor<App>.XmlFileValid(openFileDialog.FileName);
                     foreach (List<String> appValues in xmlvalidation.DeserializeAppXML(valid))
                     {
                         // Super brittle! I know I know! Looking into solving this
@@ -424,10 +424,11 @@ namespace ApplicationInstaller
            String SwitchesConfigFile = @"Configs\Switches.xml";
            if (File.Exists(SwitchesConfigFile))
            {
-               var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
+               //var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
                try
                {
-                   switches = xmlvalidation.DeserializeSwitchXML(Switches.XmlFileValid(SwitchesConfigFile));
+                   Boolean switchFileValid = GenericXmlProcessor<Switches>.XmlFileValid(SwitchesConfigFile);
+                   switches = GenericXmlProcessor<Switches>.DeserializeXML(switchFileValid, SwitchesConfigFile);
                    cbSwitches.Items.Add(String.Empty);
                    AddSwitchToComboBoxSwitches();
                }
