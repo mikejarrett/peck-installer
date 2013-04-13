@@ -74,7 +74,7 @@
             this.lbSwitches.Size = new System.Drawing.Size(661, 147);
             this.lbSwitches.TabIndex = 3;
             this.lbSwitches.SelectedIndexChanged += new System.EventHandler(this.lbSwitched_IndexChanged);
-            this.lbSwitches.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lbDeletePressed);
+            this.lbSwitches.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lbButtonPressed);
             // 
             // btnDelete
             // 
