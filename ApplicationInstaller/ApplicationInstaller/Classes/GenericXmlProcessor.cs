@@ -11,38 +11,65 @@ namespace ApplicationInstaller.Classes
 {
     public class GenericXmlProcessor<T>
     {
+        /// <summary>
+        /// Write the apps out to the given filepath configuration file
+        /// </summary>
+        /// <param name="filepath">File path and filename</param>
+        /// <param name="list">List of objects to write out</param>
         public static void WriteToXML(String filepath, List<T> list)
         {
-            // Write the apps out to the selected configuration files
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
             TextWriter textWriter = new StreamWriter(filepath);
             serializer.Serialize(textWriter, list);
             textWriter.Close();
         }
 
-        public static List<T> DeserializeXML(Boolean XmlValid, String filePath)
+        /// <summary>
+        /// If the filepath is validated, deserialize a configuration file and returns
+        /// the files contents. Else, return and empty list of type T
+        /// </summary>
+        /// <param name="filePath">The filepath and filename of the configuration file</param>
+        /// <returns>A list of type T from the XML file</returns>
+        public static List<T> DeserializeXMLToList(String filePath)
         {
-            if (XmlValid)
+            List<T> list = new List<T>();
+            try
+            {
+            if (XmlFileValid(filePath))
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(List<T>));
                 var XDoc = XDocument.Load(filePath);
                 XmlReader reader = XDoc.CreateReader();
                 reader.MoveToContent();
-                List<T> list = (List<T>)deserializer.Deserialize(reader);
+                list = (List<T>)deserializer.Deserialize(reader);
                 reader.Close();
                 return list;
             }
-            else
-            {
-                return new List<T>();
             }
+            catch (XmlValidatorException)
+            { 
+                // TODO: Add logging
+            }
+            return list;
         }
 
+        /// <summary>
+        /// Returns the name generic type T
+        /// </summary>
+        /// <returns>String representation of the generic type T</returns>
         public static String GetNameOfType()
         {
             return typeof(T).Name.ToString();
         }
 
+        /// <summary>
+        /// Given a filepath and filename validate it against the known schema of types
+        /// that are known to the system.
+        /// 
+        /// This function can thrown the custom XmlValidatorException exception
+        /// </summary>
+        /// <param name="FilePath">The filepath and filename of the configuration file</param>
+        /// <returns>True, False or throws XmlValidatorException depending if valid</returns>
         public static Boolean XmlFileValid(String FilePath)
         {
             if (FilePath.ToString() == String.Empty)
@@ -70,17 +97,16 @@ namespace ApplicationInstaller.Classes
             XDoc.Validate(xmlSchemaSet, (o, err) =>
             {
                 valid = false;
-                throw new XmlValidatorException(err.Message, err.Exception);
+                //throw new XmlValidatorException(err.Message, err.Exception);
             });
 
             if (valid == true)
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
+
+
     }
 }

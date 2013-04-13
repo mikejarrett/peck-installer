@@ -424,11 +424,9 @@ namespace ApplicationInstaller
            String SwitchesConfigFile = @"Configs\Switches.xml";
            if (File.Exists(SwitchesConfigFile))
            {
-               //var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
                try
                {
-                   Boolean switchFileValid = GenericXmlProcessor<Switches>.XmlFileValid(SwitchesConfigFile);
-                   switches = GenericXmlProcessor<Switches>.DeserializeXML(switchFileValid, SwitchesConfigFile);
+                   switches = GenericXmlProcessor<Switches>.DeserializeXMLToList(SwitchesConfigFile);
                    cbSwitches.Items.Add(String.Empty);
                    AddSwitchToComboBoxSwitches();
                }
