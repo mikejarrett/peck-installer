@@ -25,13 +25,13 @@ namespace Tests
         [ExpectedException(typeof(XmlValidatorException))]
         public void TestInvalidXML()
         {
-            Boolean isValid = App.XmlFileValid(@"TestFiles/App-Invalid.xml");
+            Boolean isValid = App.XmlFileValid(@"TestFiles\App-Invalid.xml");
         }
 
         [TestMethod]
         public void TestValidXML()
         {
-            Boolean isValid = App.XmlFileValid(@"TestFiles/App-Valid.xml");
+            Boolean isValid = App.XmlFileValid(@"TestFiles\App-Valid.xml");
             Assert.IsTrue(isValid);
         }
 

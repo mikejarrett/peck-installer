@@ -55,7 +55,7 @@ namespace ApplicationInstaller
                     installInformationHolder.servicePack.Install();
                     this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
                 }
-                catch (Exception err)
+                catch (Exception)
                 {
                     this.Invoke(new RichTextDelegate(UpdateRichText), " ! Installation cancelled");
                 }
@@ -76,7 +76,7 @@ namespace ApplicationInstaller
                         update.Install();
                         this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
                     }
-                    catch (Exception exc)
+                    catch (Exception)
                     {
                         this.Invoke(new RichTextDelegate(UpdateRichText), " ! Installation cancelled");
                     }
@@ -98,7 +98,7 @@ namespace ApplicationInstaller
                         app.Install();
                         this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
                     }
-                    catch (Exception exc)
+                    catch (Exception)
                     {
                         
                         this.Invoke(new RichTextDelegate(UpdateRichText), " ! Installation cancelled");
@@ -120,7 +120,7 @@ namespace ApplicationInstaller
                         app.Install();
                         this.Invoke(new ProgressBarDelegate(UpdateProgressBar));
                     }
-                    catch (Exception exc)
+                    catch (Exception)
                     {
                         this.Invoke(new RichTextDelegate(UpdateRichText), " ! Installation cancelled");
                     }

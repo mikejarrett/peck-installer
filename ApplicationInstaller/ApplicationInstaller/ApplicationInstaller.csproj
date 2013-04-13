@@ -100,7 +100,6 @@
     <Compile Include="Forms\ConfigBuilder.Designer.cs">
       <DependentUpon>ConfigBuilder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\XmlProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\ApplicationInstaller.resx">

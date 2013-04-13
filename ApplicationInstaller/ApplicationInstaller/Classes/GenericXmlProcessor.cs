@@ -18,10 +18,17 @@ namespace ApplicationInstaller.Classes
         /// <param name="list">List of objects to write out</param>
         public static void WriteToXML(String filepath, List<T> list)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-            TextWriter textWriter = new StreamWriter(filepath);
-            serializer.Serialize(textWriter, list);
-            textWriter.Close();
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+                TextWriter textWriter = new StreamWriter(filepath);
+                serializer.Serialize(textWriter, list);
+                textWriter.Close();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         /// <summary>
@@ -35,22 +42,48 @@ namespace ApplicationInstaller.Classes
             List<T> list = new List<T>();
             try
             {
-            if (XmlFileValid(filePath))
-            {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<T>));
-                var XDoc = XDocument.Load(filePath);
-                XmlReader reader = XDoc.CreateReader();
-                reader.MoveToContent();
-                list = (List<T>)deserializer.Deserialize(reader);
-                reader.Close();
-                return list;
-            }
+                if (XmlFileValid(filePath))
+                {
+                    XmlSerializer deserializer = new XmlSerializer(typeof(List<T>));
+                    var XDoc = XDocument.Load(filePath);
+                    XmlReader reader = XDoc.CreateReader();
+                    reader.MoveToContent();
+                    list = (List<T>)deserializer.Deserialize(reader);
+                    reader.Close();
+                    return list;
+                }
             }
             catch (XmlValidatorException)
             { 
                 // TODO: Add logging
             }
             return list;
+        }
+
+        /// <summary>
+        /// Deserializes the selected file then loops over each instance that was deserialized
+        /// and finds all the properties of the object. It then will loop through each objects
+        /// properties and adds their value to the listProperties list.
+        /// </summary>
+        /// <param name="filePath">The filepath and filename of the configuration file</param>
+        /// <returns>Yields a list type string with the value</returns>
+        public static IEnumerable<List<String>> DeserializeXMLToStringList(String filePath)
+        {
+            List<T> objects = DeserializeXMLToList(filePath);
+
+            foreach (var obj in objects)
+            {
+                List<String> listProperties = new List<String>();
+
+                Type t = obj.GetType();
+                PropertyInfo[] propertyInfo = t.GetProperties();
+                foreach (PropertyInfo property in propertyInfo)
+                {
+                    listProperties.Add(property.GetValue(obj).ToString());
+                }
+                yield return listProperties;
+            }
+            yield break;
         }
 
         /// <summary>
@@ -97,7 +130,6 @@ namespace ApplicationInstaller.Classes
             XDoc.Validate(xmlSchemaSet, (o, err) =>
             {
                 valid = false;
-                //throw new XmlValidatorException(err.Message, err.Exception);
             });
 
             if (valid == true)
@@ -106,7 +138,5 @@ namespace ApplicationInstaller.Classes
             }
             return false;
         }
-
-
     }
 }

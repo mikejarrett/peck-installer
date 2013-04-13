@@ -126,7 +126,6 @@ namespace ApplicationInstaller
         /// <param name="e"></param>
         private void btnWriteConfig_Click(object sender, EventArgs e)
         {
-            
             int rowCount = dgvApplicationList.Rows.Count;
             if (rowCount <= 1)
             {
