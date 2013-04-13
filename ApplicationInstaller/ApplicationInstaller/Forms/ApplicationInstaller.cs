@@ -3,6 +3,7 @@ using ApplicationInstaller.Schemas;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -40,9 +41,9 @@ namespace ApplicationInstaller
 
         public ApplicationInstaller()
         {
+            SaveInternetSettingZones();
             additionalConfigApps = new List<App>();
             InitializeComponent();
-
             EnsureDirectoryStructure();
             OsName = OsInformation.getOSName();
             gbName.Text = OsName;
@@ -343,14 +344,14 @@ namespace ApplicationInstaller
         }
 
         /// <summary>
-        /// TODO: Capture the current state of the Internet Settings Zones so we can reapply when we are done installing
-        /// 
         /// This disables the Internet / Windows Explorer sercurity zones whilst running the installer.
         /// 
         /// The reason for doing this is if the files are downloaded from the internet (which is almost
         /// a guranteed thing) Windows will prompt the user every time a new file installtion is started
         /// warning them that it may be unsafe to install the file which would defeat the purpose of
         /// this silent installer.
+        /// 
+        /// See http://support.microsoft.com/kb/182569
         /// </summary>
         private void DisableSecurityZones()
         {
@@ -364,18 +365,27 @@ namespace ApplicationInstaller
         }
 
         /// <summary>
-        /// TODO: Once we have capture there current levels, reapply them here instead of settings them back
-        /// to default levels
-        /// 
-        /// Reverses the changes of DisableSecurityZones be setting them back to the default levels.
+        /// Reverses the changes of DisableSecurityZones be setting them back to the default levels if the
+        /// created registry file is there. If not it reverts to what are believed to be standard settings.
         /// </summary>
         private void EnableSecurityZones()
         {
-            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\2").SetValue("1806", 1);
-            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3").SetValue("1806", 1);
-            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4").SetValue("1806", 3);
-            Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3").SetValue("CurrentLevel", 0x11500);
-            Registry.CurrentUser.Flush();
+            String filename = @"Registry\InternetSettingsBackup.reg";
+            if (File.Exists(filename))
+            {
+                Process regeditProcess = Process.Start("regedit.exe", String.Format("/s {0}", filename));
+                regeditProcess.WaitForExit();
+            }
+            else
+            {
+                String message = String.Format("Couldn't find {0} to restore Internet Settings.\nFalling back to pre-determined defaults", filename);
+                MessageBox.Show(message);
+                Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\2").SetValue("1806", 1);
+                Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3").SetValue("1806", 1);
+                Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\4").SetValue("1806", 3);
+                Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3").SetValue("CurrentLevel", 0x11500);
+                Registry.CurrentUser.Flush();
+            }
         }
 
         /// <summary>
@@ -540,7 +550,6 @@ namespace ApplicationInstaller
             InstallInfoForm installInfoForm = new InstallInfoForm(installInformationHolder);
             installInfoForm.ShowDialog();
             this.Show();
-            EnableAllitems();
             EnableSecurityZones();
             linkStartInstall.Enabled = true;
         }
@@ -560,6 +569,31 @@ namespace ApplicationInstaller
             {
                 BuildHolder();
                 installInformationHolder.WriteScriptFile(scriptFileDialog.FileName);
+            }
+        }
+
+        /// <summary>
+        /// Saves the current Zone Internet Settings to Registry\InternetSEttingsBackup.reg
+        /// </summary>
+        private static void SaveInternetSettingZones()
+        {
+            using (StreamWriter internetSettingsFilePath = new StreamWriter(@"Registry\InternetSettingsBackup.reg", false))
+            {
+                internetSettingsFilePath.Write("Windows Registry Editor Version 5.00\n\n");
+                RegistryKey baseRegistryKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones");
+                string[] subKeyNames = baseRegistryKey.GetSubKeyNames();
+                foreach (var subKeyName in subKeyNames)
+                {
+                    var subKey = baseRegistryKey.OpenSubKey(subKeyName);
+                    var value = subKey.GetValue("1806", null);
+                    if (value != null)
+                    {
+                        String something = String.Format("[{0}]\n", subKey.ToString());
+                        String dword = String.Format("\"1086\"=dword:{0:00000000}\n\n", value);
+                        internetSettingsFilePath.Write(something);
+                        internetSettingsFilePath.Write(dword);
+                    }
+                }
             }
         }
     }
