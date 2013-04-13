@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <App>
-    <AbsolutePath>C:\Users\Blyenth\Desktop\IE9-Windows6.1-KB2809289-x64.msu</AbsolutePath>
-    <Name>KB2809289</Name>
-    <Architecture>x64</Architecture>
-    <Filename>IE9-Windows6.1-KB2809289-x64.msu</Filename>
-    <Filesize>27.1237182617188</Filesize>
-    <InstallSwitch />
-    <RelativePath>\Users\Blyenth\Desktop\IE9-Windows6.1-KB2809289-x64.msu</RelativePath>
-    <Version>9612809289</Version>
   </App>
 </ArrayOfApp>

@@ -439,7 +439,7 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(720, 450);
             this.Name = "ApplicationInstaller";
-            this.Text = "ApplicationInstaller";
+            this.Text = "Application Installer";
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

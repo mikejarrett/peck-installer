@@ -41,10 +41,10 @@ namespace ApplicationInstaller
 
         public ApplicationInstaller()
         {
+            EnsureDirectoryStructure();
             SaveInternetSettingZones();
             additionalConfigApps = new List<App>();
             InitializeComponent();
-            EnsureDirectoryStructure();
             OsName = OsInformation.getOSName();
             gbName.Text = OsName;
             LoadWindowsUpdatesCofig();
