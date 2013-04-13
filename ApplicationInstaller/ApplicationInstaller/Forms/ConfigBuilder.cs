@@ -14,18 +14,27 @@ namespace ApplicationInstaller
         public List<Switches> switches
         { get; set; }
 
+        public int SelectedRowId
+        { get; set; }
+
         public ConfigBuilder()
         {
-            this.RowId = -1;
+            SelectedRowId = -1;
             InitializeComponent();
             PopulateSwitches();
         }
-
+        
+        /// <summary>
+        /// Checks if CTRL + O, CTRL + N or CTRL + G key combinations were pressed
+        /// and executes the appropriate functs assocated with the key combos
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.O))
             {
-                clearRows();
                 OpenPreviousConfigFile();
                 return true;
             }
@@ -36,86 +45,89 @@ namespace ApplicationInstaller
             }
             else if (keyData == (Keys.Control | Keys.G))
             {
-                clearRows();
                 GenerateConfigurationFromFolder();
                 return true;
             }
-            
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        public int RowId
-        { get; set; }
-
+        /// <summary>
+        /// Field validation on application name, filename, relative path and absolute path fields
+        /// </summary>
+        /// <returns>True if required fields are filled in. False if any required field is empty.</returns>
         private bool WithErrors()
         {
-            // TODO: A lot of repeated code here. Clean this up.
-            // Returns true if no input or only space is found
-            if (this.tbApplicationName.Text.Trim() == String.Empty)
+            if (tbApplicationName.Text.Trim() == String.Empty)
                 return true; 
-            if (this.tbFilename.Text.Trim() == String.Empty)
+            if (tbFilename.Text.Trim() == String.Empty)
                 return true;
-            if (this.tbRelativePath.Text.Trim() == String.Empty)
+            if (tbRelativePath.Text.Trim() == String.Empty)
                 return true;
-            if (this.tbAbsolutePath.Text.Trim() == String.Empty)
+            if (tbAbsolutePath.Text.Trim() == String.Empty)
                 return true;
             return false;
         }
 
+        /// <summary>
+        /// Validates form, if valid add the form information to the either the selected row
+        /// or to the bottom of the datagridview 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddToList_Click(object sender, EventArgs e)
         {
-            if (WithErrors() == true)
+            if (WithErrors())
             {
-                // Poorman's validation. It's bad and I should feel bad.
                 MessageBox.Show("A application name, filename, absolute and relative path are required");
             }
-            else if (WithErrors() == false && this.RowId == -1)
+            else if (!WithErrors() && SelectedRowId == -1)
             {
-                // If a previously filled row isn't selected, add the application
-                // info to the datagridview
                 AddRowToBottomOfDataGridView();
                 clearFields();
             }
-            else if (WithErrors() == false && this.RowId != -1)
+            else if (!WithErrors() && SelectedRowId != -1)
             {
-                // If we are editing a previous application info, add it back to the datagridview
                 AddToSelectRowOfDataGridView();
             }
         }
 
         private void AddRowToBottomOfDataGridView()
         {
-            this.dgvApplicationList.Rows.Add(
-                this.tbApplicationName.Text,
-                this.tbFilename.Text,
-                this.tbAbsolutePath.Text,
-                Regex.Replace(this.tbRelativePath.Text, @"[a-zA-Z][:]", ""),
-                this.cbSwitches.Text,
-                this.tbVersion.Text,
-                this.cbArchitecture.Text,
-                this.tbFileSize.Text
+            dgvApplicationList.Rows.Add(
+                tbApplicationName.Text,
+                tbFilename.Text,
+                tbAbsolutePath.Text,
+                Regex.Replace(tbRelativePath.Text, @"[a-zA-Z][:]", ""),
+                cbSwitches.Text,
+                tbVersion.Text,
+                cbArchitecture.Text,
+                tbFileSize.Text
             );
         }
 
         private void AddToSelectRowOfDataGridView()
         {
-            DataGridViewRow row = this.dgvApplicationList.Rows[this.RowId];
-            row.Cells["applicationName"].Value = this.tbApplicationName.Text.ToString();
-            row.Cells["filename"].Value = this.tbFilename.Text.ToString();
-            row.Cells["relativePath"].Value = Regex.Replace(this.tbRelativePath.Text, @"[a-zA-Z][:]", "").ToString();
-            row.Cells["absolutePath"].Value = this.tbAbsolutePath.Text.ToString();
-            row.Cells["installSwitches"].Value = this.cbSwitches.Text.ToString();
-            row.Cells["version"].Value = this.tbVersion.Text.ToString();
-            row.Cells["architecture"].Value = this.cbArchitecture.Text.ToString();
-            row.Cells["FileSize"].Value = Convert.ToDouble(this.tbFileSize.Text.ToString());
+            DataGridViewRow row = dgvApplicationList.Rows[SelectedRowId];
+            row.Cells["applicationName"].Value = tbApplicationName.Text.ToString();
+            row.Cells["filename"].Value = tbFilename.Text.ToString();
+            row.Cells["relativePath"].Value = Regex.Replace(tbRelativePath.Text, @"[a-zA-Z][:]", "").ToString();
+            row.Cells["absolutePath"].Value = tbAbsolutePath.Text.ToString();
+            row.Cells["installSwitches"].Value = cbSwitches.Text.ToString();
+            row.Cells["version"].Value = tbVersion.Text.ToString();
+            row.Cells["architecture"].Value = cbArchitecture.Text.ToString();
+            row.Cells["FileSize"].Value = Convert.ToDouble(tbFileSize.Text.ToString());
             clearFields();
         }
 
+        /// <summary>
+        /// Show save to file dialog that will either over-write an existing XML file or create a new one.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnWriteConfig_Click(object sender, EventArgs e)
         {
-            // Show save to file dialog that will either over-write an existing
-            // XML file or create a new one.
-            int rowCount = this.dgvApplicationList.Rows.Count;
+            
+            int rowCount = dgvApplicationList.Rows.Count;
             if (rowCount <= 1)
             {
                 MessageBox.Show("Nothing to write to configuration file");
@@ -144,22 +156,29 @@ namespace ApplicationInstaller
             }
         }
 
+        /// <summary>
+        /// Go through each row of the DataGridView and serialize the data to be written our 
+        /// to the newly created XML file.
+        /// </summary>
+        /// <returns></returns>
         private List<App> ProcessDataGridViewRows()
         {
-            // Go through each row of the DataGridView and serialize the data
-            // to be written our to the newly created XML file.
             List<App> apps = new List<App>();
-            for (int i = 0; i < this.dgvApplicationList.Rows.Count - 1; ++i)
+            for (int i = 0; i < dgvApplicationList.Rows.Count - 1; ++i)
             {
-                DataGridViewRow row = this.dgvApplicationList.Rows[i];
-                App application = new App();
-                application.Name = row.Cells["applicationName"].Value.ToString().Trim();
-                application.Filename = row.Cells["filename"].Value.ToString().Trim();
-                application.RelativePath = row.Cells["relativePath"].Value.ToString();
-                application.AbsolutePath = row.Cells["absolutePath"].Value.ToString();
-                application.InstallSwitch = row.Cells["installSwitches"].Value.ToString().Trim();
-                application.Version = row.Cells["version"].Value.ToString().Trim();
-                application.Architecture = String.Empty;
+                DataGridViewRow row = dgvApplicationList.Rows[i];
+                App application = new App()
+                {
+                    Name = row.Cells["applicationName"].Value.ToString().Trim(),
+                    Filename = row.Cells["filename"].Value.ToString().Trim(),
+                    RelativePath = row.Cells["relativePath"].Value.ToString(),
+                    AbsolutePath = row.Cells["absolutePath"].Value.ToString(),
+                    InstallSwitch = row.Cells["installSwitches"].Value.ToString().Trim(),
+                    Version = row.Cells["version"].Value.ToString().Trim(),
+                    Architecture = String.Empty,
+                    FileSize = 0.0
+                };
+
                 if (row.Cells["architecture"].Value != null)
                 {
                     application.Architecture = row.Cells["architecture"].Value.ToString();
@@ -195,11 +214,12 @@ namespace ApplicationInstaller
             UpdateFieldsFromSelectedFile();
         }
 
+        /// <summary>
+        /// Displays an OpenFileDialog so the user can select a application to install. Parse the file 
+        /// and path and attempt to retrieve filename, version, absolute and relative paths.
+        /// </summary>
         private void UpdateFieldsFromSelectedFile()
         {
-            // Displays an OpenFileDialog so the user can select a application to install.
-            // Parse the file and path and attempt to retrieve filename, version, absolute and
-            // relative paths.
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Executables & Scripts|*.exe;*.cmd;*.bat;*.msu;*.msi|All Files|*.*";
             openFileDialog.Title = "Select a file";
@@ -207,13 +227,14 @@ namespace ApplicationInstaller
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 App app = new App(openFileDialog.FileName.ToString());
-                this.tbApplicationName.Text = app.Name;
-                this.tbFilename.Text = app.Filename;
-                this.tbAbsolutePath.Text = app.AbsolutePath;
-                this.tbRelativePath.Text = app.RelativePath;
-                this.tbVersion.Text = app.Version;
-                this.cbArchitecture.Text = app.Architecture;
-                this.tbFileSize.Text = app.FileSize.ToString();
+                tbApplicationName.Text = app.Name;
+                tbFilename.Text = app.Filename;
+                tbAbsolutePath.Text = app.AbsolutePath;
+                tbRelativePath.Text = app.RelativePath;
+                tbVersion.Text = app.Version;
+                cbArchitecture.Text = app.Architecture;
+                
+                tbFileSize.Text = app.FileSize.ToString();
             }
         }
 
@@ -222,10 +243,12 @@ namespace ApplicationInstaller
             GenerateConfigurationFromFolder();
         }
 
+        /// <summary>
+        /// Take the selected directory and sub-directories and find all .exe, .bat, 
+        /// .cmd, .msi, .msu files and adds them DataGridView
+        /// </summary>
         private void GenerateConfigurationFromFolder()
         {
-            // Take the selected directory and sub-directories and find all .exe, .bat, 
-            // .cmd, .msi, .msu files and adds them DataGridView
             clearRows();
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             folderBrowserDialog.Description = "Select folder to process...";
@@ -243,24 +266,16 @@ namespace ApplicationInstaller
 
                 foreach (string file in files)
                 {
-                    App app = new App(file.ToString());
-                    dgvApplicationList.Rows.Add(
-                        app.Name,
-                        app.Filename,
-                        app.AbsolutePath,
-                        app.RelativePath,
-                        String.Empty,
-                        app.Version,
-                        app.Architecture,
-                        app.FileSize
-                    );
+                    AddAppToDataGridView(new App(file.ToString()));                
                 }
             }
         }
 
+        /// <summary>
+        /// Load a previously saved configuration file into the DataGridView
+        /// </summary>
         private void OpenPreviousConfigFile()
         {
-            // Load previously saved configuration file.
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Configutration File (*.xml)|*.xml|All Files|*.*";
             openFileDialog.Title = "Select a configuration file";
@@ -268,24 +283,25 @@ namespace ApplicationInstaller
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 clearRows();
-                var xmlvalidation = new XmlProcessor(openFileDialog.FileName);
-                try
+                foreach (var app in GenericXmlProcessor<App>.DeserializeXMLToList(openFileDialog.FileName))
                 {
-                    Boolean valid = GenericXmlProcessor<App>.XmlFileValid(openFileDialog.FileName);
-                    foreach (List<String> appValues in xmlvalidation.DeserializeAppXML(valid))
-                    {
-                        // Super brittle! I know I know! Looking into solving this
-                        this.dgvApplicationList.Rows.Add(appValues[0], appValues[1], appValues[2],
-                            appValues[3], appValues[4], appValues[5], appValues[6], appValues[7]);
-                    }
-                }
-                catch (XmlValidatorException err)
-                {
-                    String ExceptionMessage = err.Message.ToString();
-                    String ErrorMessage = String.Format("Couldn't load the applications config file with:\n\n{0}", ExceptionMessage);
-                    MessageBox.Show(ErrorMessage, "Couldn't load applications Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    AddAppToDataGridView(app);
                 }
             }
+        }
+
+        /// <summary>
+        /// Give an app add it's properties to the DataGridView Application List
+        /// </summary>
+        /// <param name="app">
+        ///     And instance of an app either generated from a filename or loaded
+        ///     from a configuration file
+        /// </param>
+        private void AddAppToDataGridView(App app)
+        {
+            dgvApplicationList.Rows.Add(app.Name, app.Filename, app.AbsolutePath,
+                                        app.RelativePath, app.InstallSwitch,
+                                        app.Version, app.Architecture, app.FileSize);
         }
 
         private void openConfigToolStripMenuItem_Click(object sender, EventArgs e)
@@ -303,97 +319,132 @@ namespace ApplicationInstaller
             clearRows();
         }
 
+        /// <summary>
+        /// Clears all the rows in the DataGridView Application List
+        /// </summary>
         private void clearRows()
         {
-            // Not really needed but maybe a little nicer to read clearRows()
-            // instead of the long command below
-            this.dgvApplicationList.Rows.Clear();
-            this.RowId = -1;
+            dgvApplicationList.Rows.Clear();
+            SelectedRowId = -1;
         }
 
+        /// <summary>
+        /// Clears all form fields and resets the RowId to -1
+        /// </summary>
         private void clearFields()
         {
-            this.tbApplicationName.Text = String.Empty;
-            this.tbFilename.Text = String.Empty;
-            this.tbAbsolutePath.Text = String.Empty;
-            this.tbRelativePath.Text = String.Empty;
-            this.cbSwitches.Text = String.Empty;
-            this.tbVersion.Text = String.Empty;
-            this.cbArchitecture.Text = String.Empty;
-            this.tbFileSize.Text = String.Empty;
-            this.RowId = -1;
+            tbApplicationName.Text = String.Empty;
+            tbFilename.Text = String.Empty;
+            tbAbsolutePath.Text = String.Empty;
+            tbRelativePath.Text = String.Empty;
+            cbSwitches.Text = String.Empty;
+            tbVersion.Text = String.Empty;
+            cbArchitecture.Text = String.Empty;
+            tbFileSize.Text = String.Empty;
+            SelectedRowId = -1;
         }
 
+        /// <summary>
+        /// Given a selected row update the form field to reflect the information
+        /// of the selected row
+        /// </summary>
+        /// <param name="row"></param>
         private void updateGridDataRowSelected(DataGridViewRow row)
         {
             // Take the info from the select rows and place it in the entry form 
-            this.tbApplicationName.Text = row.Cells["applicationName"].Value.ToString();
-            this.tbFilename.Text = row.Cells["filename"].Value.ToString();
-            this.tbRelativePath.Text = row.Cells["relativePath"].Value.ToString();
-            this.tbAbsolutePath.Text = row.Cells["absolutePath"].Value.ToString();
-            this.tbFileSize.Text = row.Cells["FileSize"].Value.ToString();
+            tbApplicationName.Text = row.Cells["applicationName"].Value.ToString();
+            tbFilename.Text = row.Cells["filename"].Value.ToString();
+            tbRelativePath.Text = row.Cells["relativePath"].Value.ToString();
+            tbAbsolutePath.Text = row.Cells["absolutePath"].Value.ToString();
+            tbFileSize.Text = row.Cells["FileSize"].Value.ToString();
             try
             {
-                this.cbSwitches.Text = row.Cells["installSwitches"].Value.ToString();
+                cbSwitches.Text = row.Cells["installSwitches"].Value.ToString();
             }
             catch (NullReferenceException)
             {
-                this.cbSwitches.Text = String.Empty;
+                cbSwitches.Text = String.Empty;
             }
             try
             {
-                this.tbVersion.Text = row.Cells["version"].Value.ToString();
+                tbVersion.Text = row.Cells["version"].Value.ToString();
             }
             catch (NullReferenceException)
             {
-                this.tbVersion.Text = String.Empty;
+                tbVersion.Text = String.Empty;
             }
             try
             {
-                this.cbArchitecture.Text = row.Cells["architecture"].Value.ToString();
+                cbArchitecture.Text = row.Cells["architecture"].Value.ToString();
             }
             catch (NullReferenceException)
             {
-                this.cbArchitecture.Text = String.Empty;
+                cbArchitecture.Text = String.Empty;
             }
         }
 
+        /// <summary>
+        /// Handle keyboard events on the DataGridViewRow
+        /// 
+        /// PgUp = 33, PgDn = 34, Home = 35, End = 36, UpArrow = 38, Downarrow = 40
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gridviewApplicationList_KeyUp(object sender, KeyEventArgs e)
         {
-            // PgUp, PgDn, Home, End, UpArrow, DownArrow
             int[] keyvalues = new int[6] {33, 34, 35, 36, 38, 40};
             if (keyvalues.Contains<int>(e.KeyValue))
             {
-                DataGridViewRow row = this.dgvApplicationList.SelectedRows[0];
-                this.RowId = row.Index;
-                int lastRowIndex = this.dgvApplicationList.Rows.Count - 1;
-                if (this.RowId != lastRowIndex)
+                DataGridViewRow row = dgvApplicationList.SelectedRows[0];
+                SelectedRowId = row.Index;
+                int lastRowIndex = dgvApplicationList.Rows.Count - 1;
+                if (SelectedRowId != lastRowIndex)
                 {
                     updateGridDataRowSelected(row);
                 }
-                else {  clearFields();  }
+                else 
+                {  
+                    clearFields();  
+                }
             }
         }
 
+        /// <summary>
+        /// If right mouse click and selected index is not -1 -- clear all selected rows, 
+        /// select the row the mouse if over and show the context menu strip.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgvCellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // If right mouse click and selected index is not -1 -- clear all selected
-            // rows, select the row the mouse if over and show the context menu strip.
-            if (e.Button == MouseButtons.Left) { LeftMouseClickDGV(e); }
-            else if (e.Button == MouseButtons.Right) { RightMouseClickDGV(e); }
+            if (e.Button == MouseButtons.Left) 
+            { 
+                LeftMouseClickDGV(e); 
+            }
+            else if (e.Button == MouseButtons.Right) 
+            { 
+                RightMouseClickDGV(e); 
+            }
         }
 
+        /// <summary>
+        /// Handles left mouse clicking on the DataGridView Application List
+        /// </summary>
+        /// <param name="e"></param>
         private void LeftMouseClickDGV(DataGridViewCellMouseEventArgs e)
         {
             try
             {
-                int lastRowIndex = this.dgvApplicationList.Rows.Count - 1;
+                int lastRowIndex = dgvApplicationList.Rows.Count - 1;
                 if (e.RowIndex != lastRowIndex)
                 {
-                    this.RowId = e.RowIndex;
-                    updateGridDataRowSelected(this.dgvApplicationList.Rows[e.RowIndex]);
+                    SelectedRowId = e.RowIndex;
+                    updateGridDataRowSelected(dgvApplicationList.Rows[e.RowIndex]);
                 }
-                else { clearFields(); }
+                else 
+                {
+                    clearFields(); 
+                }
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -401,75 +452,95 @@ namespace ApplicationInstaller
             }
         }
 
+        /// <summary>
+        /// Handles right clicking on the DataGridView Application List
+        /// 
+        /// This will show an context menu that allows the user to delete the selected
+        /// row
+        /// </summary>
+        /// <param name="e"></param>
         private void RightMouseClickDGV(DataGridViewCellMouseEventArgs e)
         {
             int rowSelected = e.RowIndex;
             if (e.RowIndex != -1)
             {
-                this.dgvApplicationList.ClearSelection();
-                this.dgvApplicationList.Rows[rowSelected].Selected = true;
-                this.dgvApplicationList.ContextMenuStrip.Show(this.dgvApplicationList, e.Location);
+                dgvApplicationList.ClearSelection();
+                dgvApplicationList.Rows[rowSelected].Selected = true;
+                dgvApplicationList.ContextMenuStrip.Show(dgvApplicationList, e.Location);
             }
         }
 
-       private void menuDeleteRowDeleteItem_Click(object sender, EventArgs e)
-       {
-           // Delete application from the DataGridView
-           DataGridViewRow row = this.dgvApplicationList.SelectedRows[0];
-           this.dgvApplicationList.Rows.Remove(row);
-       }
+        /// <summary>
+        /// Deletes the selected row from the DataGridView Application List
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuDeleteRowDeleteItem_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = dgvApplicationList.SelectedRows[0];
+            dgvApplicationList.Rows.Remove(row);
+        }
 
-       private void PopulateSwitches()
-       {
-           String SwitchesConfigFile = @"Configs\Switches.xml";
-           if (File.Exists(SwitchesConfigFile))
-           {
-               try
-               {
-                   switches = GenericXmlProcessor<Switches>.DeserializeXMLToList(SwitchesConfigFile);
-                   cbSwitches.Items.Add(String.Empty);
-                   AddSwitchToComboBoxSwitches();
-               }
-               catch (XmlValidatorException err)
-               {
-                   String ExceptionMessage = err.Message.ToString();
-                   String ErrorMessage = String.Format("Couldn't load the switches config file with:\n\n{0}", ExceptionMessage);
-                   MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-               }
-           }
-       }
+        /// <summary>
+        /// Attempts to load the Switches.xml configuration file from the relative
+        /// path of Configs. If it can't find it it shows a warning message dialog box
+        /// </summary>
+        private void PopulateSwitches()
+        {
+            String SwitchesConfigFile = @"Configs\Switches.xml";
+            if (File.Exists(SwitchesConfigFile))
+            {
+                switches = GenericXmlProcessor<Switches>.DeserializeXMLToList(SwitchesConfigFile);
+                cbSwitches.Items.Add(String.Empty);
+                AddSwitchToComboBoxSwitches();
+            }
+            else
+            {
+                String ErrorMessage = String.Format("Couldn't load the switches config file:\n\n{0}", SwitchesConfigFile);
+                MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
 
-       private void AddSwitchToComboBoxSwitches()
-       {
-           cbSwitches.Items.Clear();
-           foreach (var s in switches)
-           {
-               cbSwitches.Items.Add(s.Switch.ToString());
-           }
-       }
+        /// <summary>
+        /// Clears all items from the switches combo box then loops through
+        /// the switches and adds them to the combo box
+        /// </summary>
+        private void AddSwitchToComboBoxSwitches()
+        {
+            cbSwitches.Items.Clear();
+            foreach (var s in switches)
+            {
+                cbSwitches.Items.Add(s.Switch.ToString());
+            }
+        }
 
-       private void SwitchEditor()
-       {
-           EditSwitches SwitchesForm = new EditSwitches(this, switches);
-           this.Hide();
-           SwitchesForm.ShowDialog();
-           this.Show();
-           PopulateSwitches();
-       }
+        /// <summary>
+        /// Show the Switch Editor form that allows the user to add, remove or update
+        /// any of the load switches. The user can also same the switches back out
+        /// to the configuration file
+        /// </summary>
+        private void SwitchEditor()
+        {
+            EditSwitches SwitchesForm = new EditSwitches(this, switches);
+            this.Hide();
+            SwitchesForm.ShowDialog();
+            this.Show();
+            PopulateSwitches();
+        }
 
-       private void lblSwitches_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-       {
-           SwitchEditor();
-       }
+        private void lblSwitches_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            SwitchEditor();
+        }
 
-       private void switchesToolStripMenuItem_Click(object sender, EventArgs e)
-       {
-           SwitchEditor();
-       }
+        private void switchesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SwitchEditor();
+        }
 
-       private void cbSwitches_Click(object sender, MouseEventArgs e)
-       {
-           cbSwitches.DroppedDown = true;
-       }
+        private void cbSwitches_Click(object sender, MouseEventArgs e)
+        {
+            cbSwitches.DroppedDown = true;
+        }
     }
 }
