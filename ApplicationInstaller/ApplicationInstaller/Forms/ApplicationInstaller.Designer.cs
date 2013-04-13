@@ -257,7 +257,7 @@
             this.switchEditorToolStripMenuItem.Name = "switchEditorToolStripMenuItem";
             this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.switchEditorToolStripMenuItem.Text = "Switch Editor";
-            this.switchEditorToolStripMenuItem.Click += new System.EventHandler(this.switchEditorToolStripMenuItem_Click_1);
+            this.switchEditorToolStripMenuItem.Click += new System.EventHandler(this.switchEditorToolStripMenuItem_Click);
             // 
             // scriptToolStripMenuItem
             // 

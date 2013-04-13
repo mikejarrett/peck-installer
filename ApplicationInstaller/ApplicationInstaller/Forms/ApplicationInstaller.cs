@@ -135,6 +135,12 @@ namespace ApplicationInstaller
             }
         }
 
+        /// <summary>
+        /// Hides this current form, instantiates a new instance of the Configuration
+        /// Builder form and shows that instance
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void configBuilderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -143,6 +149,12 @@ namespace ApplicationInstaller
             this.Show();
         }
 
+        /// <summary>
+        /// When the "(Un)Select all applications" checkbox is ticked, either select all the
+        /// items or unselect all the items in the checkedListBoxApps
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbAppToggle_CheckedChanged(object sender, EventArgs e)
         {
             for (int i = 0; i < checkedListBoxApps.Items.Count; i++)
@@ -159,44 +171,11 @@ namespace ApplicationInstaller
             }
         }
 
-        private void linkLabelInstall_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            BuildHolder();
-            InstallPrompt();
-            installInformationHolder = null;
-        }
-
-        private void BuildHolder()
-        {
-            installInformationHolder = new InstallInformationHolder(cbWindowsUpdates.Checked);
-
-            // Service Pack Information
-            installInformationHolder.installServicePack = false;
-            if (servicePack != null)
-            {
-                installInformationHolder.installServicePack = true;
-                installInformationHolder.servicePack = servicePack;
-            }
-            else
-            {
-                // Update information
-                installInformationHolder.updateCount = (cbWindowsUpdates.Checked) ? listUpdates.Count : 0;
-                installInformationHolder.updatesToInstall = listUpdates;
-
-                // Application information
-                installInformationHolder.applicationCount = checkedListBoxApps.CheckedItems.Count;
-                installInformationHolder.BuildAppsList(checkedListBoxApps.CheckedItems.Cast<String>().ToList(), listApps);
-
-                // Additional configuration information
-                installInformationHolder.additionalCount = clbAdditionalConfigurations.CheckedItems.Count;
-                installInformationHolder.BuildAdditionalList(clbAdditionalConfigurations.CheckedItems.Cast<String>().ToList(), additionalConfigApps);
-
-                // Registry information
-                installInformationHolder.registryCount = clbRegistryFiles.CheckedItems.Count;
-                installInformationHolder.registryToInstall = clbRegistryFiles.CheckedItems.Cast<String>().ToList();
-            }
-        }
-
+        /// <summary>
+        /// Not sure if I really need to write this but -- disables all items on the form.
+        /// 
+        /// This and EnableAllItems should probably be either refactored or removed
+        /// </summary>
         private void DisableAllItems()
         {
             cbWindowsUpdates.Enabled = false;
@@ -220,6 +199,12 @@ namespace ApplicationInstaller
             linkStartInstall.Enabled = true;
         }
 
+        /// <summary>
+        /// Show a dialog window that allows the user to select an additional registry files
+        /// to be processed when the installer is run
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void linkAddRegistryFiles_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             OpenFileDialog addRegistryFilesDialog = new OpenFileDialog();
@@ -238,10 +223,18 @@ namespace ApplicationInstaller
             }
         }
         
+        /// <summary>
+        /// Shows a open file dialog box that allows the user to select addition configuration
+        /// files that will be added to the list of items to processed when the installer is run
+        /// 
+        /// The default start location is the relative Configs folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void linkAdditionalConfigs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             OpenFileDialog additionalConfigFilesDialog = new OpenFileDialog();
-            additionalConfigFilesDialog.Filter = "Registry Files (*.XML)|*.XML;";
+            additionalConfigFilesDialog.Filter = "Config Files (*.XML)|*.XML;";
             additionalConfigFilesDialog.Multiselect = true;
             additionalConfigFilesDialog.Title = "Additional Config Files";
             additionalConfigFilesDialog.InitialDirectory = Path.Combine(Application.StartupPath, @"Configs");
@@ -288,6 +281,14 @@ namespace ApplicationInstaller
             }
         }
 
+        /// <summary>
+        /// Shows and open file dialog box that allows the user to install a single executable
+        /// file of types exe, msi or msu. After they select a file another dialog window will
+        /// show prompting the user to enter any switches they wish to include when installing
+        /// the file. The default that is shown to them is "/unattent /warnrestart"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbServicePack_CheckedChanged(object sender, EventArgs e)
         {
             if (cbServicePack.Checked)
@@ -301,7 +302,7 @@ namespace ApplicationInstaller
                 {
                     servicePack = new App(servicePackDialog.FileName);
                     servicePackSwitches = "/unattend /warnrestart";
-                    servicePack.InstallSwitch = Prompt(servicePackSwitches);
+                    servicePack.InstallSwitch = SingleFileSwitchesPrompt(servicePackSwitches);
                 }
                 else
                 {
@@ -317,7 +318,13 @@ namespace ApplicationInstaller
             }
         }
 
-        private String Prompt(String defaultSwitch)
+        /// <summary>
+        /// Shows a dialog box that allows the user to manually type in switches
+        /// or argument that will be used during the single file installation.
+        /// </summary>
+        /// <param name="defaultSwitch">The default switch which is shown in the text box to the user</param>
+        /// <returns>The switch that is the text box when the user presses return</returns>
+        private String SingleFileSwitchesPrompt(String defaultSwitch)
         {
             Form prompt = new Form();
             prompt.Width = 373;
@@ -335,18 +342,16 @@ namespace ApplicationInstaller
             return textBox.Text;
         }
 
-        private void InstallPrompt()
-        {
-            DisableSecurityZones();
-            this.Hide();
-            InstallInfoform installInfoForm = new InstallInfoform(installInformationHolder);
-            installInfoForm.ShowDialog();
-            this.Show();
-            EnableAllitems();
-            EnableSecurityZones();
-            linkStartInstall.Enabled = true;
-        }
-
+        /// <summary>
+        /// TODO: Capture the current state of the Internet Settings Zones so we can reapply when we are done installing
+        /// 
+        /// This disables the Internet / Windows Explorer sercurity zones whilst running the installer.
+        /// 
+        /// The reason for doing this is if the files are downloaded from the internet (which is almost
+        /// a guranteed thing) Windows will prompt the user every time a new file installtion is started
+        /// warning them that it may be unsafe to install the file which would defeat the purpose of
+        /// this silent installer.
+        /// </summary>
         private void DisableSecurityZones()
         {
             Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\0").SetValue("1806", 0);
@@ -358,6 +363,12 @@ namespace ApplicationInstaller
             Registry.CurrentUser.Flush();
         }
 
+        /// <summary>
+        /// TODO: Once we have capture there current levels, reapply them here instead of settings them back
+        /// to default levels
+        /// 
+        /// Reverses the changes of DisableSecurityZones be setting them back to the default levels.
+        /// </summary>
         private void EnableSecurityZones()
         {
             Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\2").SetValue("1806", 1);
@@ -367,23 +378,39 @@ namespace ApplicationInstaller
             Registry.CurrentUser.Flush();
         }
 
+        /// <summary>
+        /// Show open file dialog box that allows a user to select a singal file that will be added
+        /// to the additional applications checkedlistbox. After a file is selected show the 
+        /// SingleSFileSwitchesPrompt set the app's InstallSwitch to the returned value then
+        /// add it to the checkedlistbox in the correct order
+        /// 
+        /// (see comments on UpdateCheckedListAdditionalConfigApps() for ordering)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void linkSingleApp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Executables (*.EXE;*.MSI;*.MSU;*.BAT;*.CMD)|*.EXE;*.MSI;*.MSU;*.BAT;*.CMD";
+            openFileDialog.Filter = "Executables (*.exe;*.msi;*.msu;*.bat;*.cmd)|*.EXE;*.MSI;*.MSU;*.BAT;*.CMD";
             openFileDialog.Multiselect = false;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 App app = new App(openFileDialog.FileName);
-                app.InstallSwitch = Prompt("");
+                app.InstallSwitch = SingleFileSwitchesPrompt("");
                 additionalConfigApps.Add(app);
-                clbAdditionalConfigurations.Items.Add(app.ToString());
+                UpdateCheckedListAdditionalConfigApps();
+                /*clbAdditionalConfigurations.Items.Add(app.ToString());
                 int idx = clbAdditionalConfigurations.Items.Count - 1;
-                clbAdditionalConfigurations.SetItemCheckState(idx, CheckState.Checked);
+                clbAdditionalConfigurations.SetItemCheckState(idx, CheckState.Checked);*/
             }
         }
 
+        /// <summary>
+        /// Close the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -414,31 +441,35 @@ namespace ApplicationInstaller
             tbDescription.Text = tbFirstName.Text.ToString() + " " + tbLastName.Text.ToString() + "'s Computer";
         }
 
+        /// <summary>
+        /// Show the EditSwitches form if the Switches.xml file is there else show an exclamation dialog box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void switchEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             String SwitchesConfigFile = @"Configs\Switches.xml";
             if (File.Exists(SwitchesConfigFile))
             {
-                //var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
-                try
-                {
-                    List<Switches> switches = GenericXmlProcessor<Switches>.DeserializeXMLToList(SwitchesConfigFile);
-                    EditSwitches SwitchesForm = new EditSwitches(this, switches);
-                    SwitchesForm.ShowDialog();
-                }
-                catch (XmlValidatorException err)
-                {
-                    String ExceptionMessage = err.Message.ToString();
-                    String ErrorMessage = String.Format("Couldn't load the switches config file with:\n\n{0}", ExceptionMessage);
-                    MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                this.Hide();
+                List<Switches> switches = GenericXmlProcessor<Switches>.DeserializeXMLToList(SwitchesConfigFile);
+                EditSwitches SwitchesForm = new EditSwitches(this, switches);
+                SwitchesForm.ShowDialog();
             }
-            else 
+            else
             {
-                Directory.CreateDirectory(@"Configs");
+                String ErrorMessage = String.Format("Couldn't load the switches config file: {0}", SwitchesConfigFile);
+                MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+            this.Show();
         }
 
+        /// <summary>
+        /// When the "(Un)Select all applications" checkbox is ticked, either select all the
+        /// items or unselect all the items in the cbAdditional
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbAdditional_CheckedChanged(object sender, EventArgs e)
         {
             for (int i = 0; i < clbAdditionalConfigurations.Items.Count; i++)
@@ -455,33 +486,71 @@ namespace ApplicationInstaller
             }
         }
 
-        private void switchEditorToolStripMenuItem_Click_1(object sender, EventArgs e)
+        /// <summary>
+        /// Processes the selected installations and configuartions the user selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabelInstall_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            
-            String SwitchesConfigFile = @"Configs\Switches.xml";
-            if (File.Exists(SwitchesConfigFile))
+            BuildHolder();
+            InstallPrompt();
+            installInformationHolder = null;
+        }
+
+        /// <summary>
+        /// Instantiates an instance of InstallInformationHolder which holds all the
+        /// selected applications, updates and registry files to be installed or updated
+        /// </summary>
+        private void BuildHolder()
+        {
+            installInformationHolder = new InstallInformationHolder(cbWindowsUpdates.Checked);
+
+            // Service Pack Information
+            installInformationHolder.installServicePack = false;
+            if (servicePack != null)
             {
-                //var xmlvalidation = new XmlProcessor(SwitchesConfigFile);
-                try
-                {
-                    this.Hide();
-                    List<Switches> switches = GenericXmlProcessor<Switches>.DeserializeXMLToList(SwitchesConfigFile);
-                    EditSwitches switchesForm = new EditSwitches(this, switches);
-                    switchesForm.ShowDialog();
-                }
-                catch (XmlValidatorException err)
-                {
-                    String ExceptionMessage = err.Message.ToString();
-                    String ErrorMessage = String.Format("Couldn't load the switches config file with:\n\n{0}", ExceptionMessage);
-                    MessageBox.Show(ErrorMessage, "Couldn't load Switches Config", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                finally
-                {
-                    this.Show();
-                }
+                installInformationHolder.installServicePack = true;
+                installInformationHolder.servicePack = servicePack;
+            }
+            else
+            {
+                // Update information
+                installInformationHolder.updateCount = (cbWindowsUpdates.Checked) ? listUpdates.Count : 0;
+                installInformationHolder.updatesToInstall = listUpdates;
+
+                // Application information
+                installInformationHolder.applicationCount = checkedListBoxApps.CheckedItems.Count;
+                installInformationHolder.BuildAppsList(checkedListBoxApps.CheckedItems.Cast<String>().ToList(), listApps);
+
+                // Additional configuration information
+                installInformationHolder.additionalCount = clbAdditionalConfigurations.CheckedItems.Count;
+                installInformationHolder.BuildAdditionalList(clbAdditionalConfigurations.CheckedItems.Cast<String>().ToList(), additionalConfigApps);
+
+                // Registry information
+                installInformationHolder.registryCount = clbRegistryFiles.CheckedItems.Count;
+                installInformationHolder.registryToInstall = clbRegistryFiles.CheckedItems.Cast<String>().ToList();
             }
         }
 
+        private void InstallPrompt()
+        {
+            DisableSecurityZones();
+            this.Hide();
+            InstallInfoform installInfoForm = new InstallInfoform(installInformationHolder);
+            installInfoForm.ShowDialog();
+            this.Show();
+            EnableAllitems();
+            EnableSecurityZones();
+            linkStartInstall.Enabled = true;
+        }
+
+        /// <summary>
+        /// Collects all selects applications and registry files and writes them to a command / batch
+        /// to remove the need for this installer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void writeCurrentSelectionToBatchFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog scriptFileDialog = new SaveFileDialog();
