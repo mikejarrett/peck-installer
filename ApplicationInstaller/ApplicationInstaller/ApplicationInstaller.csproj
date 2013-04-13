@@ -85,11 +85,11 @@
     <Compile Include="Forms\EditSwitches.Designer.cs">
       <DependentUpon>EditSwitches.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\InstallInfoform.cs">
+    <Compile Include="Forms\InstallInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\InstallInfoform.Designer.cs">
-      <DependentUpon>InstallInfoform.cs</DependentUpon>
+    <Compile Include="Forms\InstallInfoForm.Designer.cs">
+      <DependentUpon>InstallInfoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Schemas\Applications.cs" />
     <Compile Include="Classes\Exceptions.cs" />
@@ -111,8 +111,8 @@
     <EmbeddedResource Include="Forms\EditSwitches.resx">
       <DependentUpon>EditSwitches.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\InstallInfoform.resx">
-      <DependentUpon>InstallInfoform.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\InstallInfoForm.resx">
+      <DependentUpon>InstallInfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

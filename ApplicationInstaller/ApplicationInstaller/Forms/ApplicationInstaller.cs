@@ -537,7 +537,7 @@ namespace ApplicationInstaller
         {
             DisableSecurityZones();
             this.Hide();
-            InstallInfoform installInfoForm = new InstallInfoform(installInformationHolder);
+            InstallInfoForm installInfoForm = new InstallInfoForm(installInformationHolder);
             installInfoForm.ShowDialog();
             this.Show();
             EnableAllitems();

@@ -1,6 +1,6 @@
 ﻿namespace ApplicationInstaller
 {
-    partial class InstallInfoform
+    partial class InstallInfoForm
     {
         /// <summary>
         /// Required designer variable.

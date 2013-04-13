@@ -5,7 +5,7 @@ namespace ApplicationInstaller.Classes
 {
     public static class Slugifier
     {
-        // Slight modified from https://gist.github.com/onebeatconsumer/1329568
+        // Slightly modified from https://gist.github.com/onebeatconsumer/1329568
         /// <summary>
         /// Generates a permalink slug for passed string
         /// </summary>

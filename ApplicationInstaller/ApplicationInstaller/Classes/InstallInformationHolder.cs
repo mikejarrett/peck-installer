@@ -53,6 +53,7 @@ namespace ApplicationInstaller.Classes
             registryToInstall = new List<String>();
         }
 
+
         public void BuildAppsList(List<String> appNames, List<App> appList)
         {
             foreach (String name in appNames)
@@ -74,6 +75,13 @@ namespace ApplicationInstaller.Classes
             return updateCount + applicationCount + additionalCount + registryCount;
         }
 
+        /// <summary>
+        /// Given a filepath, write a batch (.bat) or command (.cmd) file containing
+        /// all the selected updates, applications and registry files. This removes
+        /// the need to launch this application to install updates and applications
+        /// and can there for become just a configuration tool.
+        /// </summary>
+        /// <param name="FilePath">Filepath and filename of the new file</param>
         public void WriteScriptFile(String FilePath)
         {
             List<App> TotalInstall = TotalInstallSort(new List<App>());
@@ -85,16 +93,16 @@ namespace ApplicationInstaller.Classes
             }
         }
 
-        private void WriteRegistryToFile(System.IO.StreamWriter file)
+        private static void WriteHeader(System.IO.StreamWriter file)
         {
-            if (registryCount > 0)
-            {
-                file.WriteLine("echo Registering registry files...");
-                foreach (var reg in registryToInstall)
-                {
-                    file.WriteLine(String.Format("regedit.exe /s {0}", reg));
-                }
-            }
+            String header = String.Format("@echo off\n" +
+                "cls\n" +
+                "echo ==============================================================\n" +
+                "echo      Script file generated from Application Installer v{0}\n" +
+                "echo                 Generated  {1}\n" +
+                "echo ==============================================================\n" +
+                "echo.", "1", DateTime.Now);
+            file.WriteLine(header);
         }
 
         private static void WriteAppsToFile(List<App> TotalInstall, System.IO.StreamWriter file)
@@ -121,6 +129,18 @@ namespace ApplicationInstaller.Classes
             }
         }
 
+        private void WriteRegistryToFile(System.IO.StreamWriter file)
+        {
+            if (registryCount > 0)
+            {
+                file.WriteLine("echo Registering registry files...");
+                foreach (var reg in registryToInstall)
+                {
+                    file.WriteLine(String.Format("regedit.exe /s {0}", reg));
+                }
+            }
+        }
+
         private List<App> TotalInstallSort(List<App> TotalInstall)
         {
             var appList = new List<List<App>>();
@@ -143,21 +163,8 @@ namespace ApplicationInstaller.Classes
                        ? app2.InstallSwitch.CompareTo(app1.InstallSwitch)
                         : app2.Name.CompareTo(app1.Name)
                   );
-            }
-            );
+            });
             return TotalInstall;
-        }
-
-        private static void WriteHeader(System.IO.StreamWriter file)
-        {
-            String header = String.Format("@echo off\n" +
-                "cls\n" +
-                "echo ==============================================================\n" +
-                "echo      Script file generated from Application Installer v{0}\n" +
-                "echo                 Generated  {1}\n" +
-                "echo ==============================================================\n" +
-                "echo.", "1", DateTime.Now);
-            file.WriteLine(header);
         }
     }
 }

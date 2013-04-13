@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ApplicationInstaller
 {
-    public partial class InstallInfoform : Form
+    public partial class InstallInfoForm : Form
     {
         public delegate void ProgressBarDelegate();
         public delegate void RichTextDelegate(String updateRichText);
@@ -16,7 +16,7 @@ namespace ApplicationInstaller
         InstallInformationHolder installInformationHolder
         { set; get; }
 
-        public InstallInfoform(InstallInformationHolder installInfoHolder)
+        public InstallInfoForm(InstallInformationHolder installInfoHolder)
         {
             installInformationHolder = installInfoHolder;
             InitializeComponent();
