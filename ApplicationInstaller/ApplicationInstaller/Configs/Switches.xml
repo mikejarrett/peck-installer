@@ -10,7 +10,7 @@
     <Switch>/quiet /passive /norestart</Switch>
   </Switches>
   <Switches>
-    <Switch>/s</Switch>
+    <Switch>/S</Switch>
   </Switches>
   <Switches>
     <Switch>/s /v/qn" IEXPLORER=1 MOZILLA=1 REBOOT=Suppress JAVAUPDATE=0 WEBSTARTICON=0"</Switch>

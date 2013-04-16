@@ -77,7 +77,7 @@ namespace ApplicationInstaller
         private void LoadWindowsUpdatesCofig()
         {
             String filePath = String.Format(@"Configs\{0}.xml", Slugifier.GenerateSlug(OsName));
-            List<App> listUpdates = new List<App>();
+            listUpdates = new List<App>();
             if (File.Exists(filePath))
             {
                 listUpdates = GenericXmlProcessor<App>.DeserializeXMLToList(filePath);
@@ -101,8 +101,6 @@ namespace ApplicationInstaller
         private void LoadApplicationConfig()
         {
             String filePath = @"Configs\Applications.xml";
-            List<App> listApps = new List<App>();
-
             if (File.Exists(filePath))
             {
                 listApps = GenericXmlProcessor<App>.DeserializeXMLToList(filePath);
@@ -526,7 +524,7 @@ namespace ApplicationInstaller
             else
             {
                 // Update information
-                installInformationHolder.updateCount = (cbWindowsUpdates.Checked) ? listUpdates.Count : 0;
+                installInformationHolder.updateCount = (cbWindowsUpdates.Checked == true) ? listUpdates.Count : 0;
                 installInformationHolder.updatesToInstall = listUpdates;
 
                 // Application information

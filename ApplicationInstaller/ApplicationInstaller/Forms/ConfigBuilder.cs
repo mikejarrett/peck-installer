@@ -172,11 +172,14 @@ namespace ApplicationInstaller
                     Filename = row.Cells["filename"].Value.ToString().Trim(),
                     RelativePath = row.Cells["relativePath"].Value.ToString(),
                     AbsolutePath = row.Cells["absolutePath"].Value.ToString(),
-                    InstallSwitch = row.Cells["installSwitches"].Value.ToString().Trim(),
-                    Version = row.Cells["version"].Value.ToString().Trim(),
+                    InstallSwitch = String.Empty,
                     Architecture = String.Empty,
                     FileSize = 0.0
                 };
+                application.InstallSwitch = row.Cells["installSwitches"].Value != null ? row.Cells["installSwitches"].Value.ToString().Trim() : String.Empty;
+                application.Version = row.Cells["version"].Value != null ? row.Cells["version"].Value.ToString().Trim() : String.Empty;
+                application.Architecture = row.Cells["architecture"].Value != null ? row.Cells["architecture"].Value.ToString().Trim() : String.Empty;
+                application.FileSize = row.Cells["FileSize"].Value != null ? Convert.ToDouble(row.Cells["FileSize"].Value) : 0.0;
 
                 if (row.Cells["architecture"].Value != null)
                 {
