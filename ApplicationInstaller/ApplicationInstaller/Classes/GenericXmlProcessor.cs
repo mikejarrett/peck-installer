@@ -27,7 +27,7 @@ namespace ApplicationInstaller.Classes
             }
             catch (Exception)
             {
-
+                // TODO: Log this!! Don't just silently fail it.
             }
         }
 
@@ -120,6 +120,14 @@ namespace ApplicationInstaller.Classes
             else if (validator.Equals("Switches"))
             {
                 xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Switches.xsd");
+            }
+            else if (validator.Equals("SwitchMapping"))
+            {
+                xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.AppSwitchMappings.xsd");
+            }
+            else
+            {
+                return false;
             }
             Boolean valid = true;
             XmlSchemaSet xmlSchemaSet = new XmlSchemaSet();
