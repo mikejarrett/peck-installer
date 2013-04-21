@@ -1,5 +1,6 @@
 ﻿using ApplicationInstaller.Classes;
 using ApplicationInstaller.Schemas;
+using ApplicationInstaller.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -83,7 +84,7 @@ namespace ApplicationInstaller
             else if (!WithErrors() && SelectedRowId == -1)
             {
                 AddRowToBottomOfDataGridView();
-                clearFields();
+                ClearFields();
             }
             else if (!WithErrors() && SelectedRowId != -1)
             {
@@ -116,7 +117,7 @@ namespace ApplicationInstaller
             row.Cells["version"].Value = tbVersion.Text.ToString();
             row.Cells["architecture"].Value = cbArchitecture.Text.ToString();
             row.Cells["FileSize"].Value = Convert.ToDouble(tbFileSize.Text.ToString());
-            clearFields();
+            ClearFields();
         }
 
         /// <summary>
@@ -223,7 +224,7 @@ namespace ApplicationInstaller
         private void UpdateFieldsFromSelectedFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Executables & Scripts|*.exe;*.cmd;*.bat;*.msu;*.msi|All Files|*.*";
+            openFileDialog.Filter = "Executables & Scripts|*.exe;*.cmd;*.bat;*.msu;*.msi;*.msp|All Files|*.*";
             openFileDialog.Title = "Select a file";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -247,28 +248,86 @@ namespace ApplicationInstaller
 
         /// <summary>
         /// Take the selected directory and sub-directories and find all .exe, .bat, 
-        /// .cmd, .msi, .msu files and adds them DataGridView
+        /// .cmd, .msi, .msu, .msp files and adds them DataGridView
         /// </summary>
         private void GenerateConfigurationFromFolder()
         {
             clearRows();
+            List<SwitchMapping> mappedSwitches = new List<SwitchMapping>();
+            int determineSwitch = 0;
+            String selectSwitch = String.Empty;
+
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             folderBrowserDialog.Description = "Select folder to process...";
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                clearRows();
                 var files = Directory.EnumerateFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories)
                     .Where(s =>
                         s.EndsWith(".exe", StringComparison.OrdinalIgnoreCase) ||
                         s.EndsWith(".bat", StringComparison.OrdinalIgnoreCase) ||
                         s.EndsWith(".cmd", StringComparison.OrdinalIgnoreCase) ||
                         s.EndsWith(".msi", StringComparison.OrdinalIgnoreCase) ||
+                        s.EndsWith(".msp", StringComparison.OrdinalIgnoreCase) ||
                         s.EndsWith(".msu", StringComparison.OrdinalIgnoreCase)
                     );
 
+                ShowAppSwitchMappingForm(ref determineSwitch, ref selectSwitch);
+                mappedSwitches = GetMappedSwitches(mappedSwitches, determineSwitch);
+
                 foreach (string file in files)
                 {
-                    AddAppToDataGridView(new App(file.ToString()));                
+                    App newApp = new App(file.ToString());
+                    newApp = UpdateAppSwitchMappedSwitches(mappedSwitches, determineSwitch, selectSwitch, newApp);
+                    AddAppToDataGridView(newApp);                
+                }
+            }
+        }
+
+        private static App UpdateAppSwitchMappedSwitches(List<SwitchMapping> mappedSwitches, int determineSwitch, String selectSwitch, App newApp)
+        {
+            if (determineSwitch == 1)
+            {
+                foreach (var mappedSwitch in mappedSwitches)
+                {
+                    if (Levenshtein.Check(mappedSwitch.Name, newApp.Name, 70))
+                    {
+                        newApp.InstallSwitch = mappedSwitch.Switch;
+                        break;
+                    }
+
+                    if (Levenshtein.Check(mappedSwitch.Filename, newApp.Filename, 70))
+                    {
+                        newApp.InstallSwitch = mappedSwitch.Switch;
+                        break;
+                    }
+                }
+            }
+            else if (determineSwitch == 2)
+            {
+                newApp.InstallSwitch = selectSwitch;
+            }
+            return newApp;
+        }
+
+        private static List<SwitchMapping> GetMappedSwitches(List<SwitchMapping> mappedSwitches, int determineSwitch)
+        {
+            String generalMappingsConfig = @"Configs\AppSwitchMappings.xml";
+            if (determineSwitch == 1 && File.Exists(generalMappingsConfig))
+            {
+                mappedSwitches = GenericXmlProcessor<SwitchMapping>.DeserializeXMLToList(generalMappingsConfig);
+            }
+            return mappedSwitches;
+        }
+
+        private static void ShowAppSwitchMappingForm(ref int determineSwitch, ref String selectSwitch)
+        {
+            using (var appSwitchMappingForm = new AppSwitchMappingForm())
+            {
+                var result = appSwitchMappingForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    determineSwitch = appSwitchMappingForm.radioButtonCheckedID;
+                    selectSwitch = appSwitchMappingForm.strSwitch;
                 }
             }
         }
@@ -313,7 +372,7 @@ namespace ApplicationInstaller
 
         private void btnClearInput_Click(object sender, EventArgs e)
         {
-            clearFields();
+            ClearFields();
         }
 
         private void btnClearDataGridView_Click(object sender, EventArgs e)
@@ -333,7 +392,7 @@ namespace ApplicationInstaller
         /// <summary>
         /// Clears all form fields and resets the RowId to -1
         /// </summary>
-        private void clearFields()
+        private void ClearFields()
         {
             tbApplicationName.Text = String.Empty;
             tbFilename.Text = String.Empty;
@@ -351,7 +410,7 @@ namespace ApplicationInstaller
         /// of the selected row
         /// </summary>
         /// <param name="row"></param>
-        private void updateGridDataRowSelected(DataGridViewRow row)
+        private void UpdateGridDataRowSelected(DataGridViewRow row)
         {
             // Take the info from the select rows and place it in the entry form 
             tbApplicationName.Text = row.Cells["applicationName"].Value.ToString();
@@ -402,11 +461,11 @@ namespace ApplicationInstaller
                 int lastRowIndex = dgvApplicationList.Rows.Count - 1;
                 if (SelectedRowId != lastRowIndex)
                 {
-                    updateGridDataRowSelected(row);
+                    UpdateGridDataRowSelected(row);
                 }
                 else 
                 {  
-                    clearFields();  
+                    ClearFields();  
                 }
             }
         }
@@ -441,11 +500,11 @@ namespace ApplicationInstaller
                 if (e.RowIndex != lastRowIndex)
                 {
                     SelectedRowId = e.RowIndex;
-                    updateGridDataRowSelected(dgvApplicationList.Rows[e.RowIndex]);
+                    UpdateGridDataRowSelected(dgvApplicationList.Rows[e.RowIndex]);
                 }
                 else 
                 {
-                    clearFields(); 
+                    ClearFields(); 
                 }
             }
             catch (ArgumentOutOfRangeException ex)

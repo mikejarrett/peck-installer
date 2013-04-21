@@ -594,5 +594,18 @@ namespace ApplicationInstaller
                 }
             }
         }
+
+        private void editMappedSwitchesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String SwitchesConfigFile = @"Configs\Switches.xml";
+            if (File.Exists(SwitchesConfigFile))
+            {
+                this.Hide();
+                List<Switches> switches = GenericXmlProcessor<Switches>.DeserializeXMLToList(SwitchesConfigFile);
+                var switchListForm = new MappedSwitchesEditForm(switches);
+                switchListForm.ShowDialog();
+                this.Show();
+            }
+        }
     }
 }

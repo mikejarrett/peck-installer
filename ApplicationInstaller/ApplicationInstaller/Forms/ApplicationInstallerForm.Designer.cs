@@ -64,6 +64,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
+            this.editMappedSwitchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -240,7 +241,8 @@
             // 
             this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configBuilderToolStripMenuItem,
-            this.switchEditorToolStripMenuItem});
+            this.switchEditorToolStripMenuItem,
+            this.editMappedSwitchesToolStripMenuItem});
             this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
             this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
             this.configurationToolStripMenuItem.Text = "Configuration";
@@ -248,14 +250,14 @@
             // configBuilderToolStripMenuItem
             // 
             this.configBuilderToolStripMenuItem.Name = "configBuilderToolStripMenuItem";
-            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.configBuilderToolStripMenuItem.Text = "Config Builder";
             this.configBuilderToolStripMenuItem.Click += new System.EventHandler(this.configBuilderToolStripMenuItem_Click);
             // 
             // switchEditorToolStripMenuItem
             // 
             this.switchEditorToolStripMenuItem.Name = "switchEditorToolStripMenuItem";
-            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.switchEditorToolStripMenuItem.Text = "Switch Editor";
             this.switchEditorToolStripMenuItem.Click += new System.EventHandler(this.switchEditorToolStripMenuItem_Click);
             // 
@@ -425,6 +427,13 @@
             this.linkAddRegistryFiles.Text = "Add Registry Files";
             this.linkAddRegistryFiles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAddRegistryFiles_LinkClicked);
             // 
+            // editMappedSwitchesToolStripMenuItem
+            // 
+            this.editMappedSwitchesToolStripMenuItem.Name = "editMappedSwitchesToolStripMenuItem";
+            this.editMappedSwitchesToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.editMappedSwitchesToolStripMenuItem.Text = "Edit Mapped Switches";
+            this.editMappedSwitchesToolStripMenuItem.Click += new System.EventHandler(this.editMappedSwitchesToolStripMenuItem_Click);
+            // 
             // ApplicationInstaller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -493,6 +502,7 @@
         private System.Windows.Forms.ToolStripMenuItem switchEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scriptToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem writeCurrentSelectionToBatchFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editMappedSwitchesToolStripMenuItem;
 
     }
 }
