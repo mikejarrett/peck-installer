@@ -1,11 +1,11 @@
-﻿using ApplicationInstaller.Classes;
+﻿using ComputerUpdater.Classes;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace ApplicationInstaller
+namespace ComputerUpdater
 {
     public partial class InstallInfoForm : Form
     {

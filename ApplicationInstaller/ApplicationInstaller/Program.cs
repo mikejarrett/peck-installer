@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ApplicationInstaller
+namespace ComputerUpdater
 {
     static class Program
     {
@@ -22,7 +22,7 @@ namespace ApplicationInstaller
             }
             else
             {
-                Application.Run(new ApplicationInstaller());
+                Application.Run(new ComputerUpdateForm());
             }
         }
     }

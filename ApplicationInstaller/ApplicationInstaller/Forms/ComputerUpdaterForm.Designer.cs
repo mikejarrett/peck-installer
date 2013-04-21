@@ -1,6 +1,6 @@
-﻿namespace ApplicationInstaller
+﻿namespace ComputerUpdater
 {
-    partial class ApplicationInstaller
+    partial class ComputerUpdateForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationInstaller));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComputerUpdateForm));
             this.gbName = new System.Windows.Forms.GroupBox();
             this.cbAdditional = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();

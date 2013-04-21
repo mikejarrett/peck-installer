@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationInstaller.Classes
+namespace ComputerUpdater.Classes
 {
     // http://www.antedes.com/blog/csharp/percentage-match-between-two-strings-levenshtein-distance
     static class Levenshtein

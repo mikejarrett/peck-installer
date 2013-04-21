@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace ApplicationInstaller.Classes
+namespace ComputerUpdater.Classes
 {
     [Serializable]
     public class XmlValidatorException : Exception

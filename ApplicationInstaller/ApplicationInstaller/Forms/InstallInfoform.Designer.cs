@@ -1,4 +1,4 @@
-﻿namespace ApplicationInstaller
+﻿namespace ComputerUpdater
 {
     partial class InstallInfoForm
     {

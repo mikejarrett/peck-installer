@@ -61,15 +61,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Classes\TestGenericXmlProcessor.cs" />
+    <Compile Include="Classes\TestInstallInformationHolder.cs" />
     <Compile Include="Schemas\TestSwitches.cs" />
     <Compile Include="Schemas\TestApp.cs" />
     <Compile Include="Classes\TestSlugifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationInstaller\ApplicationInstaller.csproj">
+    <ProjectReference Include="..\ApplicationInstaller\ComputerUpdater.csproj">
       <Project>{25ffdb37-dc66-4700-9508-bfdfd07b76b7}</Project>
-      <Name>ApplicationInstaller</Name>
+      <Name>ComputerUpdater</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,11 @@
-﻿using ApplicationInstaller.Classes;
-using ApplicationInstaller.Schemas;
+﻿using ComputerUpdater.Classes;
+using ComputerUpdater.Schemas;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
-namespace ApplicationInstaller
+namespace ComputerUpdater
 {
     public partial class MappedSwitchesEditForm : Form
     {

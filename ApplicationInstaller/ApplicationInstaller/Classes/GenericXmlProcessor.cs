@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace ApplicationInstaller.Classes
+namespace ComputerUpdater.Classes
 {
     public class GenericXmlProcessor<T>
     {
@@ -115,15 +115,15 @@ namespace ApplicationInstaller.Classes
             String validator = GetNameOfType();
             if (validator.Equals("App"))
             {
-                xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Applications.xsd");
+                xsdStream = assembly.GetManifestResourceStream("ComputerUpdater.Validation.Applications.xsd");
             }
             else if (validator.Equals("Switches"))
             {
-                xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Switches.xsd");
+                xsdStream = assembly.GetManifestResourceStream("ComputerUpdater.Validation.Switches.xsd");
             }
             else if (validator.Equals("SwitchMapping"))
             {
-                xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.AppSwitchMappings.xsd");
+                xsdStream = assembly.GetManifestResourceStream("ComputerUpdater.Validation.AppSwitchMappings.xsd");
             }
             else
             {

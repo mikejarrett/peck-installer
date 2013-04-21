@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ApplicationInstaller.Classes;
+using ComputerUpdater.Classes;
 
 namespace Tests
 {

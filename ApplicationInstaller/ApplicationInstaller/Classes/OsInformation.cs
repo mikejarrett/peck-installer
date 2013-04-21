@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ApplicationInstaller.Classes
+namespace ComputerUpdater.Classes
 {
     static class OsInformation
     {

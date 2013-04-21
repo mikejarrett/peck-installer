@@ -1,5 +1,5 @@
-﻿using ApplicationInstaller.Classes;
-using ApplicationInstaller.Schemas;
+﻿using ComputerUpdater.Classes;
+using ComputerUpdater.Schemas;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ApplicationInstaller
+namespace ComputerUpdater
 {
-    public partial class ApplicationInstaller : Form
+    public partial class ComputerUpdateForm : Form
     {
         public String OsName
         { get; set; }
@@ -39,7 +39,7 @@ namespace ApplicationInstaller
         public InstallInformationHolder installInformationHolder
         { get; set; }
 
-        public ApplicationInstaller()
+        public ComputerUpdateForm()
         {
             EnsureDirectoryStructure();
             SaveInternetSettingZones();

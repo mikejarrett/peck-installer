@@ -1,4 +1,4 @@
-﻿namespace ApplicationInstaller.Forms
+﻿namespace ComputerUpdater.Forms
 {
     partial class AppSwitchMappingForm
     {

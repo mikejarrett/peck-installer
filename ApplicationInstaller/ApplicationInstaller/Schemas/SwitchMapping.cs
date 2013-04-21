@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 using System.Xml.Serialization;
 
-namespace ApplicationInstaller.Schemas
+namespace ComputerUpdater.Schemas
 {
     public class SwitchMapping
     {

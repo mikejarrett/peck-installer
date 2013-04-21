@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ApplicationInstaller.Forms
+namespace ComputerUpdater.Forms
 {
     public partial class AppSwitchMappingForm : Form
     {

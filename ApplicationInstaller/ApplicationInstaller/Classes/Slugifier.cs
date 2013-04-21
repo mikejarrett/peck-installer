@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace ApplicationInstaller.Classes
+namespace ComputerUpdater.Classes
 {
     public static class Slugifier
     {

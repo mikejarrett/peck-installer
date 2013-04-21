@@ -1,6 +1,6 @@
-﻿using ApplicationInstaller.Classes;
-using ApplicationInstaller.Schemas;
-using ApplicationInstaller.Forms;
+﻿using ComputerUpdater.Classes;
+using ComputerUpdater.Schemas;
+using ComputerUpdater.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace ApplicationInstaller
+namespace ComputerUpdater
 {
     public partial class ConfigBuilder : Form
     {

@@ -1,5 +1,5 @@
-﻿using ApplicationInstaller.Schemas;
-using ApplicationInstaller.Classes;
+﻿using ComputerUpdater.Schemas;
+using ComputerUpdater.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;

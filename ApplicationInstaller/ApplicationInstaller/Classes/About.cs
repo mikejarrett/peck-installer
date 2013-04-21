@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ApplicationInstaller.Classes
+namespace ComputerUpdater.Classes
 {
     static class About
     {

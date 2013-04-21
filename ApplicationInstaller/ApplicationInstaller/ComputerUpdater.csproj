@@ -7,7 +7,7 @@
     <ProjectGuid>{25FFDB37-DC66-4700-9508-BFDFD07B76B7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ApplicationInstaller</RootNamespace>
+    <RootNamespace>ComputerUpdater</RootNamespace>
     <AssemblyName>Computer Updater</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -108,11 +108,11 @@
     <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ApplicationInstallerForm.cs">
+    <Compile Include="Forms\ComputerUpdaterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ApplicationInstallerForm.Designer.cs">
-      <DependentUpon>ApplicationInstallerForm.cs</DependentUpon>
+    <Compile Include="Forms\ComputerUpdaterForm.Designer.cs">
+      <DependentUpon>ComputerUpdaterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\InstallInformationHolder.cs" />
     <Compile Include="Classes\OsInformation.cs" />
@@ -156,8 +156,8 @@
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ApplicationInstallerForm.resx">
-      <DependentUpon>ApplicationInstallerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ComputerUpdaterForm.resx">
+      <DependentUpon>ComputerUpdaterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AppSwitchMappingForm.resx">
       <DependentUpon>AppSwitchMappingForm.cs</DependentUpon>

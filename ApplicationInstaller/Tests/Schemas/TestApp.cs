@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ApplicationInstaller.Schemas;
-using ApplicationInstaller.Classes;
+using ComputerUpdater.Schemas;
+using ComputerUpdater.Classes;
 
 namespace Tests
 {
@@ -36,7 +36,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void TesEmptyFilePath()
+        public void TestEmptyFilePath()
         {
             Boolean isValid = App.XmlFileValid("");
             Assert.IsFalse(isValid);

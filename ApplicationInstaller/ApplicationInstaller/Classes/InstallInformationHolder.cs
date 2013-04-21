@@ -1,9 +1,9 @@
-﻿using ApplicationInstaller.Schemas;
+﻿using ComputerUpdater.Schemas;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ApplicationInstaller.Classes
+namespace ComputerUpdater.Classes
 {
     public class InstallInformationHolder
     {

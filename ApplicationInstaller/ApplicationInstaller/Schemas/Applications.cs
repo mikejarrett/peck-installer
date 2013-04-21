@@ -1,4 +1,4 @@
-﻿using ApplicationInstaller.Classes;
+﻿using ComputerUpdater.Classes;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace ApplicationInstaller.Schemas
+namespace ComputerUpdater.Schemas
 {
     public class App
     {
@@ -136,7 +136,7 @@ namespace ApplicationInstaller.Schemas
             }
 
             Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream xsdStream = assembly.GetManifestResourceStream("ApplicationInstaller.Validation.Applications.xsd");
+            Stream xsdStream = assembly.GetManifestResourceStream("ComputerUpdater.Validation.Applications.xsd");
             Boolean valid = true;
             XmlSchemaSet xmlSchemaSet = new XmlSchemaSet();
             XmlReader schemaReader = XmlReader.Create(xsdStream);
