@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSwitchMapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SwitchMapping>
+    <Name>CCleaner</Name>
+    <Filename>cleaner400.exe</Filename>
+    <Switch>/S</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>Java(TM) Platform SE 7 U21</Name>
+    <Filename>jre-7u21-windows-x64.exe</Filename>
+    <Switch>/s /v/qn" IEXPLORER=1 MOZILLA=1 REBOOT=Suppress JAVAUPDATE=0 WEBSTARTICON=0"</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>FHSetup</Name>
+    <Filename>FHSetup.exe</Filename>
+    <Switch>/S</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>dfsetup213</Name>
+    <Filename>dfsetup213.exe</Filename>
+    <Switch>/S</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>spsetup121</Name>
+    <Filename>spsetup121.exe</Filename>
+    <Switch>/S</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>spsetup121</Name>
+    <Filename>27.0.1453.56_chrome_installer.exe</Filename>
+    <Switch>/S</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>Firefox</Name>
+    <Filename>Firefox Setup 20.0.1.exe</Filename>
+    <Switch>-ms</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>Adobe Flash Player Installer</Name>
+    <Filename>install_flashplayer11x32.exe</Filename>
+    <Switch>-install</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>Malwarebytes Anti-Malware</Name>
+    <Filename>mbam-setup-1.75.0.1300.exe</Filename>
+    <Switch>/verysilent /norestart</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>Adobe Self Extractor</Name>
+    <Filename>AdbeRdr11002_en_US.exe</Filename>
+    <Switch>/sPB /msi /norestart ALLUSERS=1 EULA_ACCEPT=YES</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>wrar</Name>
+    <Filename>winrar-x64-420.exe</Filename>
+    <Switch>-s</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>wrar</Name>
+    <Filename>winrar420.exe</Filename>
+    <Switch>-s</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>vlc</Name>
+    <Filename>vlc-2.0.6-win64.exe</Filename>
+    <Switch>/language=en_US /S</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>vlc</Name>
+    <Filename>vlc-2.0.6-win32.exe</Filename>
+    <Switch>/language=en_US /S</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>Skype</Name>
+    <Filename>SkypeSetup.msi</Filename>
+    <Switch>/quiet /passive /norestart</Switch>
+  </SwitchMapping>
+  <SwitchMapping>
+    <Name>nppInstaller</Name>
+    <Filename>npp.6.3.2.Installer.exe</Filename>
+    <Switch>/S</Switch>
+  </SwitchMapping>
+</ArrayOfSwitchMapping>
