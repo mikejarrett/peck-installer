@@ -98,10 +98,10 @@ namespace ApplicationInstaller.Classes
             String header = String.Format("@echo off\n" +
                 "cls\n" +
                 "echo ==============================================================\n" +
-                "echo      Script file generated from Application Installer v{0}\n" +
+                "echo      Script file generated from Computer Updater v{0}\n" +
                 "echo                 Generated  {1}\n" +
                 "echo ==============================================================\n" +
-                "echo.", "1", DateTime.Now);
+                "echo.", About.AssemblyVersion, DateTime.Now);
             file.WriteLine(header);
         }
 

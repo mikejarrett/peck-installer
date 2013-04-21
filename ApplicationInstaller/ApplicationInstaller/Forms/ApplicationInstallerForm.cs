@@ -607,5 +607,11 @@ namespace ApplicationInstaller
                 this.Show();
             }
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var About = new AboutBox();
+            About.Show();
+        }
     }
 }

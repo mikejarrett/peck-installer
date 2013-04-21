@@ -47,6 +47,7 @@
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configBuilderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editMappedSwitchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.writeCurrentSelectionToBatchFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -64,7 +65,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
-            this.editMappedSwitchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -107,7 +109,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(197, 186);
+            this.label3.Location = new System.Drawing.Point(206, 186);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 9;
@@ -118,14 +120,14 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 186);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.Size = new System.Drawing.Size(94, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Load Additional";
+            this.label2.Text = "Load additional an";
             // 
             // linkSingleApp
             // 
             this.linkSingleApp.AutoSize = true;
-            this.linkSingleApp.Location = new System.Drawing.Point(227, 186);
+            this.linkSingleApp.Location = new System.Drawing.Point(235, 186);
             this.linkSingleApp.Name = "linkSingleApp";
             this.linkSingleApp.Size = new System.Drawing.Size(59, 13);
             this.linkSingleApp.TabIndex = 5;
@@ -156,12 +158,12 @@
             // linkAdditionalConfigs
             // 
             this.linkAdditionalConfigs.AutoSize = true;
-            this.linkAdditionalConfigs.Location = new System.Drawing.Point(83, 186);
+            this.linkAdditionalConfigs.Location = new System.Drawing.Point(97, 186);
             this.linkAdditionalConfigs.Name = "linkAdditionalConfigs";
-            this.linkAdditionalConfigs.Size = new System.Drawing.Size(116, 13);
+            this.linkAdditionalConfigs.Size = new System.Drawing.Size(111, 13);
             this.linkAdditionalConfigs.TabIndex = 4;
             this.linkAdditionalConfigs.TabStop = true;
-            this.linkAdditionalConfigs.Text = "Application Config Files";
+            this.linkAdditionalConfigs.Text = "Application Config File";
             this.linkAdditionalConfigs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAdditionalConfigs_LinkClicked);
             // 
             // checkedListBoxApps
@@ -214,7 +216,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.configurationToolStripMenuItem,
-            this.scriptToolStripMenuItem});
+            this.scriptToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(357, 24);
@@ -260,6 +263,13 @@
             this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.switchEditorToolStripMenuItem.Text = "Switch Editor";
             this.switchEditorToolStripMenuItem.Click += new System.EventHandler(this.switchEditorToolStripMenuItem_Click);
+            // 
+            // editMappedSwitchesToolStripMenuItem
+            // 
+            this.editMappedSwitchesToolStripMenuItem.Name = "editMappedSwitchesToolStripMenuItem";
+            this.editMappedSwitchesToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.editMappedSwitchesToolStripMenuItem.Text = "Edit Mapped Switches";
+            this.editMappedSwitchesToolStripMenuItem.Click += new System.EventHandler(this.editMappedSwitchesToolStripMenuItem_Click);
             // 
             // scriptToolStripMenuItem
             // 
@@ -427,12 +437,20 @@
             this.linkAddRegistryFiles.Text = "Add Registry Files";
             this.linkAddRegistryFiles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAddRegistryFiles_LinkClicked);
             // 
-            // editMappedSwitchesToolStripMenuItem
+            // helpToolStripMenuItem
             // 
-            this.editMappedSwitchesToolStripMenuItem.Name = "editMappedSwitchesToolStripMenuItem";
-            this.editMappedSwitchesToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.editMappedSwitchesToolStripMenuItem.Text = "Edit Mapped Switches";
-            this.editMappedSwitchesToolStripMenuItem.Click += new System.EventHandler(this.editMappedSwitchesToolStripMenuItem_Click);
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // ApplicationInstaller
             // 
@@ -448,7 +466,7 @@
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(720, 450);
             this.Name = "ApplicationInstaller";
-            this.Text = "Application Installer";
+            this.Text = "Computer Updater";
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -503,6 +521,8 @@
         private System.Windows.Forms.ToolStripMenuItem scriptToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem writeCurrentSelectionToBatchFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editMappedSwitchesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 
     }
 }

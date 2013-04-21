@@ -54,21 +54,21 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(131, 9);
+            this.label3.Location = new System.Drawing.Point(126, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(248, 13);
+            this.label3.Size = new System.Drawing.Size(252, 13);
             this.label3.TabIndex = 1000;
-            this.label3.Text = "Autodiscovering will slow processing down";
+            this.label3.Text = "Auto discovering will slow processing down";
             // 
             // rbDiscoverSwitches
             // 
             this.rbDiscoverSwitches.AutoSize = true;
             this.rbDiscoverSwitches.Location = new System.Drawing.Point(6, 19);
             this.rbDiscoverSwitches.Name = "rbDiscoverSwitches";
-            this.rbDiscoverSwitches.Size = new System.Drawing.Size(204, 17);
+            this.rbDiscoverSwitches.Size = new System.Drawing.Size(207, 17);
             this.rbDiscoverSwitches.TabIndex = 1;
             this.rbDiscoverSwitches.TabStop = true;
-            this.rbDiscoverSwitches.Text = "Yes, attempt to autodiscover switches";
+            this.rbDiscoverSwitches.Text = "Yes, attempt to auto discover switches";
             this.rbDiscoverSwitches.UseVisualStyleBackColor = true;
             // 
             // rbNoSwitches
@@ -87,10 +87,10 @@
             this.rbApplyTheseSwitches.AutoSize = true;
             this.rbApplyTheseSwitches.Location = new System.Drawing.Point(6, 42);
             this.rbApplyTheseSwitches.Name = "rbApplyTheseSwitches";
-            this.rbApplyTheseSwitches.Size = new System.Drawing.Size(197, 17);
+            this.rbApplyTheseSwitches.Size = new System.Drawing.Size(211, 17);
             this.rbApplyTheseSwitches.TabIndex = 2;
             this.rbApplyTheseSwitches.TabStop = true;
-            this.rbApplyTheseSwitches.Text = "No, apply the follow switch to all files";
+            this.rbApplyTheseSwitches.Text = "No, apply the following switch to all files";
             this.rbApplyTheseSwitches.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -105,9 +105,9 @@
             // 
             // tbSwitches
             // 
-            this.tbSwitches.Location = new System.Drawing.Point(209, 41);
+            this.tbSwitches.Location = new System.Drawing.Point(223, 41);
             this.tbSwitches.Name = "tbSwitches";
-            this.tbSwitches.Size = new System.Drawing.Size(273, 20);
+            this.tbSwitches.Size = new System.Drawing.Size(256, 20);
             this.tbSwitches.TabIndex = 3;
             this.tbSwitches.Text = "/passive /norestart";
             // 
@@ -124,7 +124,7 @@
             this.groupBox1.TabIndex = 1001;
             this.groupBox1.TabStop = false;
             // 
-            // AppSwitchMapping
+            // AppSwitchMappingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -133,7 +133,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "AppSwitchMapping";
+            this.Name = "AppSwitchMappingForm";
             this.Text = "Attempt to determine switches?";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

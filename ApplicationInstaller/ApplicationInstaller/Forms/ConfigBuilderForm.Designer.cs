@@ -96,7 +96,7 @@
             this.btnAddToList.Name = "btnAddToList";
             this.btnAddToList.Size = new System.Drawing.Size(105, 23);
             this.btnAddToList.TabIndex = 9;
-            this.btnAddToList.Text = "Add App To List";
+            this.btnAddToList.Text = "Add App to List";
             this.btnAddToList.UseVisualStyleBackColor = true;
             this.btnAddToList.Click += new System.EventHandler(this.btnAddToList_Click);
             // 
@@ -399,21 +399,21 @@
             // 
             this.selectAppToolStripMenuItem.Name = "selectAppToolStripMenuItem";
             this.selectAppToolStripMenuItem.ShortcutKeyDisplayString = "CTRL-N";
-            this.selectAppToolStripMenuItem.Size = new System.Drawing.Size(313, 22);
+            this.selectAppToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
             this.selectAppToolStripMenuItem.Text = "Add &New File";
             this.selectAppToolStripMenuItem.Click += new System.EventHandler(this.selectAppToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(310, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(308, 6);
             // 
             // generateConfigurationFromFolderToolStripMenuItem
             // 
             this.generateConfigurationFromFolderToolStripMenuItem.Name = "generateConfigurationFromFolderToolStripMenuItem";
             this.generateConfigurationFromFolderToolStripMenuItem.ShortcutKeyDisplayString = "CTRL-G";
-            this.generateConfigurationFromFolderToolStripMenuItem.Size = new System.Drawing.Size(313, 22);
-            this.generateConfigurationFromFolderToolStripMenuItem.Text = "&Generate Configuration From Folder";
+            this.generateConfigurationFromFolderToolStripMenuItem.Size = new System.Drawing.Size(311, 22);
+            this.generateConfigurationFromFolderToolStripMenuItem.Text = "&Generate Configuration from Folder";
             this.generateConfigurationFromFolderToolStripMenuItem.Click += new System.EventHandler(this.GenerateConfigFolderToolStripMenuItem_Click);
             // 
             // switchesToolStripMenuItem

@@ -25,7 +25,7 @@
     <TargetCulture>en-US</TargetCulture>
     <ProductName>Application Installer</ProductName>
     <PublisherName>Mike Jarrett</PublisherName>
-    <ApplicationRevision>12</ApplicationRevision>
+    <ApplicationRevision>14</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -99,8 +99,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\About.cs" />
     <Compile Include="Classes\GenericXmlProcessor.cs" />
     <Compile Include="Classes\Levenshtein.cs" />
+    <Compile Include="Forms\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ApplicationInstallerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +153,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schemas\SwitchMapping.cs" />
+    <EmbeddedResource Include="Forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ApplicationInstallerForm.resx">
       <DependentUpon>ApplicationInstallerForm.cs</DependentUpon>
     </EmbeddedResource>
