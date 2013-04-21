@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationInstaller", "ApplicationInstaller\ApplicationInstaller.csproj", "{25FFDB37-DC66-4700-9508-BFDFD07B76B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerUpdater", "ApplicationInstaller\ComputerUpdater.csproj", "{25FFDB37-DC66-4700-9508-BFDFD07B76B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{12C39A21-F56C-449A-B774-E1437CADD03C}"
 EndProject
