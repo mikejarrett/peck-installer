@@ -603,5 +603,10 @@ namespace ApplicationInstaller
         {
             cbSwitches.DroppedDown = true;
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
