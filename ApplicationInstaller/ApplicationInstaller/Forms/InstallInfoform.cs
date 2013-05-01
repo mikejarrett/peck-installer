@@ -26,7 +26,10 @@ namespace ComputerUpdater
             lblAdditional.Text = installInfoHolder.additionalCount.ToString();
             lblRegistry.Text = installInfoHolder.registryCount.ToString();
             progressBar1.Maximum = installInfoHolder.GetTotal();
+        }
 
+        private void InstallInfoForm_Load(object sender, EventArgs e)
+        {
             ThreadPool.QueueUserWorkItem(new WaitCallback(ProcessUpdates), null);
         }
 
