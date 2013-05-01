@@ -37,7 +37,7 @@
             this.linkSingleApp = new System.Windows.Forms.LinkLabel();
             this.cbServicePack = new System.Windows.Forms.CheckBox();
             this.clbAdditionalConfigurations = new System.Windows.Forms.CheckedListBox();
-            this.clbContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.AddAppsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.clearAdditionalAppsListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linkAdditionalConfigs = new System.Windows.Forms.LinkLabel();
             this.checkedListBoxApps = new System.Windows.Forms.CheckedListBox();
@@ -71,7 +71,7 @@
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
             this.gbName.SuspendLayout();
-            this.clbContextMenu.SuspendLayout();
+            this.AddAppsContextMenu.SuspendLayout();
             this.MainMenu.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabpageUpdatesAndApps.SuspendLayout();
@@ -154,24 +154,24 @@
             // clbAdditionalConfigurations
             // 
             this.clbAdditionalConfigurations.CheckOnClick = true;
-            this.clbAdditionalConfigurations.ContextMenuStrip = this.clbContextMenu;
+            this.clbAdditionalConfigurations.ContextMenuStrip = this.AddAppsContextMenu;
             this.clbAdditionalConfigurations.FormattingEnabled = true;
             this.clbAdditionalConfigurations.Location = new System.Drawing.Point(6, 224);
             this.clbAdditionalConfigurations.Name = "clbAdditionalConfigurations";
             this.clbAdditionalConfigurations.Size = new System.Drawing.Size(306, 94);
             this.clbAdditionalConfigurations.TabIndex = 7;
             // 
-            // clbContextMenu
+            // AddAppsContextMenu
             // 
-            this.clbContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddAppsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearAdditionalAppsListToolStripMenuItem});
-            this.clbContextMenu.Name = "contextMenuStrip1";
-            this.clbContextMenu.Size = new System.Drawing.Size(153, 48);
+            this.AddAppsContextMenu.Name = "contextMenuStrip1";
+            this.AddAppsContextMenu.Size = new System.Drawing.Size(123, 26);
             // 
             // clearAdditionalAppsListToolStripMenuItem
             // 
             this.clearAdditionalAppsListToolStripMenuItem.Name = "clearAdditionalAppsListToolStripMenuItem";
-            this.clearAdditionalAppsListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearAdditionalAppsListToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.clearAdditionalAppsListToolStripMenuItem.Text = "Clear List";
             this.clearAdditionalAppsListToolStripMenuItem.Click += new System.EventHandler(this.clearAdditionalAppsListToolStripMenuItem_Click);
             // 
@@ -256,7 +256,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -321,7 +321,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -493,7 +493,7 @@
             this.Text = "Computer Updater";
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
-            this.clbContextMenu.ResumeLayout(false);
+            this.AddAppsContextMenu.ResumeLayout(false);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -548,7 +548,7 @@
         private System.Windows.Forms.ToolStripMenuItem editMappedSwitchesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip clbContextMenu;
+        private System.Windows.Forms.ContextMenuStrip AddAppsContextMenu;
         private System.Windows.Forms.ToolStripMenuItem clearAdditionalAppsListToolStripMenuItem;
 
     }

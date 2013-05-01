@@ -643,6 +643,7 @@ namespace ComputerUpdater
         private void clearAdditionalAppsListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             clbAdditionalConfigurations.Items.Clear();
+            additionalConfigApps.Clear();
             cbAdditional.Checked = false;
             cbAdditional.Enabled = false;
         }

@@ -14,7 +14,7 @@ namespace Tests.Classes
         [TestMethod]
         public void TestBuildAppsList()
         {
-            var holder = new InstallInformationHolder(true);
+            var holder = new InstallInformationHolder(true, "64");
             Assert.AreEqual(true, holder.installUpdates);
             Assert.AreEqual(0, holder.updateCount);
             Assert.AreEqual(0, holder.applicationCount);
@@ -25,7 +25,7 @@ namespace Tests.Classes
             Assert.AreEqual(0, holder.additionalToInstall.Count);
             Assert.AreEqual(0, holder.registryToInstall.Count);
 
-            var holder2 = new InstallInformationHolder(false);
+            var holder2 = new InstallInformationHolder(false, "64");
             Assert.AreEqual(false, holder2.installUpdates);
             Assert.AreEqual(0, holder2.updateCount);
             Assert.AreEqual(0, holder2.applicationCount);
@@ -40,7 +40,7 @@ namespace Tests.Classes
         [TestMethod]
         public void TestHolderBuildAppsList()
         {
-            var holder = new InstallInformationHolder(false);
+            var holder = new InstallInformationHolder(false, "64");
             String appName = "(N) Test App (1.57 MB)";
             List<String> appNames = new List<String> { appName };
             App appInList = new App() { Name = "Test App", FileSize = 1.570000009 };
@@ -53,7 +53,7 @@ namespace Tests.Classes
         [TestMethod]
         public void TestHolderBuildAdditionalList()
         {
-            var holder = new InstallInformationHolder(false);
+            var holder = new InstallInformationHolder(false, "64");
             String appName = "(N) Test App (1.57 MB)";
             List<String> appNames = new List<String> { appName };
             App appInList = new App() { Name = "Test App", FileSize = 1.570000009 };
@@ -66,18 +66,18 @@ namespace Tests.Classes
         [TestMethod]
         public void TestHolderGetTotal()
         {
-            var holder = new InstallInformationHolder(false) { updateCount = 0, applicationCount = 2, additionalCount = 5, registryCount = 3 };
+            var holder = new InstallInformationHolder(false, "64") { updateCount = 0, applicationCount = 2, additionalCount = 5, registryCount = 3 };
             Assert.AreEqual(10, holder.GetTotal());
         }
 
         [TestMethod]
-        public void TestHoldeWriteScriptFile()
+        public void TestHolderWriteScriptFile()
         {
 
         }
 
         [TestMethod]
-        public void TestHoldeTotalInstallSort()
+        public void TestHolderTotalInstallSort()
         {
 
         }
