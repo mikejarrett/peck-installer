@@ -135,9 +135,12 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(704, 258);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(704, 258);
             this.Name = "EditSwitches";
-            this.Text = "Switches";
+            this.ShowIcon = false;
+            this.Text = "Edit Switches";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

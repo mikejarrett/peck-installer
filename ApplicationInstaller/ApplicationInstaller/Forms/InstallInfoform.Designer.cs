@@ -161,7 +161,7 @@
             this.linkDone.Text = "Done";
             this.linkDone.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDone_LinkClicked);
             // 
-            // InstallInfoform
+            // InstallInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -169,9 +169,13 @@
             this.Controls.Add(this.linkDone);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(373, 450);
             this.MinimizeBox = false;
-            this.Name = "InstallInfoform";
+            this.MinimumSize = new System.Drawing.Size(373, 450);
+            this.Name = "InstallInfoForm";
+            this.ShowIcon = false;
             this.Text = "InstallInfoformcs";
+            this.Load += new System.EventHandler(this.InstallInfoForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

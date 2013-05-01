@@ -91,7 +91,12 @@
             this.Controls.Add(this.labelCompanyName);
             this.Controls.Add(this.labelCopyright);
             this.Controls.Add(this.labelVersion);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(219, 120);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(219, 120);
             this.Name = "AboutBox";
+            this.ShowIcon = false;
             this.Text = "About";
             this.ResumeLayout(false);
             this.PerformLayout();

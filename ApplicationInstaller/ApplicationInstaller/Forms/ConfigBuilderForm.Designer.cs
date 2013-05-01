@@ -44,7 +44,7 @@
             this.version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.architecture = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.menuDeleteRow = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dgvDeleteMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuDeleteRowDeleteItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbFilename = new System.Windows.Forms.LinkLabel();
             this.lbRelativePath = new System.Windows.Forms.LinkLabel();
@@ -58,7 +58,7 @@
             this.tbAbsolutePath = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cbSwitches = new System.Windows.Forms.ComboBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -76,8 +76,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbFileSize = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).BeginInit();
-            this.menuDeleteRow.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.dgvDeleteMenu.SuspendLayout();
+            this.MainMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,7 +141,7 @@
             this.version,
             this.architecture,
             this.FileSize});
-            this.dgvApplicationList.ContextMenuStrip = this.menuDeleteRow;
+            this.dgvApplicationList.ContextMenuStrip = this.dgvDeleteMenu;
             this.dgvApplicationList.Location = new System.Drawing.Point(6, 144);
             this.dgvApplicationList.Name = "dgvApplicationList";
             this.dgvApplicationList.RowHeadersWidth = 49;
@@ -205,12 +205,12 @@
             this.FileSize.Name = "FileSize";
             this.FileSize.Visible = false;
             // 
-            // menuDeleteRow
+            // dgvDeleteMenu
             // 
-            this.menuDeleteRow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dgvDeleteMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuDeleteRowDeleteItem});
-            this.menuDeleteRow.Name = "menuDeleteRow";
-            this.menuDeleteRow.Size = new System.Drawing.Size(108, 26);
+            this.dgvDeleteMenu.Name = "menuDeleteRow";
+            this.dgvDeleteMenu.Size = new System.Drawing.Size(108, 26);
             // 
             // menuDeleteRowDeleteItem
             // 
@@ -343,17 +343,17 @@
             this.cbSwitches.TabIndex = 5;
             this.cbSwitches.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbSwitches_Click);
             // 
-            // menuStrip1
+            // MainMenuStrip
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.buildToolStripMenuItem,
             this.switchesToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(700, 24);
-            this.menuStrip1.TabIndex = 27;
-            this.menuStrip1.Text = "menuStrip1";
+            this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.MainMenuStrip.Name = "MainMenuStrip";
+            this.MainMenuStrip.Size = new System.Drawing.Size(700, 24);
+            this.MainMenuStrip.TabIndex = 27;
+            this.MainMenuStrip.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
@@ -381,8 +381,9 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.exitToolStripMenuItem.Text = "Back to Installer";
+            this.exitToolStripMenuItem.Text = "Close";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // buildToolStripMenuItem
@@ -520,16 +521,20 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(700, 426);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.MainMenuStrip);
             this.Controls.Add(this.groupBox1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.MainMenuStrip;
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(716, 464);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(716, 464);
             this.Name = "ConfigBuilder";
-            this.Text = "Application Builder";
+            this.ShowIcon = false;
+            this.Text = "Configuration Builder";
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplicationList)).EndInit();
-            this.menuDeleteRow.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.dgvDeleteMenu.ResumeLayout(false);
+            this.MainMenuStrip.ResumeLayout(false);
+            this.MainMenuStrip.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -546,7 +551,7 @@
         private System.Windows.Forms.TextBox tbApplicationName;
         private System.Windows.Forms.TextBox tbVersion;
         private System.Windows.Forms.DataGridView dgvApplicationList;
-        private System.Windows.Forms.ContextMenuStrip menuDeleteRow;
+        private System.Windows.Forms.ContextMenuStrip dgvDeleteMenu;
         private System.Windows.Forms.LinkLabel lbFilename;
         private System.Windows.Forms.LinkLabel lbRelativePath;
         private System.Windows.Forms.LinkLabel lbAppName;
@@ -559,7 +564,7 @@
         private System.Windows.Forms.TextBox tbAbsolutePath;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbSwitches;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip MainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openConfigToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;

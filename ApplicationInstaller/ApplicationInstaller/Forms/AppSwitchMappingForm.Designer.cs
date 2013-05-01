@@ -133,6 +133,10 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(526, 198);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(526, 198);
             this.Name = "AppSwitchMappingForm";
             this.Text = "Attempt to determine switches?";
             this.groupBox1.ResumeLayout(false);
