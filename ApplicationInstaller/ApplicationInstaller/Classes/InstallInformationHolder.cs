@@ -40,7 +40,10 @@ namespace ComputerUpdater.Classes
         public App servicePack
         { get; set; }
 
-        public InstallInformationHolder(Boolean InstallUpdates)
+        public String OsArch
+        { get; set; }
+
+        public InstallInformationHolder(Boolean InstallUpdates, String Arch)
         {
             installUpdates = InstallUpdates;
             updateCount = 0;
@@ -51,6 +54,7 @@ namespace ComputerUpdater.Classes
             appsToInstall = new List<App>();
             additionalToInstall = new List<App>();
             registryToInstall = new List<String>();
+            OsArch = Arch;
         }
 
 
@@ -149,9 +153,22 @@ namespace ComputerUpdater.Classes
             if (additionalCount > 0) { appList.Add(additionalToInstall); }
             foreach (var toInstall in appList)
             {
-                foreach (var app in toInstall)
+                if (OsArch == "64")
                 {
-                    TotalInstall.Add(app);
+                    foreach (var app in toInstall)
+                    {
+                        TotalInstall.Add(app);
+                    }
+                }
+                else
+                {
+                    foreach (var app in toInstall)
+                    {
+                        if (app.Architecture != "x64")
+                        {
+                            TotalInstall.Add(app);
+                        }
+                    }
                 }
             }
 

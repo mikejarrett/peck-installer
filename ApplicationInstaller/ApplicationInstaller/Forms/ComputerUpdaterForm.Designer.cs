@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComputerUpdateForm));
             this.gbName = new System.Windows.Forms.GroupBox();
             this.cbAdditional = new System.Windows.Forms.CheckBox();
@@ -36,12 +37,14 @@
             this.linkSingleApp = new System.Windows.Forms.LinkLabel();
             this.cbServicePack = new System.Windows.Forms.CheckBox();
             this.clbAdditionalConfigurations = new System.Windows.Forms.CheckedListBox();
+            this.clbContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.clearAdditionalAppsListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linkAdditionalConfigs = new System.Windows.Forms.LinkLabel();
             this.checkedListBoxApps = new System.Windows.Forms.CheckedListBox();
             this.cbAppToggle = new System.Windows.Forms.CheckBox();
             this.cbWindowsUpdates = new System.Windows.Forms.CheckBox();
             this.linkStartInstall = new System.Windows.Forms.LinkLabel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,6 +53,8 @@
             this.editMappedSwitchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.writeCurrentSelectionToBatchFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabpageUpdatesAndApps = new System.Windows.Forms.TabPage();
             this.tabpageSettings = new System.Windows.Forms.TabPage();
@@ -65,10 +70,9 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.clbRegistryFiles = new System.Windows.Forms.CheckedListBox();
             this.linkAddRegistryFiles = new System.Windows.Forms.LinkLabel();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbName.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.clbContextMenu.SuspendLayout();
+            this.MainMenu.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabpageUpdatesAndApps.SuspendLayout();
             this.tabpageSettings.SuspendLayout();
@@ -98,6 +102,7 @@
             // cbAdditional
             // 
             this.cbAdditional.AutoSize = true;
+            this.cbAdditional.Enabled = false;
             this.cbAdditional.Location = new System.Drawing.Point(9, 205);
             this.cbAdditional.Name = "cbAdditional";
             this.cbAdditional.Size = new System.Drawing.Size(128, 17);
@@ -149,11 +154,26 @@
             // clbAdditionalConfigurations
             // 
             this.clbAdditionalConfigurations.CheckOnClick = true;
+            this.clbAdditionalConfigurations.ContextMenuStrip = this.clbContextMenu;
             this.clbAdditionalConfigurations.FormattingEnabled = true;
             this.clbAdditionalConfigurations.Location = new System.Drawing.Point(6, 224);
             this.clbAdditionalConfigurations.Name = "clbAdditionalConfigurations";
             this.clbAdditionalConfigurations.Size = new System.Drawing.Size(306, 94);
             this.clbAdditionalConfigurations.TabIndex = 7;
+            // 
+            // clbContextMenu
+            // 
+            this.clbContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearAdditionalAppsListToolStripMenuItem});
+            this.clbContextMenu.Name = "contextMenuStrip1";
+            this.clbContextMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // clearAdditionalAppsListToolStripMenuItem
+            // 
+            this.clearAdditionalAppsListToolStripMenuItem.Name = "clearAdditionalAppsListToolStripMenuItem";
+            this.clearAdditionalAppsListToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearAdditionalAppsListToolStripMenuItem.Text = "Clear List";
+            this.clearAdditionalAppsListToolStripMenuItem.Click += new System.EventHandler(this.clearAdditionalAppsListToolStripMenuItem_Click);
             // 
             // linkAdditionalConfigs
             // 
@@ -211,18 +231,18 @@
             this.linkStartInstall.Text = "Start Installation";
             this.linkStartInstall.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelInstall_LinkClicked);
             // 
-            // menuStrip1
+            // MainMenu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.configurationToolStripMenuItem,
             this.scriptToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(357, 24);
-            this.menuStrip1.TabIndex = 4;
-            this.menuStrip1.Text = "menuStrip1";
+            this.MainMenu.Location = new System.Drawing.Point(0, 0);
+            this.MainMenu.Name = "MainMenu";
+            this.MainMenu.Size = new System.Drawing.Size(357, 24);
+            this.MainMenu.TabIndex = 4;
+            this.MainMenu.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
@@ -253,21 +273,24 @@
             // configBuilderToolStripMenuItem
             // 
             this.configBuilderToolStripMenuItem.Name = "configBuilderToolStripMenuItem";
-            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.configBuilderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            this.configBuilderToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.configBuilderToolStripMenuItem.Text = "Config Builder";
             this.configBuilderToolStripMenuItem.Click += new System.EventHandler(this.configBuilderToolStripMenuItem_Click);
             // 
             // switchEditorToolStripMenuItem
             // 
             this.switchEditorToolStripMenuItem.Name = "switchEditorToolStripMenuItem";
-            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.switchEditorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.switchEditorToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.switchEditorToolStripMenuItem.Text = "Switch Editor";
             this.switchEditorToolStripMenuItem.Click += new System.EventHandler(this.switchEditorToolStripMenuItem_Click);
             // 
             // editMappedSwitchesToolStripMenuItem
             // 
             this.editMappedSwitchesToolStripMenuItem.Name = "editMappedSwitchesToolStripMenuItem";
-            this.editMappedSwitchesToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.editMappedSwitchesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.editMappedSwitchesToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
             this.editMappedSwitchesToolStripMenuItem.Text = "Edit Mapped Switches";
             this.editMappedSwitchesToolStripMenuItem.Click += new System.EventHandler(this.editMappedSwitchesToolStripMenuItem_Click);
             // 
@@ -282,9 +305,25 @@
             // writeCurrentSelectionToBatchFileToolStripMenuItem
             // 
             this.writeCurrentSelectionToBatchFileToolStripMenuItem.Name = "writeCurrentSelectionToBatchFileToolStripMenuItem";
-            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.writeCurrentSelectionToBatchFileToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.writeCurrentSelectionToBatchFileToolStripMenuItem.Text = "Generate Script File";
             this.writeCurrentSelectionToBatchFileToolStripMenuItem.Click += new System.EventHandler(this.writeCurrentSelectionToBatchFileToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -437,40 +476,26 @@
             this.linkAddRegistryFiles.Text = "Add Registry Files";
             this.linkAddRegistryFiles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAddRegistryFiles_LinkClicked);
             // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // ApplicationInstaller
+            // ComputerUpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 412);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.linkStartInstall);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.MainMenu;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(720, 450);
-            this.Name = "ApplicationInstaller";
+            this.Name = "ComputerUpdateForm";
             this.Text = "Computer Updater";
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.clbContextMenu.ResumeLayout(false);
+            this.MainMenu.ResumeLayout(false);
+            this.MainMenu.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabpageUpdatesAndApps.ResumeLayout(false);
             this.tabpageSettings.ResumeLayout(false);
@@ -486,7 +511,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox gbName;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.CheckedListBox checkedListBoxApps;
         private System.Windows.Forms.CheckBox cbWindowsUpdates;
         private System.Windows.Forms.CheckBox cbAppToggle;
@@ -523,6 +548,8 @@
         private System.Windows.Forms.ToolStripMenuItem editMappedSwitchesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip clbContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem clearAdditionalAppsListToolStripMenuItem;
 
     }
 }

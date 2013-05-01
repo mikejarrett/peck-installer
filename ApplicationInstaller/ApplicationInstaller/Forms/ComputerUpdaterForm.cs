@@ -15,6 +15,9 @@ namespace ComputerUpdater
         public String OsName
         { get; set; }
 
+        public String OsArchitecture
+        { get; set; }
+
         public List<App> listApps
         { get; set; }
 
@@ -47,6 +50,7 @@ namespace ComputerUpdater
             InitializeComponent();
             OsName = OsInformation.getOSName();
             gbName.Text = OsName;
+            OsArchitecture = OsInformation.getOSArchitecture().ToString();
             LoadWindowsUpdatesCofig();
             LoadRegistryFiles();
             LoadApplicationConfig();
@@ -104,11 +108,26 @@ namespace ComputerUpdater
             if (File.Exists(filePath))
             {
                 listApps = GenericXmlProcessor<App>.DeserializeXMLToList(filePath);
-                foreach (App app in listApps)
+                if (OsArchitecture == "64")
                 {
-                    checkedListBoxApps.Items.Add(app.ToString());
-                    int idx = checkedListBoxApps.Items.Count - 1;
-                    checkedListBoxApps.SetItemCheckState(idx, CheckState.Checked);
+                    foreach (App app in listApps)
+                    {
+                        checkedListBoxApps.Items.Add(app.ToString());
+                        int idx = checkedListBoxApps.Items.Count - 1;
+                        checkedListBoxApps.SetItemCheckState(idx, CheckState.Checked);
+                    }
+                }
+                else
+                {
+                    foreach (App app in listApps)
+                    {
+                        if (app.Architecture != "x64")
+                        {
+                            checkedListBoxApps.Items.Add(app.ToString());
+                            int idx = checkedListBoxApps.Items.Count - 1;
+                            checkedListBoxApps.SetItemCheckState(idx, CheckState.Checked);
+                        }
+                    }
                 }
             }
 
@@ -245,7 +264,12 @@ namespace ComputerUpdater
                     List<App> additionalApps = GenericXmlProcessor<App>.DeserializeXMLToList(filename);
                     additionalConfigApps.AddRange(additionalApps);
                 }
-                UpdateCheckedListAdditionalConfigApps();
+                if (additionalConfigApps.Count > 0)
+                {
+                    cbAdditional.Enabled = true;
+                    cbAdditional.Checked = true;
+                    UpdateCheckedListAdditionalConfigApps();
+                }
              }
         }
 
@@ -407,10 +431,12 @@ namespace ComputerUpdater
                 App app = new App(openFileDialog.FileName);
                 app.InstallSwitch = SingleFileSwitchesPrompt("");
                 additionalConfigApps.Add(app);
-                UpdateCheckedListAdditionalConfigApps();
-                /*clbAdditionalConfigurations.Items.Add(app.ToString());
-                int idx = clbAdditionalConfigurations.Items.Count - 1;
-                clbAdditionalConfigurations.SetItemCheckState(idx, CheckState.Checked);*/
+                if (additionalConfigApps.Count > 0)
+                {
+                    cbAdditional.Enabled = true;
+                    cbAdditional.Checked = true;
+                    UpdateCheckedListAdditionalConfigApps();
+                }
             }
         }
 
@@ -512,7 +538,7 @@ namespace ComputerUpdater
         /// </summary>
         private void BuildHolder()
         {
-            installInformationHolder = new InstallInformationHolder(cbWindowsUpdates.Checked);
+            installInformationHolder = new InstallInformationHolder(cbWindowsUpdates.Checked, OsArchitecture);
 
             // Service Pack Information
             installInformationHolder.installServicePack = false;
@@ -612,6 +638,13 @@ namespace ComputerUpdater
         {
             var About = new AboutBox();
             About.Show();
+        }
+
+        private void clearAdditionalAppsListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            clbAdditionalConfigurations.Items.Clear();
+            cbAdditional.Checked = false;
+            cbAdditional.Enabled = false;
         }
     }
 }
