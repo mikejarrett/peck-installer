@@ -18,6 +18,7 @@ namespace ComputerUpdater
 
         public InstallInfoForm(InstallInformationHolder installInfoHolder)
         {
+            StartPosition = FormStartPosition.CenterScreen;
             installInformationHolder = installInfoHolder;
             InitializeComponent();
 

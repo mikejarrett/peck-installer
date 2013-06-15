@@ -50,7 +50,7 @@ namespace Tests
             Assert.AreEqual("Application Installer", app.Name);
             Assert.AreEqual("Test.file", app.Filename);
             Assert.AreEqual(0.2021484375, app.FileSize);
-            Assert.AreEqual("(S) Application Installer (0.20 MB)", app.ToString());
+            Assert.AreEqual("(P) Application Installer (0.20 MB)", app.ToString());
             Assert.AreEqual("1.0.0.0", app.Version);
         }
 

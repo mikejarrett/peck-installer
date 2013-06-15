@@ -135,12 +135,16 @@ namespace ComputerUpdater.Schemas
 
         public override String ToString()
         {
-            String swithces = "(N)";
-            if (InstallSwitch != String.Empty)
+            String silentString = "(N)";
+            if (!Silent && InstallSwitch != String.Empty)
             {
-                swithces = "(S)";
+                silentString = "(P)";
             }
-            return String.Format("{0} {1} ({2:0.00} MB)", swithces, Name, FileSize);
+            else if (Silent && InstallSwitch != String.Empty)
+            {
+                silentString = "(S)";
+            }
+            return String.Format("{0} {1} ({2:0.00} MB)", silentString, Name, FileSize);
         }
 
         public static Boolean XmlFileValid(String FilePath)

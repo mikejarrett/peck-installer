@@ -22,6 +22,7 @@ namespace ComputerUpdater
 
         public MappedSwitchesEditForm(List<Switches> switches)
         {
+            StartPosition = FormStartPosition.CenterScreen;
             ListSwitches = switches;
             ListMappedSwitches = new List<SwitchMapping>();
             SelectedRowId = -1;

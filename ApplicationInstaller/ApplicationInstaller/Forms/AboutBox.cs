@@ -9,6 +9,7 @@ namespace ComputerUpdater
     {
         public AboutBox()
         {
+            StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             this.labelProductName.Text = About.AssemblyProduct;
             this.labelVersion.Text = String.Format("Version {0}", About.AssemblyVersion);

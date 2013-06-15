@@ -13,8 +13,8 @@ namespace ComputerUpdater
 
         public EditSwitches(Form parentForm, List<Switches> SwitchesArgs)
         {
+            StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
-
             switches = SwitchesArgs;
             PopulateListBox();
         }
