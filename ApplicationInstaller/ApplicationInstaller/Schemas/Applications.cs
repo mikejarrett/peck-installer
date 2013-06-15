@@ -35,7 +35,14 @@ namespace ComputerUpdater.Schemas
 
         [XmlElement("InstallSwitch")]
         public string InstallSwitch
-        { get; set; }
+        {
+            get { return _InstallSwitch; }
+            set 
+            { 
+                _InstallSwitch = value;
+                Silent = true;
+            }
+        }
 
         [XmlElement("RelativePath")]
         public string RelativePath
@@ -44,6 +51,13 @@ namespace ComputerUpdater.Schemas
         [XmlElement("Version")]
         public string Version
         { get; set; }
+
+        [XmlElement("Silent")]
+        public Boolean Silent
+        { get; set; }
+
+        [XmlIgnore]
+        private string _InstallSwitch;
 
         public App()
         { }
@@ -64,6 +78,7 @@ namespace ComputerUpdater.Schemas
             Filename = filename;
             RelativePath = Regex.Replace(FilePath, @"[a-zA-Z][:]", "");
             Version = fileInfo.ProductVersion;
+            Silent = false;
 
             FileSize = ConvertToMegabytes(new FileInfo(FilePath).Length);
             Name = GetApplicationNameFromFile(FilePath, x64Arch, x86Arch, kbNumber);

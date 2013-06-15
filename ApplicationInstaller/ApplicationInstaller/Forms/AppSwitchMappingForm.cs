@@ -20,6 +20,7 @@ namespace ComputerUpdater.Forms
 
         public AppSwitchMappingForm()
         {
+            StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
         }
 

@@ -63,6 +63,7 @@
             // rbDiscoverSwitches
             // 
             this.rbDiscoverSwitches.AutoSize = true;
+            this.rbDiscoverSwitches.Checked = true;
             this.rbDiscoverSwitches.Location = new System.Drawing.Point(6, 19);
             this.rbDiscoverSwitches.Name = "rbDiscoverSwitches";
             this.rbDiscoverSwitches.Size = new System.Drawing.Size(207, 17);
@@ -78,7 +79,6 @@
             this.rbNoSwitches.Name = "rbNoSwitches";
             this.rbNoSwitches.Size = new System.Drawing.Size(148, 17);
             this.rbNoSwitches.TabIndex = 4;
-            this.rbNoSwitches.TabStop = true;
             this.rbNoSwitches.Text = "No, just process the folder";
             this.rbNoSwitches.UseVisualStyleBackColor = true;
             // 
@@ -89,7 +89,6 @@
             this.rbApplyTheseSwitches.Name = "rbApplyTheseSwitches";
             this.rbApplyTheseSwitches.Size = new System.Drawing.Size(211, 17);
             this.rbApplyTheseSwitches.TabIndex = 2;
-            this.rbApplyTheseSwitches.TabStop = true;
             this.rbApplyTheseSwitches.Text = "No, apply the following switch to all files";
             this.rbApplyTheseSwitches.UseVisualStyleBackColor = true;
             // 
@@ -98,7 +97,7 @@
             this.button1.Location = new System.Drawing.Point(404, 67);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
+            this.button1.TabIndex = 0;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);

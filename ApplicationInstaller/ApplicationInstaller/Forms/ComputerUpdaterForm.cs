@@ -48,6 +48,7 @@ namespace ComputerUpdater
             SaveInternetSettingZones();
             additionalConfigApps = new List<App>();
             InitializeComponent();
+            StartPosition = FormStartPosition.CenterScreen;
             OsName = OsInformation.getOSName();
             gbName.Text = OsName;
             OsArchitecture = OsInformation.getOSArchitecture().ToString();

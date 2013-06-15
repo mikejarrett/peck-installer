@@ -5,16 +5,17 @@
       <xsd:sequence>
         <xsd:element minOccurs="1" maxOccurs="unbounded" name="App">
           <xsd:complexType>
-            <xsd:sequence>
+            <xsd:all>
               <xsd:element name="AbsolutePath" type="xsd:string" />
               <xsd:element name="Name" type="xsd:string" />
-              <xsd:element name="Architecture" type="xsd:string" />
+              <xsd:element name="Architecture" type="xsd:string" minOccurs="0" />
               <xsd:element name="Filename" type="xsd:string" />
               <xsd:element name="Filesize" type="xsd:float" />
-              <xsd:element name="InstallSwitch" />
+              <xsd:element name="InstallSwitch" type="xsd:string" minOccurs="0" />
               <xsd:element name="RelativePath" type="xsd:string" />
-              <xsd:element name="Version" type="xsd:string" />
-            </xsd:sequence>
+              <xsd:element name="Version" type="xsd:string" minOccurs="0" />
+              <xsd:element name="Silent" type="xsd:boolean" minOccurs="0" />
+            </xsd:all>
           </xsd:complexType>
         </xsd:element>
       </xsd:sequence>

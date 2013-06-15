@@ -18,11 +18,25 @@ namespace ComputerUpdater
         public int SelectedRowId
         { get; set; }
 
+        private Boolean IsExpanded
+        { get; set; }
+
+        private int originalHeight
+        { get; set; }
+
+        private int originalWidth
+        { get; set; }
+
+        private List<App> AppDataSource
+        { get; set; }
+
         public ConfigBuilder()
         {
-            SelectedRowId = -1;
+            StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             PopulateSwitches();
+            SelectedRowId = -1;
+            AppDataSource = new List<App>();
         }
         
         /// <summary>
@@ -48,6 +62,10 @@ namespace ComputerUpdater
             {
                 GenerateConfigurationFromFolder();
                 return true;
+            }
+            else if (keyData == Keys.Escape)
+            {
+                this.Close();
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -75,7 +93,7 @@ namespace ComputerUpdater
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnAddToList_Click(object sender, EventArgs e)
+        private void AddAppToListLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (WithErrors())
             {
@@ -83,41 +101,57 @@ namespace ComputerUpdater
             }
             else if (!WithErrors() && SelectedRowId == -1)
             {
-                AddRowToBottomOfDataGridView();
+                AddToApplicationsList(false);
                 ClearFields();
+                UpdateDataGridView();
             }
             else if (!WithErrors() && SelectedRowId != -1)
             {
-                AddToSelectRowOfDataGridView();
+                AddToApplicationsList(true);
+                ClearFields();
+                UpdateDataGridView();
             }
         }
 
-        private void AddRowToBottomOfDataGridView()
+        private void AddToApplicationsList(bool RowSelected = false)
         {
-            dgvApplicationList.Rows.Add(
-                tbApplicationName.Text,
-                tbFilename.Text,
-                tbAbsolutePath.Text,
-                Regex.Replace(tbRelativePath.Text, @"[a-zA-Z][:]", ""),
-                cbSwitches.Text,
-                tbVersion.Text,
-                cbArchitecture.Text,
-                tbFileSize.Text
-            );
+            App app = new App()
+            {
+                Name = tbApplicationName.Text,
+                Filename = tbFilename.Text,
+                AbsolutePath = tbAbsolutePath.Text,
+                RelativePath = Regex.Replace(tbRelativePath.Text, @"[a-zA-Z][:]", ""),
+                InstallSwitch = cbSwitches.Text,
+                Version = tbVersion.Text,
+                Architecture = cbArchitecture.Text,
+                FileSize = double.Parse(tbFileSize.Text),
+                Silent = cbSilent.Checked
+            };
+            if (RowSelected)
+            {
+                AppDataSource[SelectedRowId] = app;
+            }
+            else
+            {
+                AppDataSource.Add(app);
+            }
         }
 
-        private void AddToSelectRowOfDataGridView()
+        private void UpdateDataGridView()
         {
-            DataGridViewRow row = dgvApplicationList.Rows[SelectedRowId];
-            row.Cells["applicationName"].Value = tbApplicationName.Text.ToString();
-            row.Cells["filename"].Value = tbFilename.Text.ToString();
-            row.Cells["relativePath"].Value = Regex.Replace(tbRelativePath.Text, @"[a-zA-Z][:]", "").ToString();
-            row.Cells["absolutePath"].Value = tbAbsolutePath.Text.ToString();
-            row.Cells["installSwitches"].Value = cbSwitches.Text.ToString();
-            row.Cells["version"].Value = tbVersion.Text.ToString();
-            row.Cells["architecture"].Value = cbArchitecture.Text.ToString();
-            row.Cells["FileSize"].Value = Convert.ToDouble(tbFileSize.Text.ToString());
-            ClearFields();
+            if (AppDataSource.Count() > 0)
+            {
+                dgvApplicationList.ColumnHeadersVisible = true;
+                dgvApplicationList.Enabled = true;
+                AppDataSource = (from app in AppDataSource
+                                 orderby app.Silent descending,
+                                 app.FileSize descending
+                                 select app).ToList();
+                var source = new BindingSource();
+                source.DataSource = AppDataSource;
+                dgvApplicationList.DataSource = source;
+                UpdateDataGridViewHeaders();
+            }
         }
 
         /// <summary>
@@ -125,10 +159,9 @@ namespace ComputerUpdater
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnWriteConfig_Click(object sender, EventArgs e)
+        private void WriteConfigLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            int rowCount = dgvApplicationList.Rows.Count;
-            if (rowCount <= 1)
+            if (AppDataSource.Count() < 1)
             {
                 MessageBox.Show("Nothing to write to configuration file");
             }
@@ -141,55 +174,11 @@ namespace ComputerUpdater
 
                 if (saveFileDialog.FileName != "")
                 {
-                    List<App> apps = ProcessDataGridViewRows();
-                    if (apps.Count > 0)
-                    {
-                        GenericXmlProcessor<App>.WriteToXML(saveFileDialog.FileName, apps);
-                        clearRows();
-                        MessageBox.Show("Config written successfully to: " + saveFileDialog.FileName);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Nothing to write to configuration file");
-                    }
+                    GenericXmlProcessor<App>.WriteToXML(saveFileDialog.FileName, AppDataSource);
+                    ClearRows();
+                    MessageBox.Show("Config written successfully to: " + saveFileDialog.FileName);
                 }
             }
-        }
-
-        /// <summary>
-        /// Go through each row of the DataGridView and serialize the data to be written our 
-        /// to the newly created XML file.
-        /// </summary>
-        /// <returns></returns>
-        private List<App> ProcessDataGridViewRows()
-        {
-            List<App> apps = new List<App>();
-            for (int i = 0; i < dgvApplicationList.Rows.Count - 1; ++i)
-            {
-                DataGridViewRow row = dgvApplicationList.Rows[i];
-                App application = new App()
-                {
-                    Name = row.Cells["applicationName"].Value.ToString().Trim(),
-                    Filename = row.Cells["filename"].Value.ToString().Trim(),
-                    RelativePath = row.Cells["relativePath"].Value.ToString(),
-                    AbsolutePath = row.Cells["absolutePath"].Value.ToString(),
-                    InstallSwitch = String.Empty,
-                    Architecture = String.Empty,
-                    FileSize = 0.0
-                };
-                application.InstallSwitch = row.Cells["installSwitches"].Value != null ? row.Cells["installSwitches"].Value.ToString().Trim() : String.Empty;
-                application.Version = row.Cells["version"].Value != null ? row.Cells["version"].Value.ToString().Trim() : String.Empty;
-                application.Architecture = row.Cells["architecture"].Value != null ? row.Cells["architecture"].Value.ToString().Trim() : String.Empty;
-                application.FileSize = row.Cells["FileSize"].Value != null ? Convert.ToDouble(row.Cells["FileSize"].Value) : 0.0;
-
-                if (row.Cells["architecture"].Value != null)
-                {
-                    application.Architecture = row.Cells["architecture"].Value.ToString();
-                }
-                application.FileSize = Convert.ToDouble(row.Cells["FileSize"].Value.ToString());
-                apps.Add(application);
-            }
-            return apps;
         }
 
         private void lbAppName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -236,7 +225,6 @@ namespace ComputerUpdater
                 tbRelativePath.Text = app.RelativePath;
                 tbVersion.Text = app.Version;
                 cbArchitecture.Text = app.Architecture;
-                
                 tbFileSize.Text = app.FileSize.ToString();
             }
         }
@@ -252,7 +240,8 @@ namespace ComputerUpdater
         /// </summary>
         private void GenerateConfigurationFromFolder()
         {
-            clearRows();
+            ClearFields();
+            ClearRows();
             List<SwitchMapping> mappedSwitches = new List<SwitchMapping>();
             int determineSwitch = 0;
             String selectSwitch = String.Empty;
@@ -274,12 +263,14 @@ namespace ComputerUpdater
                 ShowAppSwitchMappingForm(ref determineSwitch, ref selectSwitch);
                 mappedSwitches = GetMappedSwitches(mappedSwitches, determineSwitch);
 
+                AppDataSource.Clear();
                 foreach (string file in files)
                 {
                     App newApp = new App(file.ToString());
                     newApp = UpdateAppSwitchMappedSwitches(mappedSwitches, determineSwitch, selectSwitch, newApp);
-                    AddAppToDataGridView(newApp);                
+                    AppDataSource.Add(newApp);
                 }
+                UpdateDataGridView();
             }
         }
 
@@ -292,12 +283,14 @@ namespace ComputerUpdater
                     if (Levenshtein.Check(mappedSwitch.Name, newApp.Name, 70))
                     {
                         newApp.InstallSwitch = mappedSwitch.Switch;
+                        newApp.Silent = true;
                         break;
                     }
 
                     if (Levenshtein.Check(mappedSwitch.Filename, newApp.Filename, 70))
                     {
                         newApp.InstallSwitch = mappedSwitch.Switch;
+                        newApp.Silent = true;
                         break;
                     }
                 }
@@ -343,26 +336,11 @@ namespace ComputerUpdater
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                clearRows();
-                foreach (var app in GenericXmlProcessor<App>.DeserializeXMLToList(openFileDialog.FileName))
-                {
-                    AddAppToDataGridView(app);
-                }
+                ClearFields();
+                ClearRows();
+                AppDataSource = GenericXmlProcessor<App>.DeserializeXMLToList(openFileDialog.FileName);
+                UpdateDataGridView();
             }
-        }
-
-        /// <summary>
-        /// Give an app add it's properties to the DataGridView Application List
-        /// </summary>
-        /// <param name="app">
-        ///     And instance of an app either generated from a filename or loaded
-        ///     from a configuration file
-        /// </param>
-        private void AddAppToDataGridView(App app)
-        {
-            dgvApplicationList.Rows.Add(app.Name, app.Filename, app.AbsolutePath,
-                                        app.RelativePath, app.InstallSwitch,
-                                        app.Version, app.Architecture, app.FileSize);
         }
 
         private void openConfigToolStripMenuItem_Click(object sender, EventArgs e)
@@ -370,23 +348,27 @@ namespace ComputerUpdater
             OpenPreviousConfigFile();
         }
 
-        private void btnClearInput_Click(object sender, EventArgs e)
+        private void ClearListLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ClearFields();
+            ClearRows();
         }
 
-        private void btnClearDataGridView_Click(object sender, EventArgs e)
+        private void ClearFieldsLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            clearRows();
+            ClearFields();
         }
 
         /// <summary>
         /// Clears all the rows in the DataGridView Application List
         /// </summary>
-        private void clearRows()
+        private void ClearRows()
         {
-            dgvApplicationList.Rows.Clear();
+            AppDataSource.Clear();
             SelectedRowId = -1;
+            UpdateDataGridView();
+            dgvApplicationList.ColumnHeadersVisible = false;
+            dgvApplicationList.Enabled = false;
+            cbSilent.Checked = false;
         }
 
         /// <summary>
@@ -406,41 +388,25 @@ namespace ComputerUpdater
         }
 
         /// <summary>
-        /// Given a selected row update the form field to reflect the information
+        /// Given a selected row and update the form fields to reflect the information
         /// of the selected row
         /// </summary>
         /// <param name="row"></param>
         private void UpdateGridDataRowSelected(DataGridViewRow row)
         {
             // Take the info from the select rows and place it in the entry form 
-            tbApplicationName.Text = row.Cells["applicationName"].Value.ToString();
-            tbFilename.Text = row.Cells["filename"].Value.ToString();
-            tbRelativePath.Text = row.Cells["relativePath"].Value.ToString();
-            tbAbsolutePath.Text = row.Cells["absolutePath"].Value.ToString();
-            tbFileSize.Text = row.Cells["FileSize"].Value.ToString();
-            try
+            if (row.Index < AppDataSource.Count())
             {
-                cbSwitches.Text = row.Cells["installSwitches"].Value.ToString();
-            }
-            catch (NullReferenceException)
-            {
-                cbSwitches.Text = String.Empty;
-            }
-            try
-            {
-                tbVersion.Text = row.Cells["version"].Value.ToString();
-            }
-            catch (NullReferenceException)
-            {
-                tbVersion.Text = String.Empty;
-            }
-            try
-            {
-                cbArchitecture.Text = row.Cells["architecture"].Value.ToString();
-            }
-            catch (NullReferenceException)
-            {
-                cbArchitecture.Text = String.Empty;
+                App app = AppDataSource[row.Index];
+                tbApplicationName.Text = app.Name;
+                tbFilename.Text = app.Filename;
+                tbRelativePath.Text = app.RelativePath;
+                tbAbsolutePath.Text = app.AbsolutePath;
+                tbFileSize.Text = app.FileSize.ToString();
+                cbSwitches.Text = app.InstallSwitch;
+                tbVersion.Text = app.Version;
+                cbArchitecture.Text = app.Architecture;
+                cbSilent.Checked = app.Silent;
             }
         }
 
@@ -494,22 +460,14 @@ namespace ComputerUpdater
         /// <param name="e"></param>
         private void LeftMouseClickDGV(DataGridViewCellMouseEventArgs e)
         {
-            try
+            if (e.RowIndex < AppDataSource.Count() && e.RowIndex != -1)
             {
-                int lastRowIndex = dgvApplicationList.Rows.Count - 1;
-                if (e.RowIndex != lastRowIndex)
-                {
-                    SelectedRowId = e.RowIndex;
-                    UpdateGridDataRowSelected(dgvApplicationList.Rows[e.RowIndex]);
-                }
-                else 
-                {
-                    ClearFields(); 
-                }
+                SelectedRowId = e.RowIndex;
+                UpdateGridDataRowSelected(dgvApplicationList.Rows[e.RowIndex]);
             }
-            catch (ArgumentOutOfRangeException ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                ClearFields();
             }
         }
 
@@ -522,11 +480,10 @@ namespace ComputerUpdater
         /// <param name="e"></param>
         private void RightMouseClickDGV(DataGridViewCellMouseEventArgs e)
         {
-            int rowSelected = e.RowIndex;
-            if (e.RowIndex != -1)
+            if (e.RowIndex + 1 != AppDataSource.Count() && e.RowIndex != -1)
             {
                 dgvApplicationList.ClearSelection();
-                dgvApplicationList.Rows[rowSelected].Selected = true;
+                dgvApplicationList.Rows[e.RowIndex].Selected = true;
                 dgvApplicationList.ContextMenuStrip.Show(dgvApplicationList, e.Location);
             }
         }
@@ -538,8 +495,12 @@ namespace ComputerUpdater
         /// <param name="e"></param>
         private void menuDeleteRowDeleteItem_Click(object sender, EventArgs e)
         {
-            DataGridViewRow row = dgvApplicationList.SelectedRows[0];
-            dgvApplicationList.Rows.Remove(row);
+            int rowIndex = dgvApplicationList.SelectedRows[0].Index;
+            if (rowIndex < AppDataSource.Count())
+            {
+                AppDataSource.Remove(AppDataSource[rowIndex]);
+                UpdateDataGridView();
+            }
         }
 
         /// <summary>
@@ -607,6 +568,76 @@ namespace ComputerUpdater
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void linkLoadConfig_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenPreviousConfigFile();
+        }
+
+        private void UpdateDataGridViewHeaders()
+        {
+            dgvApplicationList.Columns["Silent"].Width = 50;
+            dgvApplicationList.Columns["Silent"].DisplayIndex = 0;
+
+            dgvApplicationList.Columns["AbsolutePath"].Visible = absolutePathToolStripMenuItem.Checked;
+            dgvApplicationList.Columns["Architecture"].Visible = architectureToolStripMenuItem.Checked;
+            dgvApplicationList.Columns["Filename"].Visible = filenameToolStripMenuItem.Checked;
+            dgvApplicationList.Columns["Filesize"].Visible = filesizeToolStripMenuItem.Checked;
+            dgvApplicationList.Columns["InstallSwitch"].Visible = switchesToolStripMenuItem1.Checked;
+            dgvApplicationList.Columns["RelativePath"].Visible = relativePathToolStripMenuItem.Checked;
+            dgvApplicationList.Columns["Version"].Visible = versionToolStripMenuItem.Checked;
+            dgvApplicationList.Columns["Silent"].Visible = silentStripMenuItem.Checked;
+            dgvApplicationList.Columns["InstallSwitch"].Visible = switchesToolStripMenuItem1.Checked;
+
+            dgvApplicationList.Columns["AbsolutePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvApplicationList.Columns["Architecture"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvApplicationList.Columns["Filename"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvApplicationList.Columns["Filesize"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvApplicationList.Columns["InstallSwitch"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvApplicationList.Columns["RelativePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvApplicationList.Columns["Version"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvApplicationList.Columns["InstallSwitch"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void switchesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            UpdateDataGridViewHeaders();
+        }
+
+        private void silentStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateDataGridViewHeaders();
+        }
+
+        private void filenameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateDataGridViewHeaders();
+        }
+
+        private void absolutePathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateDataGridViewHeaders();
+        }
+
+        private void relativePathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateDataGridViewHeaders();
+        }
+
+        private void filesizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateDataGridViewHeaders();
+        }
+
+        private void architectureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateDataGridViewHeaders();
+        }
+
+        private void versionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateDataGridViewHeaders();
         }
     }
 }
